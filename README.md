@@ -11,6 +11,7 @@ This is a portfolio website for Cristiano Ronaldo. It includes various pages suc
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
+- [License](#license)
 
 ## Description
 
@@ -19,7 +20,7 @@ This project is a portfolio website for Cristiano Ronaldo. It showcases his care
 ## Installation
 
 To run this project locally, follow these steps:
-
+```
 1. Clone the repository to your local machine:
 
 ```bash
@@ -60,3 +61,7 @@ Contributions are welcome! If you'd like to contribute to this project, please f
 4. Commit your changes (`git commit -am 'Add new feature'`)
 5. Push to the branch (`git push origin feature-name`)
 6. Create a new Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
