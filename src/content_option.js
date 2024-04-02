@@ -9,7 +9,7 @@ const introdata = {
     animated: {
         first: "I love scoring goals",
         second: "I win trophies",
-        third: "I enjoy life",
+        third: "I enjoy football",
     },
     description: "I am the leading goal scorer in football history and one of the most decorated players of all time",
 };
@@ -18,6 +18,32 @@ const dataabout = {
     title: "About Myself",
     aboutme: "As a footballer driven by passion and dedication, I constantly strive to push my limits and inspire those around me. With every match, I aim to leave an indelible mark on the beautiful game, weaving my story into the fabric of football history.",
 };
+
+const earlyLife = {
+  title: "Early Life and Background",
+  description: "I was born on February 5, 1985, in Funchal, Madeira, Portugal. Raised in a working-class family, I began playing football at a young age and showed immense talent from the start. My childhood was marked by determination, hard work, and a relentless pursuit of excellence.",
+};
+
+const careerHighlights = {
+  title: "Football Career Highlights",
+  description: "My illustrious football career is adorned with numerous achievements and accolades. From my breakthrough at Sporting Lisbon to my iconic stints at Manchester United, Real Madrid, and Juventus, I have consistently set new standards of excellence. With multiple Ballon d'Or awards, Champions League titles, and scoring records to my name, I continue to defy expectations and inspire generations of footballers worldwide.",
+};
+
+const playingStyle = {
+  title: "Playing Style and Skills",
+  description: "Known for my explosive speed, incredible athleticism, and clinical finishing, I possess a diverse skill set that makes me a formidable force on the field. My remarkable dribbling ability, aerial prowess, powerful shots, and unmatched work ethic have earned me a reputation as one of the greatest footballers of all time.",
+};
+
+const personalTraits = {
+  title: "Personal Traits and Characteristics",
+  description: "Off the pitch, I am characterized by my dedication, discipline, and passion for success. A natural leader and role model, I exemplify professionalism and determination in everything I do. My commitment to fitness, my philanthropic endeavors, and my entrepreneurial spirit showcase the multifaceted nature of my personality.",
+};
+
+const philanthropy = {
+  title: "Philanthropy and Charity Work",
+  description: "Beyond my footballing achievements, I am renowned for my philanthropic efforts and charitable contributions. Through my CR7 Foundation and other initiatives, I support various causes aimed at improving the lives of underprivileged children and communities around the world. My generosity and compassion continue to make a positive impact on countless lives.",
+};
+
 
 const worktimeline = [
     {
@@ -193,4 +219,9 @@ export {
     contactConfig,
     socialprofils,
     logotext,
+    earlyLife,
+    playingStyle,
+    careerHighlights,
+    personalTraits,
+    philanthropy
 };
