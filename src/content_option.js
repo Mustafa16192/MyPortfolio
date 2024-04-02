@@ -19,58 +19,87 @@ const dataabout = {
     aboutme: "As a footballer driven by passion and dedication, I constantly strive to push my limits and inspire those around me. With every match, I aim to leave an indelible mark on the beautiful game, weaving my story into the fabric of football history.",
 };
 
-const worktimeline = [{
-        jobtitle: "Designer of week",
-        where: "YAdfi",
-        date: "2020",
+const worktimeline = [
+    {
+      jobtitle: "Forward (LW)",
+      where: "Sporting Lisbon",
+      date: "2002-2003",
     },
     {
-        jobtitle: "Designer of week",
-        where: "Jamalya",
-        date: "2019",
+      jobtitle: "Forward (LW)",
+      where: "Manchester United",
+      date: "2003-2009",
     },
     {
-        jobtitle: "Designer of week",
-        where: "ALquds",
-        date: "2019",
+      jobtitle: "Forward (LW, ST)",
+      where: "Real Madrid",
+      date: "2009-2018",
     },
-];
+    {
+      jobtitle: "Forward (LW, ST)",
+      where: "Juventus",
+      date: "2018-2021",
+    },
+    {
+        jobtitle: "Forward (ST)",
+        where: "Manchester United",
+        date: "2021-2023",
+    },
+    {
+        jobtitle: "Forward (ST)",
+        where: "Al Nassr",
+        date: "2023-present",
+    },
+  ];
+  
 
-const skills = [{
-        name: "Python",
-        value: 90,
+  const skills = [
+    {
+      name: "Dribbling",
+      value: 90,
     },
     {
-        name: "Djano",
-        value: 85,
+      name: "Shooting",
+      value: 90,
     },
     {
-        name: "Javascript",
-        value: 80,
+      name: "Heading",
+      value: 85,
     },
     {
-        name: "React",
-        value: 60,
+      name: "Speed",
+      value: 92,
     },
     {
-        name: "Jquery",
-        value: 85,
+      name: "Physicality",
+      value: 90,
     },
-];
+  ];
+  
 
-const services = [{
-        title: "UI & UX Design",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at nisl euismod urna bibendum sollicitudin.",
+  const milestones = [
+    {
+      title: "Debut for Sporting Lisbon",
+      description: "Cristiano Ronaldo made his professional debut for Sporting Lisbon in 2002, quickly catching the eye of talent scouts with his skill and athleticism.",
     },
     {
-        title: "Mobile Apps",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at nisl euismod urna bibendum sollicitudin.",
+      title: "Transfer to Manchester United",
+      description: "In 2003, Cristiano Ronaldo transferred to Manchester United, where he developed into one of the world's best players under the guidance of Sir Alex Ferguson.",
     },
     {
-        title: "Wordpress Design",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at nisl euismod urna bibendum sollicitudin.",
+      title: "Ballon d'Or Win",
+      description: "Ronaldo won his first Ballon d'Or award in 2008 after a stellar season with Manchester United, establishing himself as one of the top players in the world.",
     },
-];
+    {
+      title: "Transfer to Real Madrid",
+      description: "In 2009, Cristiano Ronaldo made a record-breaking transfer to Real Madrid, becoming the most expensive footballer in history at the time.",
+    },
+    {
+      title: "Champions League Success",
+      description: "During his time at Real Madrid, Ronaldo won the UEFA Champions League four times, cementing his legacy as one of the greatest players of all time.",
+    },
+  ];
+  
 
 const dataportfolio = [{
         img: "https://picsum.photos/400/?grayscale",
@@ -136,9 +165,9 @@ const dataportfolio = [{
 ];
 
 const contactConfig = {
-    YOUR_EMAIL: "name@domain.com",
-    YOUR_FONE: "(555)123-4567",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vehicula eu nunc et sollicitudin. Cras pulvinar, nisi at imperdiet pharetra. ",
+    YOUR_EMAIL: "ronaldo@example.com",
+    YOUR_FONE: "(000)123-4567",
+    description: "Feel free to get in touch with me if you have any inquiries about my services or if you'd like to discuss potential collaborations. I'm always eager to connect with fans, sponsors, and fellow professionals in the football industry. Looking forward to hearing from you!",
     // creat an emailjs.com account 
     // check out this tutorial https://www.emailjs.com/docs/examples/reactjs/
     YOUR_SERVICE_ID: "service_id",
@@ -159,7 +188,7 @@ export {
     dataportfolio,
     worktimeline,
     skills,
-    services,
+    milestones,
     introdata,
     contactConfig,
     socialprofils,
