@@ -11,7 +11,6 @@ This is a portfolio website for Cristiano Ronaldo. It includes various pages suc
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Description
 
