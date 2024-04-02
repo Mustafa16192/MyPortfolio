@@ -1,0 +1,43 @@
+/* Center the thumbnails in the middle of the page */
+.thumbnail-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Set the height of the container to the full viewport height */
+    padding-top: 2rem;
+  }
+  
+  /* Style for the thumbnails */
+  .thumbnail {
+    position: relative;
+    max-width: 200px; /* Set the maximum width of the thumbnails */
+    height: auto; /* Maintain aspect ratio */
+  }
+  
+  /* Style for the text on the thumbnails */
+  .thumbnail span {
+    position: absolute;
+    top: 0;
+    right: 0; /* Position the text to the right side of the thumbnail */
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    padding: 5px;
+    z-index: 1;
+  }
+  
+  /* Style for the header container */
+  .header-container {
+    margin-bottom: 20px; /* Add some bottom margin to create space */
+    width: 25%;
+  }
+  
+  /* Increase spacing between list items */
+  .thumbnail-container ul {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .thumbnail-container li {
+    margin-bottom: 20px; /* Adjust as needed */
+  }
+  

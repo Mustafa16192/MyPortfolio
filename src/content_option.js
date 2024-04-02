@@ -1,24 +1,24 @@
-const logotext = "JOHN";
+const logotext = "CR7";
 const meta = {
-    title: "John Doe",
-    description: "I’m John Doe data scientist _ Full stack devloper,currently working in Berlin",
+    title: "Cristiano Ronaldo",
+    description: "I’m Cristiano Ronaldo, currently playing for Al Nassr",
 };
 
 const introdata = {
-    title: "I’m John Doe",
+    title: "I’m Cristiano Ronaldo",
     animated: {
-        first: "I love coding",
-        second: "I code cool websites",
-        third: "I develop mobile apps",
+        first: "I love scoring goals",
+        second: "I win trophies",
+        third: "I enjoy life",
     },
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at nisl euismod urna bibendum",
-    your_img_url: "https://images.unsplash.com/photo-1514790193030-c89d266d5a9d",
+    description: "I am the leading goal scorer in football history and one of the most decorated players of all time",
 };
 
 const dataabout = {
-    title: "abit about my self",
-    aboutme: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis dolor id ligula semper elementum feugiat pretium nulla. Nunc non commodo dolor. Nunc mollis dignissim facilisis. Morbi ut magna ultricies.",
+    title: "About Myself",
+    aboutme: "As a footballer driven by passion and dedication, I constantly strive to push my limits and inspire those around me. With every match, I aim to leave an indelible mark on the beautiful game, weaving my story into the fabric of football history.",
 };
+
 const worktimeline = [{
         jobtitle: "Designer of week",
         where: "YAdfi",
@@ -148,9 +148,10 @@ const contactConfig = {
 
 const socialprofils = {
     github: "https://github.com",
-    facebook: "https://facebook.com",
+    facebook: "https://www.facebook.com/Cristiano/",
     linkedin: "https://linkedin.com",
-    twitter: "https://twitter.com",
+    twitter: "https://twitter.com/Cristiano?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor",
+    instagram: "https://www.instagram.com/cristiano/",
 };
 export {
     meta,

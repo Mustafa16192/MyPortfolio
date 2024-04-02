@@ -4,9 +4,9 @@ import {
   FaGithub,
   FaTwitter,
   FaFacebookF,
-  FaLinkedin,
   FaYoutube,
   FaTwitch,
+  FaInstagram, // Import the Instagram icon
 } from "react-icons/fa";
 import { socialprofils } from "../../content_option";
 
@@ -21,24 +21,17 @@ export const Socialicons = (params) => {
             </a>
           </li>
         )}
-        {socialprofils.github && (
+        {/* {socialprofils.github && (
           <li>
             <a href={socialprofils.github}>
               <FaGithub />
             </a>
           </li>
-        )}
+        )} */}
         {socialprofils.facebook && (
           <li>
             <a href={socialprofils.facebook}>
               <FaFacebookF />
-            </a>
-          </li>
-        )}
-        {socialprofils.linkedin && (
-          <li>
-            <a href={socialprofils.linkedin}>
-              <FaLinkedin />
             </a>
           </li>
         )}
@@ -49,10 +42,17 @@ export const Socialicons = (params) => {
             </a>
           </li>
         )}
-        {socialprofils.twitch && (
+        {/* {socialprofils.twitch && (
           <li>
             <a href={socialprofils.twitch}>
               <FaTwitch />
+            </a>
+          </li>
+        )} */}
+        {socialprofils.instagram && ( // Conditional rendering for Instagram
+          <li>
+            <a href={socialprofils.instagram}>
+              <FaInstagram />
             </a>
           </li>
         )}

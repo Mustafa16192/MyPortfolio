@@ -1,12 +1,13 @@
 import React from "react";
-import { Route, Routes} from "react-router-dom";
-import withRouter from "../hooks/withRouter"
+import { Route, Routes, useLocation } from "react-router-dom";
+import withRouter from "../hooks/withRouter";
 import { Home } from "../pages/home";
 import { Portfolio } from "../pages/portfolio";
 import { ContactUs } from "../pages/contact";
 import { About } from "../pages/about";
-import { Socialicons } from "../components/socialicons";
+import APIPage from "../pages/api"; // Import default export from "../pages/api"
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { Socialicons } from "../components/socialicons";
 
 const AnimatedRoutes = withRouter(({ location }) => (
   <TransitionGroup>
@@ -24,6 +25,7 @@ const AnimatedRoutes = withRouter(({ location }) => (
         <Route path="/about" element={<About />} />
         <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/contact" element={<ContactUs />} />
+        <Route path="/api" element={<APIPage />} />
         <Route path="*" element={<Home />} />
       </Routes>
     </CSSTransition>
@@ -31,10 +33,16 @@ const AnimatedRoutes = withRouter(({ location }) => (
 ));
 
 function AppRoutes() {
+  const location = useLocation();
+
+  // Check if the current route is either "/api" or "/about"
+  const isExcludedPage = location.pathname === "/api" || location.pathname === "/about";
+
   return (
     <div className="s_c">
       <AnimatedRoutes />
-      <Socialicons />
+      {/* Conditionally render the Socialicons component */}
+      {!isExcludedPage && <Socialicons />}
     </div>
   );
 }
