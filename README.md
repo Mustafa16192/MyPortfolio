@@ -1,5 +1,3 @@
-Sure, I'll integrate the additional documentation requirements into your existing README content. Here's an enhanced version that incorporates the requested information:
-
 # Cristiano Ronaldo Portfolio Website
 
 This is a portfolio website for Cristiano Ronaldo. It showcases his career highlights, skills, philanthropic efforts, and more. This project serves as a comprehensive look into Ronaldo's professional life and achievements.
