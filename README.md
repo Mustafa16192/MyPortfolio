@@ -1,6 +1,5 @@
 Sure, I'll integrate the additional documentation requirements into your existing README content. Here's an enhanced version that incorporates the requested information:
 
-```markdown
 # Cristiano Ronaldo Portfolio Website
 
 This is a portfolio website for Cristiano Ronaldo. It showcases his career highlights, skills, philanthropic efforts, and more. This project serves as a comprehensive look into Ronaldo's professional life and achievements.
@@ -29,7 +28,7 @@ Your codebase needs to be well documented. Be sure to include comments in your c
 ## Installation
 
 To set up this project locally, follow these steps:
-```
+
 1. Clone the repository to your local machine:
    ```bash
    git clone https://github.com/your-username/your-repository.git
