@@ -95,5 +95,3 @@ To report issues or bugs, please file an issue on the project's GitHub repositor
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 ```
-
-This revised README file now includes sections for documentation, contributing, features, dependencies, the application's architecture, and how to report issues, making it comprehensive and informative for users and contributors alike.
