@@ -1,50 +1,63 @@
-/* Adjust the container to wrap items and not enforce full viewport height unnecessarily */
 .thumbnail-container {
   display: flex;
-  flex-wrap: wrap; /* Allow items to wrap */
-  justify-content: center;
-  align-items: flex-start; /* Start alignment removes unnecessary vertical stretching */
+  flex-wrap: wrap;
+  justify-content: start; /* Aligns items to the start of the container */
+  align-items: flex-start;
+  gap: 3rem; /* Adjust the space between items */
   padding: 2rem;
-  margin-top: 1rem; /* Ensure some space between search bar and the container */
-  gap: 3rem; /* Increased consistent spacing between thumbnails */
 }
 
-/* Style adjustments for thumbnails to ensure consistent appearance */
+.thumbnail-container::after {
+  content: "";
+  flex: auto;
+}
+
+.video-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem; /* Space below each item */
+  flex: 1 0 calc(20% - 3rem); /* Sets the basis for each item minus the gap */
+  max-width: calc(20% - 3rem); /* Ensures no item grows beyond this width */
+}
+
 .thumbnail {
-  max-width: 200px; /* Control width */
-  display: block; /* Ensure thumbnails are block-level for correct margin application */
+  width: 100%; /* Ensure thumbnails take up the width of their container */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: cover;
 }
 
-/* Adjustments for text overlay on thumbnails */
 .thumbnail span {
   position: absolute;
   bottom: 0;
   left: 0;
-  right: 0; /* Ensure span stretches across thumbnail */
+  right: 0;
   background-color: rgba(0, 0, 0, 0.5);
   color: #fff;
   padding: 5px;
   text-align: center;
+  width: 100%;
 }
 
-/* Header and list style adjustments */
-.header-container {
-  text-align: center;
-  margin-bottom: 1rem; /* Reduce space below the header */
-  width: auto; /* Adjust based on content width */
+/* Responsive adjustment: ensure 5 items per row on larger screens */
+@media (max-width: 1200px) {
+  .video-item {
+    flex: 1 0 calc(20% - 3rem);
+    max-width: calc(20% - 3rem);
+  }
 }
 
-.thumbnail-container ul {
-  list-style: none;
-  padding: 0;
-  margin: 0 auto; /* Center the list */
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+/* Adjustment for smaller screens if needed */
+@media (max-width: 768px) {
+  .video-item {
+    flex: 1 0 calc(50% - 3rem); /* 2 items per row on smaller screens */
+    max-width: calc(50% - 3rem);
+  }
 }
 
-.thumbnail-container li {
-  display: flex; /* Apply flex to ensure alignment and spacing */
-  justify-content: center;
-  width: 200px; /* Match thumbnail width for consistent alignment */
+@media (max-width: 480px) {
+  .video-item {
+    flex: 1 0 100%; /* 1 item per row on very small screens */
+    max-width: 100%;
+  }
 }

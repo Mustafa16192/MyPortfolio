@@ -1,75 +1,95 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './style.css'; // Assuming this CSS is saved in style.css
-
-const FootballSoccerVideos = ({ videos }) => (
-  <div>
-    <div className="header-container">
-      <h2 className="display-4 mb-4">Football/Soccer Videos</h2>
-      <p>Since I'm a football player myself, I keep up to date with everything that's happening in the game. These are the highlights of some of my favorite recent football games. Hope you enjoy!</p>
-    </div>
-    <div className="thumbnail-container">
-      <ul>
-        {videos.map(video => (
-          <li key={video.id}>
-            <a href={video.url} target="_blank" rel="noopener noreferrer">
-              <img className="thumbnail" src={video.thumbnail} alt="Thumbnail" />
-              <span>{video.title}</span>
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </div>
-);
+import './style.css'; // Make sure this path correctly points to your CSS file
 
 const APIPage = () => {
-  const [videoData, setVideoData] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [footballVideos, setFootballVideos] = useState([]);
+  const [youtubeVideos, setYoutubeVideos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    const fetchFootballSoccerVideos = async () => {
-      const options = {
-        method: 'GET',
-        url: 'https://free-football-soccer-videos.p.rapidapi.com/',
-        headers: {
-          'X-RapidAPI-Key': process.env.REACT_APP_RAPIDAPI_KEY, // Use environment variable
-          'X-RapidAPI-Host': 'free-football-soccer-videos.p.rapidapi.com'
-        }
-      };
-
+    const fetchFootballVideos = async () => {
       try {
-        const response = await axios.request(options);
-        setVideoData(response.data.slice(0, 10));
+        const response = await axios.request({
+          method: 'GET',
+          url: 'https://free-football-soccer-videos.p.rapidapi.com/',
+          headers: {
+            'X-RapidAPI-Key': process.env.REACT_APP_RAPIDAPI_KEY,
+            'X-RapidAPI-Host': 'free-football-soccer-videos.p.rapidapi.com'
+          }
+        });
+        setFootballVideos(response.data.slice(0, 10)); // Limiting to first 10 for demonstration
       } catch (error) {
-        console.error("Error fetching football/soccer videos:", error);
-      } finally {
-        setLoading(false);
+        console.error("Error fetching football videos:", error);
+        setError('Failed to load football videos.');
       }
     };
 
-    fetchFootballSoccerVideos();
+    const fetchYoutubeVideos = async () => {
+      try {
+        const response = await axios.request({
+          method: 'GET',
+          url: 'https://youtube-v31.p.rapidapi.com/search',
+          params: {
+            channelId: 'UCd84KUlhKQYXrMHsOPfyxcw', // Example channel ID
+            part: 'snippet,id',
+            order: 'date',
+            maxResults: '10'
+          },
+          headers: {
+            'X-RapidAPI-Key': process.env.REACT_APP_RAPIDAPI_KEY,
+            'X-RapidAPI-Host': 'youtube-v31.p.rapidapi.com'
+          }
+        });
+        setYoutubeVideos(response.data.items); // Also limiting to first 10 results
+      } catch (error) {
+        console.error("Error fetching YouTube videos:", error);
+        setError('Failed to load YouTube videos.');
+      }
+    };
+
+    Promise.all([fetchFootballVideos(), fetchYoutubeVideos()]).finally(() => setLoading(false));
   }, []);
 
-  const filteredVideos = videoData.filter(video =>
-    searchTerm === "" || video.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center', marginTop: '20px' }}>
-      <input
-        type="text"
-        placeholder="Search videos..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        style={{ padding: "10px", width: "80%", maxWidth: "600px", marginBottom: '1rem' }} // Adjust for wider input
-      />
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <FootballSoccerVideos videos={filteredVideos} />
-      )}
+    <div className="videos-container">
+      <section className="football-videos">
+      <hr className="t_border my-4 ml-0 text-left" />
+        <h2 className="display-4 mb-4">Football/Soccer Videos</h2>
+        <p style={{ fontSize: 'larger' }}>Since I'm a football player myself, I keep up to date with everything that's happening in the game. These are the highlights of some of my favorite recent football games. Hope you enjoy!</p>
+        <hr className="t_border my-4 ml-0 text-left" />
+        <div className="thumbnail-container">
+          {footballVideos.map((video, index) => (
+            <div key={index} className="video-item">
+              <a href={video.url} target="_blank" rel="noopener noreferrer">
+                <img className="thumbnail" src={video.thumbnail} alt="Thumbnail" />
+                <span>{video.title}</span>
+              </a>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="youtube-videos">
+      <hr className="t_border my-4 ml-0 text-left" />
+        <h2 className="display-4 mb-4">Ronaldo YouTube Channel Videos</h2>
+        <p style={{ fontSize: 'larger' }}>These are the latest videos of my Youtube Channel!</p>
+        <hr className="t_border my-4 ml-0 text-left" />
+        <div className="thumbnail-container">
+          {youtubeVideos.map((video, index) => (
+            <div key={index} className="video-item">
+              <a href={`https://www.youtube.com/watch?v=${video.id.videoId}`} target="_blank" rel="noopener noreferrer">
+                <img src={video.snippet.thumbnails.medium.url} alt={video.snippet.title} className="thumbnail" />
+                <span>{video.snippet.title}</span>
+              </a>
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 };
