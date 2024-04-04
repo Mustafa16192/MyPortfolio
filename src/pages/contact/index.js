@@ -25,6 +25,10 @@ export const ContactUs = () => {
         showAlert: true,
         successMessage: "Message sent successfully!",
       });
+      // Hide the success message after 2 seconds
+      setTimeout(() => {
+        setFormData(formData => ({ ...formData, showAlert: false }));
+      }, 2000);
     }, 2000); // Simulating a 2-second delay, replace with actual submission logic
   };
 
