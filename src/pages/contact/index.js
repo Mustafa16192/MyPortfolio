@@ -1,64 +1,35 @@
 import React, { useState } from "react";
-import * as emailjs from "emailjs-com";
-import "./style.css";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { meta } from "../../content_option";
 import { Container, Row, Col, Alert } from "react-bootstrap";
-import { contactConfig } from "../../content_option";
 
 export const ContactUs = () => {
-  const [formData, setFormdata] = useState({
+  const [formData, setFormData] = useState({
     email: "",
     name: "",
     message: "",
     loading: false,
-    show: false,
-    alertmessage: "",
-    variant: "",
+    showAlert: false,
+    successMessage: "",
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setFormdata({ loading: true });
+    setFormData({ ...formData, loading: true });
 
-    const templateParams = {
-      from_name: formData.email,
-      user_name: formData.name,
-      to_name: contactConfig.YOUR_EMAIL,
-      message: formData.message,
-    };
-
-    emailjs
-      .send(
-        contactConfig.YOUR_SERVICE_ID,
-        contactConfig.YOUR_TEMPLATE_ID,
-        templateParams,
-        contactConfig.YOUR_USER_ID
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-          setFormdata({
-            loading: false,
-            alertmessage: "SUCCESS! ,Thankyou for your messege",
-            variant: "success",
-            show: true,
-          });
-        },
-        (error) => {
-          console.log(error.text);
-          setFormdata({
-            alertmessage: `Faild to send!,${error.text}`,
-            variant: "danger",
-            show: true,
-          });
-          document.getElementsByClassName("co_alert")[0].scrollIntoView();
-        }
-      );
+    // Simulate form submission process
+    setTimeout(() => {
+      setFormData({
+        ...formData,
+        loading: false,
+        showAlert: true,
+        successMessage: "Message sent successfully!",
+      });
+    }, 2000); // Simulating a 2-second delay, replace with actual submission logic
   };
 
   const handleChange = (e) => {
-    setFormdata({
+    setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
@@ -80,50 +51,33 @@ export const ContactUs = () => {
         </Row>
         <Row className="sec_sp">
           <Col lg="12">
-            <Alert
-              //show={formData.show}
-              variant={formData.variant}
-              className={`rounded-0 co_alert ${
-                formData.show ? "d-block" : "d-none"
-              }`}
-              onClose={() => setFormdata({ show: false })}
-              dismissible
-            >
-              <p className="my-0">{formData.alertmessage}</p>
-            </Alert>
+            {formData.showAlert && (
+              <Alert variant={formData.successMessage.includes("Failed") ? "danger" : "success"}>
+                {formData.successMessage}
+              </Alert>
+            )}
           </Col>
           <Col lg="5" className="mb-5">
             <h3 className="color_sec py-4">Get in touch</h3>
             <address>
-              <strong>Email:</strong>{" "}
-              <a href={`mailto:${contactConfig.YOUR_EMAIL}`}>
-                {contactConfig.YOUR_EMAIL}
-              </a>
-              <br />
-              <br />
-              {contactConfig.hasOwnProperty("YOUR_FONE") ? (
-                <p>
-                  <strong>Phone:</strong> {contactConfig.YOUR_FONE}
-                </p>
-              ) : (
-                ""
-              )}
+              <strong>Email:</strong> <a href="mailto:recipient@example.com">recipient@example.com</a><br /><br />
             </address>
-            <p>{contactConfig.description}</p>
+            <p>Write your message below:</p>
           </Col>
           <Col lg="7" className="d-flex align-items-center">
-            <form onSubmit={handleSubmit} className="contact__form w-100">
+            <form onSubmit={handleSubmit} className="contact__form w-100" style={{ backgroundColor: "black", border: "1px solid white", padding: "20px" }}>
               <Row>
                 <Col lg="6" className="form-group">
                   <input
-                    className="form-control"
+                    className="form-control rounded-0"
                     id="name"
                     name="name"
                     placeholder="Name"
-                    value={formData.name || ""}
+                    value={formData.name}
                     type="text"
                     required
                     onChange={handleChange}
+                    style={{ backgroundColor: "black", color: "white" }}
                   />
                 </Col>
                 <Col lg="6" className="form-group">
@@ -133,9 +87,10 @@ export const ContactUs = () => {
                     name="email"
                     placeholder="Email"
                     type="email"
-                    value={formData.email || ""}
+                    value={formData.email}
                     required
                     onChange={handleChange}
+                    style={{ backgroundColor: "black", color: "white" }}
                   />
                 </Col>
               </Row>
@@ -148,11 +103,12 @@ export const ContactUs = () => {
                 value={formData.message}
                 onChange={handleChange}
                 required
+                style={{ backgroundColor: "black", color: "white", marginTop: "5px" }}
               ></textarea>
               <br />
               <Row>
                 <Col lg="12" className="form-group">
-                  <button className="btn ac_btn" type="submit">
+                  <button className="btn ac_btn" type="submit" disabled={formData.loading}>
                     {formData.loading ? "Sending..." : "Send"}
                   </button>
                 </Col>
