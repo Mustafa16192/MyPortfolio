@@ -66,7 +66,7 @@ export const ContactUs = () => {
             <address>
               <strong>Email:</strong> <a href="mailto:recipient@example.com">recipient@example.com</a><br /><br />
             </address>
-            <p>Write your message below:</p>
+            <p>Write your message in the form:</p>
           </Col>
           <Col lg="7" className="d-flex align-items-center">
             <form onSubmit={handleSubmit} className="contact__form w-100" style={{ backgroundColor: "black", border: "1px solid white", padding: "20px" }}>
