@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { meta } from "../../content_option";
 import { Container, Row, Col, Alert } from "react-bootstrap";
+import emailjs from "emailjs-com";
 
 export const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -15,21 +16,49 @@ export const ContactUs = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setFormData({ ...formData, loading: true });
+    setFormData((prev) => ({ ...prev, loading: true }));
 
-    // Simulate form submission process
-    setTimeout(() => {
-      setFormData({
-        ...formData,
-        loading: false,
-        showAlert: true,
-        successMessage: "Message sent successfully!",
-      });
-      // Hide the success message after 2 seconds
-      setTimeout(() => {
-        setFormData(formData => ({ ...formData, showAlert: false }));
-      }, 2000);
-    }, 2000); // Simulating a 2-second delay, replace with actual submission logic
+    // Ensure the parameter keys below exactly match what you have in your EmailJS template.
+    emailjs
+      .send(
+        "service_2df2vzf",       // Your EmailJS Service ID
+        "template_wf5n7c9",       // Your EmailJS Template ID
+        {
+          name: formData.name,
+          message: formData.message + "\n\nFrom Email: " + formData.email,
+        },
+        "N3dpK6g0mb2J6ajsg"        // Your EmailJS Public Key
+      )
+      .then(
+        (response) => {
+          setFormData({
+            email: "",
+            name: "",
+            message: "",
+            loading: false,
+            showAlert: true,
+            successMessage: "Message sent successfully!",
+          });
+
+          // Automatically hide the alert after 2 seconds.
+          setTimeout(() => {
+            setFormData((prev) => ({ ...prev, showAlert: false }));
+          }, 2000);
+        },
+        (error) => {
+          setFormData((prev) => ({
+            ...prev,
+            loading: false,
+            showAlert: true,
+            successMessage: "Failed to send message. Please try again.",
+          }));
+
+          // Automatically hide the alert after 2 seconds.
+          setTimeout(() => {
+            setFormData((prev) => ({ ...prev, showAlert: false }));
+          }, 2000);
+        }
+      );
   };
 
   const handleChange = (e) => {
@@ -41,7 +70,7 @@ export const ContactUs = () => {
 
   return (
     <HelmetProvider>
-      <Container>
+      <Container className="About-header">
         <Helmet>
           <meta charSet="utf-8" />
           <title>{meta.title} | Contact</title>
@@ -53,10 +82,17 @@ export const ContactUs = () => {
             <hr className="t_border my-4 ml-0 text-left" />
           </Col>
         </Row>
+
         <Row className="sec_sp">
           <Col lg="12">
             {formData.showAlert && (
-              <Alert variant={formData.successMessage.includes("Failed") ? "danger" : "success"}>
+              <Alert
+                variant={
+                  formData.successMessage.includes("Failed")
+                    ? "danger"
+                    : "success"
+                }
+              >
                 {formData.successMessage}
               </Alert>
             )}
@@ -64,12 +100,26 @@ export const ContactUs = () => {
           <Col lg="5" className="mb-5">
             <h3 className="color_sec py-4">Get in touch</h3>
             <address>
-              <strong>Email:</strong> <a href="mailto:recipient@example.com">recipient@example.com</a><br /><br />
+              <strong>Email:</strong>{" "}
+              <a href="mailto:mustafa_mirza_56@outlook.com">
+                mustafa_mirza_56@outlook.com
+              </a>
+              <br />
+              <br />
             </address>
-            <p>Write your message in the form:</p>
+            <p>Or send a message using the form:</p>
           </Col>
+
           <Col lg="7" className="d-flex align-items-center">
-            <form onSubmit={handleSubmit} className="contact__form w-100" style={{ backgroundColor: "black", border: "1px solid white", padding: "20px" }}>
+            <form
+              onSubmit={handleSubmit}
+              className="contact__form w-100"
+              style={{
+                backgroundColor: "#000",
+                border: "1px solid white",
+                padding: "20px",
+              }}
+            >
               <Row>
                 <Col lg="6" className="form-group">
                   <input
@@ -81,7 +131,7 @@ export const ContactUs = () => {
                     type="text"
                     required
                     onChange={handleChange}
-                    style={{ backgroundColor: "black", color: "white" }}
+                    style={{ backgroundColor: "#000", color: "#fff" }}
                   />
                 </Col>
                 <Col lg="6" className="form-group">
@@ -94,12 +144,13 @@ export const ContactUs = () => {
                     value={formData.email}
                     required
                     onChange={handleChange}
-                    style={{ backgroundColor: "black", color: "white" }}
+                    style={{ backgroundColor: "#000", color: "#fff" }}
                   />
                 </Col>
               </Row>
+
               <textarea
-                className="form-control rounded-0"
+                className="form-control rounded-0 mt-3"
                 id="message"
                 name="message"
                 placeholder="Message"
@@ -107,12 +158,16 @@ export const ContactUs = () => {
                 value={formData.message}
                 onChange={handleChange}
                 required
-                style={{ backgroundColor: "black", color: "white", marginTop: "5px" }}
+                style={{ backgroundColor: "#000", color: "#fff" }}
               ></textarea>
-              <br />
-              <Row>
+
+              <Row className="mt-3">
                 <Col lg="12" className="form-group">
-                  <button className="btn ac_btn" type="submit" disabled={formData.loading}>
+                  <button
+                    className="btn ac_btn"
+                    type="submit"
+                    disabled={formData.loading}
+                  >
                     {formData.loading ? "Sending..." : "Send"}
                   </button>
                 </Col>
@@ -120,8 +175,9 @@ export const ContactUs = () => {
             </form>
           </Col>
         </Row>
+
+        <div className={formData.loading ? "loading-bar" : "d-none"}></div>
       </Container>
-      <div className={formData.loading ? "loading-bar" : "d-none"}></div>
     </HelmetProvider>
   );
 };

@@ -1,213 +1,153 @@
-const logotext = "CR7";
+const logotext = "MAM";
 const meta = {
-    title: "Cristiano Ronaldo",
-    description: "I’m Cristiano Ronaldo, currently playing for Al Nassr",
+    title: "Mustafa Ali Mirza",
+    description: "I’m Mustafa Ali Mirza, a Product Manager and UX-driven technologist from Pakistan",
 };
 
 const introdata = {
-    title: "I’m Cristiano Ronaldo",
+    title: "I’m Mustafa Ali Mirza",
     animated: {
-        first: "I love scoring goals",
-        second: "I win trophies",
-        third: "I enjoy football",
+        first: "I design impactful digital experiences",
+        second: "I build scalable tech products",
+        third: "I drive growth through UX & data",
     },
-    description: "I am the leading goal scorer in football history and one of the most decorated players of all time",
+    description: "I’m a product manager with a strong foundation in user-centered design, technical development, and business strategy. I’ve helped scale tech products across industries like automotive, fintech, and classifieds in Pakistan and the UAE.",
 };
 
 const dataabout = {
     title: "About Myself",
-    aboutme: "As a footballer driven by passion and dedication, I constantly strive to push my limits and inspire those around me. With every match, I aim to leave an indelible mark on the beautiful game, weaving my story into the fabric of football history.",
+    aboutme: "I’m an experienced product manager, currently admitted to the University of Michigan’s MSI program with a focus on User-Centered Product Development. Over the past years, I’ve built and optimized products for Dubizzle Group and other tech firms, improving engagement, automating operations, and driving millions in revenue."
 };
 
 const earlyLife = {
-  title: "Early Life and Background",
-  description: "I was born on February 5, 1985, in Funchal, Madeira, Portugal. Raised in a working-class family, I began playing football at a young age and showed immense talent from the start. My childhood was marked by determination, hard work, and a relentless pursuit of excellence.",
+    title: "Early Life and Background",
+    description: "Born and raised in Lahore, Pakistan, I was always fascinated by systems, design, and how users interact with digital tools. From tinkering with websites in my teens to launching real products that serve thousands, my path has been a blend of curiosity, creativity, and persistence."
 };
 
 const careerHighlights = {
-  title: "Football Career Highlights",
-  description: "My illustrious football career is adorned with numerous achievements and accolades. From my breakthrough at Sporting Lisbon to my iconic stints at Manchester United, Real Madrid, and Juventus, I have consistently set new standards of excellence. With multiple Ballon d'Or awards, Champions League titles, and scoring records to my name, I continue to defy expectations and inspire generations of footballers worldwide.",
+    title: "Career Highlights",
+    description: "At Dubizzle Group, I led CRM product development for their UAE automotive business, optimizing lead flows, sales processes, and affiliate integrations that generated over $2M in monthly revenue. Previously, I worked across startups and agencies to deliver web platforms, dashboards, and data-rich applications."
 };
 
 const playingStyle = {
-  title: "Playing Style and Skills",
-  description: "Known for my explosive speed, incredible athleticism, and clinical finishing, I possess a diverse skill set that makes me a formidable force on the field. My remarkable dribbling ability, aerial prowess, powerful shots, and unmatched work ethic have earned me a reputation as one of the greatest footballers of all time.",
+    title: "Product Thinking & UX Approach",
+    description: "My style blends user empathy with a builder’s mindset. I work cross-functionally with engineering, design, and business teams to define user journeys, wireframes, roadmaps, and success metrics — ensuring that every feature solves a real user pain point while aligning with business goals."
 };
 
 const personalTraits = {
-  title: "Personal Traits and Characteristics",
-  description: "Off the pitch, I am characterized by my dedication, discipline, and passion for success. A natural leader and role model, I exemplify professionalism and determination in everything I do. My commitment to fitness, my philanthropic endeavors, and my entrepreneurial spirit showcase the multifaceted nature of my personality.",
+    title: "Traits and Values",
+    description: "I’m analytical, curious, and obsessed with improving how products serve users. I value clarity, data-backed decisions, and collaborative problem-solving. Outside work, I’m passionate about fitness, fragrances, and staying updated with emerging tech and markets."
 };
 
 const philanthropy = {
-  title: "Philanthropy and Charity Work",
-  description: "Beyond my footballing achievements, I am renowned for my philanthropic efforts and charitable contributions. Through my CR7 Foundation and other initiatives, I support various causes aimed at improving the lives of underprivileged children and communities around the world. My generosity and compassion continue to make a positive impact on countless lives.",
+    title: "Personal Projects & Initiatives",
+    description: "Beyond full-time roles, I mentor aspiring product managers, write about user research, and contribute to open-source tooling for analytics workflows. I believe in sharing knowledge and helping grow the local tech ecosystem in Pakistan."
 };
-
 
 const worktimeline = [
     {
-      jobtitle: "Forward (LW)",
-      where: "Sporting Lisbon",
-      date: "2002-2003",
+      jobtitle: "Associate Product Manager",
+      where: "Dubizzle Group UAE",
+      date: "2024-Present",
     },
     {
-      jobtitle: "Forward (LW)",
-      where: "Manchester United",
-      date: "2003-2009",
+      jobtitle: "AI Product Intern",
+      where: "SoftAims",
+      date: "2023",
     },
-    {
-      jobtitle: "Forward (LW, ST)",
-      where: "Real Madrid",
-      date: "2009-2018",
-    },
-    {
-      jobtitle: "Forward (LW, ST)",
-      where: "Juventus",
-      date: "2018-2021",
-    },
-    {
-        jobtitle: "Forward (ST)",
-        where: "Manchester United",
-        date: "2021-2023",
-    },
-    {
-        jobtitle: "Forward (ST)",
-        where: "Al Nassr",
-        date: "2023-present",
-    },
-  ];
-  
+];
 
-  const skills = [
+const skills = [
     {
-      name: "Dribbling",
+      name: "Product Strategy",
       value: 90,
     },
     {
-      name: "Shooting",
-      value: 90,
-    },
-    {
-      name: "Heading",
+      name: "UX Design & Wireframing",
       value: 85,
     },
     {
-      name: "Speed",
-      value: 92,
+      name: "Analytics & Reporting",
+      value: 88,
     },
     {
-      name: "Physicality",
+      name: "Frontend Development",
+      value: 80,
+    },
+    {
+      name: "Stakeholder Communication",
       value: 90,
     },
-  ];
-  
+];
 
-  const milestones = [
+const milestones = [
     {
-      title: "Debut for Sporting Lisbon",
-      description: "Cristiano Ronaldo made his professional debut for Sporting Lisbon in 2002, quickly catching the eye of talent scouts with his skill and athleticism.",
+      title: "Admitted to University of Michigan",
+      description: "Received admission into the University of Michigan’s School of Information (MSI) to specialize in User-Centered Product Development.",
     },
     {
-      title: "Transfer to Manchester United",
-      description: "In 2003, Cristiano Ronaldo transferred to Manchester United, where he developed into one of the world's best players under the guidance of Sir Alex Ferguson.",
+      title: "Launched CarForce CRM",
+      description: "Led development of a high-revenue CRM system managing car inspections, financing, and affiliate services across the UAE.",
     },
     {
-      title: "Ballon d'Or Win",
-      description: "Ronaldo won his first Ballon d'Or award in 2008 after a stellar season with Manchester United, establishing himself as one of the top players in the world.",
+      title: "Optimized Auto Lead Funnel",
+      description: "Redesigned Dubizzle’s auto buyer-seller pipeline, improving task automation and agent efficiency across 3 sales teams.",
     },
     {
-      title: "Transfer to Real Madrid",
-      description: "In 2009, Cristiano Ronaldo made a record-breaking transfer to Real Madrid, becoming the most expensive footballer in history at the time.",
+      title: "Built Affiliate Management System",
+      description: "Product managed an affiliate system for car dealers, bankers, and DSOs, tracking commissions and lead flows."
     },
     {
-      title: "Champions League Success",
-      description: "During his time at Real Madrid, Ronaldo won the UEFA Champions League four times, cementing his legacy as one of the greatest players of all time.",
+      title: "Expanded Tech Strategy",
+      description: "Worked with founders to define and execute product strategies across multiple startups in finance, ecommerce, and auto-tech."
     },
-  ];
-  
+];
 
-const dataportfolio = [{
+const dataportfolio = [
+    {
         img: "https://picsum.photos/400/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
+        description: "CarForce CRM – Optimized lead management and automation",
         link: "#",
     },
     {
         img: "https://picsum.photos/400/800/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
-        link: "#",
-    },
-    {
-        img: "https://picsum.photos/400/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
+        description: "Affiliate Module – Dashboard and onboarding for lead partners",
         link: "#",
     },
     {
         img: "https://picsum.photos/400/600/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
+        description: "Inspection Analytics – Reports and KPIs for auto inspections",
         link: "#",
     },
     {
         img: "https://picsum.photos/400/300/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
+        description: "WhatsApp Lead Outreach – Automated messaging workflows",
         link: "#",
     },
     {
         img: "https://picsum.photos/400/700/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
-        link: "#",
-    },
-
-    {
-        img: "https://picsum.photos/400/600/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
-        link: "#",
-    },
-    {
-        img: "https://picsum.photos/400/300/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
-        link: "#",
-    },
-    {
-        img: "https://picsum.photos/400/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
-        link: "#",
-    },
-    {
-        img: "https://picsum.photos/400/550/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
-        link: "#",
-    },
-    {
-        img: "https://picsum.photos/400/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
-        link: "#",
-    },
-    {
-        img: "https://picsum.photos/400/700/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
+        description: "Call Analysis AI – LLM-powered quality control tool for agents",
         link: "#",
     },
 ];
 
 const contactConfig = {
-    YOUR_EMAIL: "ronaldo@example.com",
-    YOUR_FONE: "(000)123-4567",
-    description: "Feel free to get in touch with me if you have any inquiries about my services or if you'd like to discuss potential collaborations. I'm always eager to connect with fans, sponsors, and fellow professionals in the football industry. Looking forward to hearing from you!",
-    // creat an emailjs.com account 
-    // check out this tutorial https://www.emailjs.com/docs/examples/reactjs/
-    YOUR_SERVICE_ID: "service_id",
-    YOUR_TEMPLATE_ID: "template_id",
-    YOUR_USER_ID: "user_id",
+    YOUR_EMAIL: "mustafa_mirza_56@outlook.com",
+    YOUR_FONE: "+92 309 4363004",
+    description: "Whether you're a founder, recruiter, or fellow builder — feel free to reach out if you want to collaborate, chat about product, or work together. I'm always open to meaningful conversations.",
+    YOUR_SERVICE_ID: "your_service_id",
+    YOUR_TEMPLATE_ID: "your_template_id",
+    YOUR_USER_ID: "your_user_id",
 };
 
 const socialprofils = {
-    github: "https://github.com",
-    facebook: "https://www.facebook.com/Cristiano/",
-    linkedin: "https://linkedin.com",
-    twitter: "https://twitter.com/Cristiano?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor",
-    instagram: "https://www.instagram.com/cristiano/",
+    github: "https://github.com/Mustafa16192?tab=repositories",
+    facebook: "https://www.facebook.com/mustafa.mirza.549",
+    linkedin: "https://www.linkedin.com/in/mustafa-ali-mirza/",
+    twitter: "https://x.com/mustafa_16192?s=21",
+    instagram: "https://x.com/mustafa_16192?s=21",
 };
+
 export {
     meta,
     dataabout,

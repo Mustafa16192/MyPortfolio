@@ -4,7 +4,7 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import Typewriter from "typewriter-effect";
 import { introdata, meta } from "../../content_option";
 import { Link } from "react-router-dom";
-import cr7 from "../../components/Cristiano-Ronaldo-ceremony-rename-airport-Santa-Cruz-Madeira-Portugal-March-29-2017.jpg.webp";
+import me from "../../components/me.png";
 
 export const Home = () => {
   return (
@@ -18,8 +18,15 @@ export const Home = () => {
         <div className="intro_sec d-block d-lg-flex align-items-center ">
           <div
             className="h_bg-image order-1 order-lg-2 h-100"
-            style={{ 
-              backgroundImage: `url(${cr7})`, // Use the imported image
+            style={{
+              backgroundImage: `url(${me})`,
+              backgroundSize: "contain", // Keeps aspect ratio
+              backgroundRepeat: "no-repeat", // Prevents tiling
+              backgroundPosition: "center", // Centers image
+              backgroundColor: "#000", // True black behind image
+              filter: "none", // Prevents grayscale or brightness washout
+              imageRendering: "crisp-edges", // Ensures no blur on scaled image
+              WebkitFilter: "none",
             }}
           ></div>
           <div className="text order-2 order-lg-1 h-100 d-lg-flex justify-content-center">
@@ -42,9 +49,9 @@ export const Home = () => {
                 </h1>
                 <p className="mb-1x">{introdata.description}</p>
                 <div className="intro_btn-action pb-5">
-                  <Link to="/api" className="text_2">
+                  <Link to="/resume" className="text_2">
                     <div id="button_p" className="ac_btn btn ">
-                      My Portfolio
+                      My Resume
                       <div className="ring one"></div>
                       <div className="ring two"></div>
                       <div className="ring three"></div>

@@ -1,0 +1,18 @@
+.portfolio-item {
+    transition: transform 0.3s ease;
+  }
+  .portfolio-item:hover {
+    transform: translateY(-5px);
+  }
+  .portfolio-thumb img {
+    border-radius: 8px;
+    max-height: 250px;
+    object-fit: cover;
+    width: 100%;
+  }
+  .btn-outline-success {
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 6px;
+  }
+  
