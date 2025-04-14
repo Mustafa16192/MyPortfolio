@@ -22,23 +22,28 @@ export const Resume = () => {
         </Helmet>
 
         <Row className="mb-5 mt-3 pt-md-3 align-items-center justify-content-between">
-  <Col lg="6" className="d-flex align-items-center">
-    <h1 className="display-4 mb-0 mr-4">Resume</h1>
-  </Col>
-  <Col lg="6" className="d-flex justify-content-lg-end mt-3 mt-lg-0">
-    <a href="/Mustafa_Ali_Resume.pdf" download target="_blank" rel="noopener noreferrer">
-      <div id="button_h" className="ac_btn btn">
-        Download PDF
-        <div className="ring one"></div>
-        <div className="ring two"></div>
-        <div className="ring three"></div>
-      </div>
-    </a>
-  </Col>
-  <Col lg="12">
-    <hr className="t_border my-4 ml-0 text-left" />
-  </Col>
-</Row>
+          <Col lg="6" className="d-flex align-items-center">
+            <h1 className="display-4 mb-0 mr-4">Resume</h1>
+          </Col>
+          <Col lg="6" className="d-flex justify-content-lg-end mt-3 mt-lg-0">
+            <a
+              href="/Mustafa_Ali_Resume.pdf"
+              download
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div id="button_h" className="ac_btn btn">
+                Download PDF
+                <div className="ring one"></div>
+                <div className="ring two"></div>
+                <div className="ring three"></div>
+              </div>
+            </a>
+          </Col>
+          <Col lg="12">
+            <hr className="t_border my-4 ml-0 text-left" />
+          </Col>
+        </Row>
 
         {/* ABOUT ME SECTION */}
         <Row className="sec_sp">
@@ -119,7 +124,7 @@ export const Resume = () => {
                   <div className="portfolio-item">
                     <div className="portfolio-thumb mb-2">
                       <img
-                        src={project.img}
+                        src={require(`../../assets/images/${project.img}`)}
                         alt={`Project ${i + 1}`}
                         className="img-fluid rounded shadow-sm"
                       />
