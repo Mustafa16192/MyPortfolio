@@ -43,7 +43,8 @@ export const Home = () => {
                       ],
                       autoStart: true,
                       loop: true,
-                      deleteSpeed: 10,
+                      deleteSpeed: 25, // fast delete
+                      delay: 40, // fast typing
                     }}
                   />
                 </h1>
