@@ -5,6 +5,7 @@ import Typewriter from "typewriter-effect";
 import { introdata, meta } from "../../content_option";
 import { Link } from "react-router-dom";
 import me from "../../components/me.png";
+import m2 from "../../assets/images/image.png";
 
 export const Home = () => {
   return (
@@ -19,7 +20,7 @@ export const Home = () => {
           <div
             className="h_bg-image order-1 order-lg-2 h-100"
             style={{
-              backgroundImage: `url(${me})`,
+              backgroundImage: `url(${m2})`,
               backgroundSize: "contain", // Keeps aspect ratio
               backgroundRepeat: "no-repeat", // Prevents tiling
               backgroundPosition: "center", // Centers image
