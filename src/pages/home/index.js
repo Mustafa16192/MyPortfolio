@@ -17,15 +17,14 @@ export const Home = () => {
         <div className="bg-gradient-circle" aria-hidden="true" />
         <Helmet>
           <meta charSet="utf-8" />
-          <title>{meta.title}</title>
+          <title> {meta.title}</title>
           <meta name="description" content={meta.description} />
         </Helmet>
-
         <div className="intro_sec d-block d-lg-flex align-items-center ">
           <div
-            className="h_bg-image photo-grid order-1 order-lg-2 h-10"
+            className="h_bg-image order-1 order-lg-2 h-10 photo-grid"
             style={{
-              // 2x2 grid with a visible border (gap shows bg color)
+              // Container becomes a 2x2 grid with a visible border (gap shows bg color)
               display: "grid",
               gridTemplateColumns: "1fr 1fr",
               gridTemplateRows: "1fr 1fr",
@@ -34,14 +33,14 @@ export const Home = () => {
               borderRadius: "50px",
               padding: "8px", // padding around the grid so the rounded corners show the border
               overflow: "hidden",
-              // limit overall size; width is now controlled by CSS for responsiveness
+              // limit overall size similar to previous usage; adjust as needed in CSS
               minHeight: "600px",
               boxSizing: "border-box",
             }}
           >
             {/* Four grid cells — swap/add images as desired */}
             <div
-              className="photo-tile photo-tile-1"
+              className="photo-tile tile-1"
               style={{
                 backgroundImage: `url(${me3})`,
                 backgroundSize: "cover",
@@ -56,7 +55,7 @@ export const Home = () => {
               }}
             />
             <div
-              className="photo-tile photo-tile-2"
+              className="photo-tile tile-2"
               style={{
                 backgroundImage: `url(${me2})`,
                 backgroundSize: "cover",
@@ -71,12 +70,13 @@ export const Home = () => {
               }}
             />
             <div
-              className="photo-tile photo-tile-3"
+              className="photo-tile tile-3"
               style={{
                 backgroundImage: `url(${me6})`,
-                backgroundSize: "113% auto", // slight zoom
+                backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "100% 80%",
+                backgroundSize: "113% auto", // increase to zoom: 105%..120%
                 borderRadius: "12px",
                 borderBottomLeftRadius: "43px",
                 imageRendering: "auto",
@@ -86,7 +86,7 @@ export const Home = () => {
               }}
             />
             <div
-              className="photo-tile photo-tile-4"
+              className="photo-tile tile-4"
               style={{
                 backgroundImage: `url(${me7})`,
                 backgroundSize: "cover",
@@ -101,7 +101,6 @@ export const Home = () => {
               }}
             />
           </div>
-
           <div className="text order-2 order-lg-1 h-100 d-lg-flex justify-content-center">
             <div className="align-self-center ">
               <div className="intro mx-auto">
