@@ -229,6 +229,69 @@ section {
     color: var(--text-color)
 }
 
-.intro_sec .h_bg-image {
-    filter: saturate(0.5);
+/* decorative top-left gradient circle (soft, blurred, hue-rotating) */
+.bg-gradient-circle {
+    position: fixed;
+    top: -220px;
+    left: -220px;
+    width: 700px;
+    height: 700px;
+    border-radius: 50%;
+    /* radial gradient base; hues will be rotated with the animation */
+    background: radial-gradient(circle at 30% 30%, #ff6b6b 0%, #ffd93d 35%, #3dd9ff 65%, rgba(255,255,255,0) 85%);
+    /* soft blur and subtle translucency */
+    filter: blur(80px) hue-rotate(0deg);
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: -1; /* behind content */
+    transition: opacity 0.3s ease;
+    animation: rotateHue 12s linear infinite;
+}
+
+@keyframes rotateHue {
+    to { filter: blur(80px) hue-rotate(360deg); }
+}
+
+/* ===========================
+   Photo grid fade-in + hover
+   =========================== */
+
+.photo-grid {
+    /* layout handled by inline styles + existing width rules */
+}
+
+.photo-tile {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: homePhotoFadeIn 0.6s ease-out forwards;
+    transition: transform 0.28s ease-out,
+                filter 0.28s ease-out,
+                box-shadow 0.28s ease-out;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.3);
+}
+
+/* staggered entrance */
+.photo-tile-1 { animation-delay: 0.05s; }
+.photo-tile-2 { animation-delay: 0.12s; }
+.photo-tile-3 { animation-delay: 0.19s; }
+.photo-tile-4 { animation-delay: 0.26s; }
+
+@keyframes homePhotoFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* subtle hover only on devices that actually hover */
+@media (hover:hover) and (pointer:fine) {
+    .photo-tile:hover {
+        transform: translateY(-4px) scale(1.01);
+        filter: brightness(0.9);
+        box-shadow: 0 14px 30px rgba(0, 0, 0, 0.55);
+    }
 }

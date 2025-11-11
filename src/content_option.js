@@ -6,7 +6,7 @@ const meta = {
 };
 
 const introdata = {
-  title: "I’m Mustafa Ali Mirza",
+  title: "Hello, I’m Mustafa!",
   animated: {
     first: "I design impactful digital experiences",
     second: "I build scalable tech products",
@@ -118,30 +118,25 @@ const milestones = [
 
 const dataportfolio = [
   {
-    img: "CF.png",
+    img: "project1.png",
     description: "CarForce CRM – Optimized lead management and automation",
     link: "#",
   },
   {
-    img: "affiliate.png",
+    img: "project2.png",
     description:
-      "Affiliate Module – Dashboard and onboarding for lead partners",
+      "CRM WhatsApp Integration – Conversations, tasks, and follow-ups in sync",
     link: "#",
   },
   {
-    img: "Dashboard.png",
-    description: "Inspection Analytics – Reports and KPIs for auto inspections",
+    img: "project3.png",
+    description: "Dubizzle Affiliate App – Bank evaluations, approvals, and payouts made simple",
     link: "#",
   },
   {
-    img: "WA.png",
-    description: "WhatsApp Lead Outreach – Automated messaging workflows",
-    link: "#",
-  },
-  {
-    img: "AI.png",
+    img: "project4.png",
     description:
-      "Call Analysis AI – LLM-powered quality control tool for agents",
+      "Uber Eats Combo Cart – Mix restaurants into one Uber Eats order",
     link: "#",
   },
 ];

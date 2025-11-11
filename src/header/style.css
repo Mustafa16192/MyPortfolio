@@ -96,6 +96,20 @@
     visibility: hidden;
 }
 
+/* Make the header transparent so decorative gradients can show through, but keep
+   the logo readable with a subtle semi-transparent backing. This targets the
+   logo link specifically (.navbar-brand.nav_ac) so other nav_ac buttons keep
+   their solid background. */
+.site__header {
+    background: transparent;
+    z-index: 1000000; /* ensure header sits above decorative elements */
+}
+
+.site__header .navbar-brand.nav_ac {
+    background: rgba(0,0,0,0.1);
+    /* keep existing sizing/spacing from .nav_ac while making it translucent */
+}
+
 .menu__opend {
     visibility: visible !important;
 }

@@ -111,41 +111,6 @@ export const Resume = () => {
             ))}
           </Col>
         </Row>
-
-        {/* PORTFOLIO SECTION */}
-        <Row className="sec_sp">
-          <Col lg="5">
-            <h3 className="color_sec py-4">Featured Projects</h3>
-          </Col>
-          <Col lg="7">
-            <Row>
-              {dataportfolio.map((project, i) => (
-                <Col md={6} className="mb-4" key={i}>
-                  <div className="portfolio-item">
-                    <div className="portfolio-thumb mb-2">
-                      <img
-                        src={require(`../../assets/images/${project.img}`)}
-                        alt={`Project ${i + 1}`}
-                        className="img-fluid rounded shadow-sm"
-                      />
-                    </div>
-                    <p className="service_desc">{project.description}</p>
-                    {project.link && project.link !== "#" && (
-                      <a
-                        href={project.link}
-                        className="btn btn-outline-primary btn-sm mt-2"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        View Project
-                      </a>
-                    )}
-                  </div>
-                </Col>
-              ))}
-            </Row>
-          </Col>
-        </Row>
       </Container>
     </HelmetProvider>
   );
