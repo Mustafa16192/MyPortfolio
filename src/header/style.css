@@ -32,7 +32,7 @@
     line-height: 2;
     height: 50px;
     font-weight: bold;
-    z-index: 1000;
+    z-index: 900;
 }
 
 .nav_ac:hover {
@@ -44,7 +44,7 @@
 .br-right,
 .br-left {
     position: fixed;
-    z-index: 999999;
+    z-index: 900;
     background: var(--primary-color);
 }
 
@@ -102,7 +102,7 @@
    their solid background. */
 .site__header {
     background: transparent;
-    z-index: 1000000; /* ensure header sits above decorative elements */
+    z-index: 900; /* ensure header sits above decorative elements but below custom cursor */
 }
 
 .site__header .navbar-brand.nav_ac {
