@@ -106,7 +106,7 @@
 }
 
 .site__header .navbar-brand.nav_ac {
-    background: rgba(0,0,0,0.1);
+    background: rgba(0,0,0,0);
     /* keep existing sizing/spacing from .nav_ac while making it translucent */
 }
 
