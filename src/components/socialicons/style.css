@@ -47,7 +47,7 @@
 /* Divider line positioning - independent from text */
 .stick_follow_icon p:after,
 .connect_text:after {
-    top: 8.5px;         /* Adjust to move line up/down relative to text */
+    top: 8.4px;         /* Adjust to move line up/down relative to text */
     right: -70px;     /* Adjust to move line left/right relative to text */
     width: 42px;      /* Adjust line length */
     height: 1px;
