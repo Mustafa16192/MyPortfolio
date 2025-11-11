@@ -19,9 +19,11 @@
     fill: var(--text-color)
 }
 
-.stick_follow_icon p {
-    top: 70px;
-    left: -24px;
+/* "Let's Connect!" text positioning */
+.stick_follow_icon p,
+.connect_text {
+    top: 97px;        /* Adjust to move text left/right (visually) */
+    left: -24px;      /* Adjust to move text up/down (visually) */
     width: 68px;
     height: 20px;
     color: var(--text-color);
@@ -30,7 +32,8 @@
     line-height: 1.2;
     white-space: nowrap;
     position: relative;
-    transform: rotate( -90deg);
+    transform: rotate(-90deg);
+    margin: 0;
 }
 
 .stick_follow_icon ul li {
@@ -41,10 +44,12 @@
     transition: all .3s;
 }
 
-.stick_follow_icon p:after {
-    top: 9px;
-    right: -48px;
-    width: 40px;
+/* Divider line positioning - independent from text */
+.stick_follow_icon p:after,
+.connect_text:after {
+    top: 8.5px;         /* Adjust to move line up/down relative to text */
+    right: -70px;     /* Adjust to move line left/right relative to text */
+    width: 42px;      /* Adjust line length */
     height: 1px;
     content: "";
     display: block;
