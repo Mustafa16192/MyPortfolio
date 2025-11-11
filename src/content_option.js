@@ -63,6 +63,11 @@ const worktimeline = [
     where: "SoftAims",
     date: "2023",
   },
+  {
+    jobtitle: "Product Research Intern",
+    where: "Alt Ventures",
+    date: "2022",
+  },
 ];
 
 const skills = [
@@ -90,27 +95,27 @@ const skills = [
 
 const milestones = [
   {
-    title: "Admitted to University of Michigan",
+    title: "March 2025: Admitted to University of Michigan",
     description:
       "Received admission into the University of Michigan’s School of Information (MSI) to specialize in User-Centered Product Development.",
   },
   {
-    title: "Launched CarForce CRM",
-    description:
-      "Led development of a high-revenue CRM system managing car inspections, financing, and affiliate services across the UAE.",
-  },
-  {
-    title: "Optimized Auto Lead Funnel",
-    description:
-      "Redesigned Dubizzle’s auto buyer-seller pipeline, improving task automation and agent efficiency across 3 sales teams.",
-  },
-  {
-    title: "Built Affiliate Management System",
+    title: "February 2025: Built Affiliate Management System",
     description:
       "Product managed an affiliate system for car dealers, bankers, and DSOs, tracking commissions and lead flows.",
   },
   {
-    title: "Expanded Tech Strategy",
+    title: "January 2025: Optimized Auto Lead Funnel",
+    description:
+      "Redesigned Dubizzle’s auto buyer-seller pipeline, improving task automation and agent efficiency across 3 sales teams.",
+  },
+  {
+    title: "August 2024: Launched CarForce CRM",
+    description:
+      "Led development of a high-revenue CRM system managing car inspections, financing, and affiliate services across the UAE.",
+  },
+  {
+    title: "June 2024: Expanded Tech Strategy",
     description:
       "Worked with founders to define and execute product strategies across multiple startups in finance, ecommerce, and auto-tech.",
   },
