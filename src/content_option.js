@@ -235,29 +235,61 @@ const dataportfolio = [
     id: "goblue-ai-redesign",
     img: "goblue-ai.png",
     title: "GoBlue AI Redesign",
-    description: "AI driven redesign of the University of Michigan GoBlue app",
+    description: "Independent concept work exploring trust and utility in a campus assistant",
     timeline: "2024",
     role: "Product Designer",
-    details: "A comprehensive redesign of the University of Michigan GoBlue app focused on improving academic and campus life coordination through AI driven personalization. The project rethinks information architecture, notification logic, and task visibility using student personas, privacy conscious data assumptions, and clear success metrics such as reduced missed deadlines and faster access to relevant campus resources.",
+    details: "This is a research-driven redesign concept for a University of Michigan student campus life assistant experience. It is not an official University product redesign. It is a portfolio project that explores how an AI-powered campus assistant could become more useful, more trustworthy, and easier to adopt. The core issue is not just UI clutter, but adoption and trust.",
     sections: [
         {
-            title: "Problem Statement",
-            content: "The existing app suffered from information overload and poor navigation, making it difficult for students to find critical information like bus schedules, dining hall menus, and class deadlines quickly.",
+            title: "1. Problem: The Gap Between AI Promise and Student Trust",
+            content: [
+                "University of Michigan students increasingly seek AI assistance, yet a critical barrier prevents widespread adoption: a profound lack of trust. This isn't merely a user interface problem; it's a foundational issue tied to perceived accuracy, reliability, U-M specificity, and privacy.",
+                "The existing GoBlue App suffered from low awareness and usage, failing to meet the core needs and expectations students have for an intelligent campus companion. My goal was to explore how an AI-powered assistant could transcend these challenges."
+            ],
             img: "goblue/go_blue_old.png",
-            caption: "Pre-redesign version"
+            caption: "The existing landscape: Low awareness and unmet needs"
         },
         {
-            title: "Solution & Approach",
-            content: "Redesigned the information architecture to prioritize high-frequency tasks. Integrated an AI-driven 'Smart Feed' that surfaces relevant information (e.g., upcoming deadlines, nearby bus arrivals) based on the user's schedule and location."
+            title: "2. Research: Understanding the Student Landscape",
+            content: [
+                "To uncover the root causes of low trust, I conducted a survey (N=44) and user interviews.",
+                "Key Findings:",
+                "• 65.9% of students did not even know what the GoBlue app is.",
+                "• 82.4% reported never using the app.",
+                "• Top needs were 'Staying organized with deadlines' (72.7%) and 'Managing classes' (54.5%).",
+                "Qualitative feedback was clear: \"I want AI help, but I need to know it's giving me accurate U-M specific answers.\""
+            ],
+            img: "AI.png",
+            caption: "Survey and Interview Insights Driving the Redesign"
+        },
+        {
+            title: "3. Insights & Approach",
+            content: [
+                "The research revealed that trust and utility are two sides of the same coin. Accuracy is king, and privacy is a foundation.",
+                "My design strategy focused on:",
+                "• Task-first IA: Organizing around moments, not features.",
+                "• Prioritized Home: Surfacing deadlines and academic tasks immediately.",
+                "• Trust as a Visible Layer: Using citations, freshness cues, and clear fallbacks to build confidence.",
+                "• Calm UX: A direct, non-marketing tone suitable for high-stress academic environments."
+            ]
+        },
+        {
+            title: "4. Solution & Prototype",
+            content: "The redesign introduces a proactive, highly relevant assistant. It surfaces critical info like deadlines and course overviews while integrating trust patterns to give students confidence in the data source."
         },
         {
             type: "video",
             src: "goblue/goblue.mp4",
-            caption: "Walkthrough of the GoBlue AI Redesign concept"
+            caption: "Concept Walkthrough: Building Trust and Utility"
         },
         {
-            title: "Key Outcomes",
-            content: "User testing indicated a 50% reduction in time-to-task for finding class locations and dining options. The personalized feed concept was highly rated for its ability to reduce cognitive load during busy academic periods."
+            title: "5. Outcomes & Learnings",
+            content: [
+                "Outcomes: A validated understanding of student needs and a tangible prototype showcasing how a trustworthy AI experience could foster adoption.",
+                "Learnings: Trust is not a feature; it is a foundational requirement. Focusing on immediate, task-oriented utility is crucial for overcoming initial skepticism."
+            ],
+            img: "blueprint-ai.png",
+            caption: "Future vision: Integrating AI for a seamless campus experience"
         }
     ],
     link: "#",
