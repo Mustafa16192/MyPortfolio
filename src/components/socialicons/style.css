@@ -5,6 +5,7 @@
     height: 200px;
     position: fixed;
     margin-top: -100px;
+    z-index: 1100;
 }
 
 .stick_follow_icon ul {
@@ -57,35 +58,52 @@
     background-color: var(--text-color);
 }
 
-@media only screen and (max-width: 991px) {
+@media (max-width: 991px) {
     .stick_follow_icon {
-        width: unset;
-        height: unset;
-        position: static;
-        margin-top: unset;
-        display: flex;
-        flex-direction: row-reverse;
-        justify-content: center;
-        padding: 40px 0;
-        align-items: center;
-    }
-    .stick_follow_icon p {
-        top: unset;
-        left: unset;
-        width: unset;
-        height: unset;
-        white-space: nowrap;
         position: relative;
-        transform: unset;
-        font-size: 17px;
-        margin-right: 65px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: auto;
+        margin: 2rem 0;
+        padding: 0.5rem 0.75rem;
+        z-index: 20;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
     }
+
+    .stick_follow_icon p,
+    .connect_text {
+        position: static;
+        transform: none;
+        width: auto;
+        height: auto;
+        margin: 0 0 0.5rem 0;
+        text-align: center;
+        letter-spacing: 0.5px;
+    }
+
+    .stick_follow_icon p:after,
+    .connect_text:after {
+        display: none;
+    }
+
     .stick_follow_icon ul {
-        margin-bottom: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        gap: 1.25rem;
     }
+
     .stick_follow_icon ul li {
-        display: inline;
-        margin-bottom: 29px;
-        margin-right: 10px;
+        display: inline-flex;
+        margin: 0;
     }
 }

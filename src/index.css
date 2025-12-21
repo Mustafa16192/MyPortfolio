@@ -27,7 +27,7 @@ body {
     margin: 0;
     height: 100%;
     overflow-x: hidden;
-    overflow-y: visible;
+    overflow-y: scroll; /* Force vertical scrollbar to avoid layout jump */
     background-color: var(--bg-color);
     color: var(--text-color);
     font-family: 'Raleway', sans-serif;

@@ -4,30 +4,61 @@
     }
 }
 
-.page-enter {
-    transform: translateY(100%);
+.s_c {
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
-.page-enter-active {
-    transform: translateY(0%);
-    transition: all 400ms ease-out;
-}
-
-.page-exit {
-    transform: translateY(0%);
-    position: absolute;
+/* Framer Motion Page Transition Helpers */
+.absolute-page {
+    top: 60px; 
     left: 0;
     right: 0;
-    top: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
 }
 
-.page-exit-active {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    transform: translateY(-130%);
-    transition: all 400ms ease-out;
+@media (min-width: 992px) {
+    .absolute-page {
+        position: absolute;
+    }
+}
+
+
+/* Reserve space for the mobile social bar */
+@media only screen and (max-width: 991px) {
+    .s_c {
+        padding-bottom: 100px;
+    }
+}
+
+/* New Fixed Page for Project Details - Responsive */
+.fixed-page {
+    /* Mobile: Standard Page Flow */
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    z-index: 1000;
+    background-color: var(--bg-color);
+    padding-top: 80px; 
+    padding-bottom: 0; /* Social icons will follow */
+}
+
+@media (min-width: 992px) {
+    /* Desktop: Fixed Overlay */
+    .fixed-page {
+        position: fixed;
+        top: 0;
+        left: 120px;
+        width: calc(100vw - 120px);
+        height: 100vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-bottom: 50px;
+        min-height: unset; 
+    }
 }
 
 @media (min-width: 1400px) {
