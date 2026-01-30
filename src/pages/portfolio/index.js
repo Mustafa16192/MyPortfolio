@@ -59,17 +59,6 @@ export const Portfolio = () => {
                       )}
                     </div>
                     <p className="service_desc">{project.description}</p>
-                    
-                    {project.link && project.link !== "#" && (
-                      <a
-                        href={project.link}
-                        className="btn btn-outline-secondary btn-sm mt-2"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        View Link
-                      </a>
-                    )}
                   </div>
                 </Col>
               ))}

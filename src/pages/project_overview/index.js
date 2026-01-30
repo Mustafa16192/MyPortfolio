@@ -118,13 +118,6 @@ export const ProjectOverview = () => {
             )}
             <h3 className="color_sec py-4">Overview</h3>
             <p>{project.details || project.description}</p>
-             {project.link && project.link !== "#" && (
-                <div className="mt-4">
-                     <a href={project.link} target="_blank" rel="noreferrer" className="btn ac_btn">
-                        View Live
-                     </a>
-                </div>
-            )}
              <div className="mt-4">
                 <Link to="/portfolio" className="btn ac_btn">
                   Back to Portfolio
