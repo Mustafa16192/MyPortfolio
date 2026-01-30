@@ -127,8 +127,8 @@ const dataportfolio = [
     img: "go_blue_main.png",
     title: "GoBlue AI Redesign",
     description: "Independent concept work exploring trust and utility in a campus assistant",
-    timeline: "2024",
-    role: "Product Designer",
+    timeline: "August 2025 - December 2025",
+    role: "UX Researcher & Designer",
     details: "This is a research-driven redesign concept for a University of Michigan student campus life assistant experience. It is not an official University product redesign. It is a portfolio project that explores how an AI-powered campus assistant could become more useful, more trustworthy, and easier to adopt. The core issue is not just UI clutter, but adoption and trust.",
     sections: [
         {
@@ -210,7 +210,7 @@ const dataportfolio = [
     img: "project1.png",
     title: "CarForce CRM",
     description: "CarForce CRM – Optimized lead management and automation",
-    timeline: "Aug 2024 - Present",
+    timeline: "August 2024 - June 2025",
     role: "Product Manager",
     details:
       "A comprehensive CRM solution designed to streamline lead management and automate sales workflows. Key features include real-time lead tracking, automated follow-ups, and detailed performance analytics, resulting in a significant increase in conversion rates and operational efficiency. Due to NDA restrictions, specific interface designs and internal data cannot be shared publicly.",
@@ -241,7 +241,7 @@ const dataportfolio = [
     img: "project2.png",
     title: "CRM WhatsApp Integration",
     description: "CRM WhatsApp Integration – Conversations, tasks, and follow-ups in sync",
-    timeline: "2024",
+    timeline: "August 2024 - June 2025",
     role: "Product Manager",
     details: "Seamlessly integrates WhatsApp conversations directly into the CRM. This allows agents to manage tasks, schedule follow-ups, and maintain a complete communication history within a single platform. Specific implementation details are proprietary.",
     sections: [
@@ -266,7 +266,7 @@ const dataportfolio = [
     img: "project3.png",
     title: "Dubizzle Affiliate App",
     description: "Dubizzle Affiliate App – Bank evaluations, approvals, and payouts made simple",
-    timeline: "2024",
+    timeline: "August 2024 - June 2025",
     role: "Product Manager",
     details: "A dedicated application for managing affiliate partnerships. It simplifies the complex process of bank evaluations, streamlines approval workflows, and automates payout calculations. Due to the sensitive nature of financial workflows, detailed designs are not public.",
     sections: [
@@ -291,7 +291,7 @@ const dataportfolio = [
     img: "project4.png",
     title: "Uber Eats Combo Cart",
     description: "Uber Eats Combo Cart – Mix restaurants into one Uber Eats order",
-    timeline: "Concept",
+    timeline: "November 2024",
     role: "UX Designer",
     details: "An innovative feature concept for Uber Eats that allows users to order from multiple restaurants in a single transaction. This project focuses on the UX/UI challenges of combining different menus, delivery logistics, and unified checkout experiences.",
     sections: [
@@ -315,7 +315,7 @@ const dataportfolio = [
     img: "snow_go_main.png",
     title: "SnowGo",
     description: "Community driven platform for neighborhood snow assistance",
-    timeline: "2023",
+    timeline: "October 2025 - December 2025",
     role: "Product Lead",
     details: "A civic technology project designed to help neighborhoods coordinate snow clearing during winter emergencies. The platform enables residents to request or offer help, builds trust through lightweight verification, and prioritizes accessibility for non-technical users. The project emphasizes human-centered design under real-world constraints.",
     sections: [
@@ -359,7 +359,7 @@ const dataportfolio = [
     img: "lantern_main.png",
     title: "Lantern AI",
     description: "AI powered walking tour companion for immersive city exploration",
-    timeline: "2023",
+    timeline: "October 2025 - December 2025",
     role: "Product Designer",
     details: "An AI-driven walking tour application designed to enhance city exploration through contextual storytelling, location-aware prompts, and adaptive narratives. Lantern focuses on night walks and cultural discovery, balancing immersion with safety and usability.",
     sections: [
