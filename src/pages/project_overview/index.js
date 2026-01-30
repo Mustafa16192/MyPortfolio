@@ -166,7 +166,7 @@ export const ProjectOverview = () => {
                                         className="img-fluid rounded shadow-sm"
                                         style={{ width: "auto", maxWidth: "100%", maxHeight: "80vh", display: "block", margin: "0 auto" }}
                                     />
-                                    {section.caption && <p className="text-center text-muted mt-2">{section.caption}</p>}
+                                    {section.caption && <p className="text-center mt-2" style={{ opacity: 0.9, fontStyle: "italic" }}>{section.caption}</p>}
                                 </div>
                             )}
                         </div>
