@@ -21,83 +21,17 @@ export const Home = () => {
           <meta name="description" content={meta.description} />
         </Helmet>
         <div className="intro_sec d-block d-lg-flex align-items-center ">
-          <div
-            className="h_bg-image order-1 order-lg-2 h-10 photo-grid"
-            style={{
-              // Container becomes a 2x2 grid with a visible border (gap shows bg color)
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gridTemplateRows: "1fr 1fr",
-              gap: "8px", // space between images — appears as border
-              backgroundColor: "#000", // color of the "border" between images
-              borderRadius: "50px",
-              padding: "8px", // padding around the grid so the rounded corners show the border
-              overflow: "hidden",
-              // limit overall size similar to previous usage; adjust as needed in CSS
-              minHeight: "600px",
-              boxSizing: "border-box",
-            }}
-          >
-            {/* Four grid cells — swap/add images as desired */}
+          <div className="h_bg-image order-1 order-lg-2 h-100 d-flex align-items-center justify-content-center">
             <div
-              className="photo-tile tile-1"
               style={{
                 backgroundImage: `url(${me3})`,
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
-                borderRadius: "12px",
-                borderTopLeftRadius: "43px",
-                imageRendering: "auto",
-                WebkitFilter: "none",
-                height: "100%",
-                width: "100%",
-              }}
-            />
-            <div
-              className="photo-tile tile-2"
-              style={{
-                backgroundImage: `url(${me2})`,
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "center",
-                borderRadius: "12px",
-                borderTopRightRadius: "43px",
-                imageRendering: "auto",
-                WebkitFilter: "none",
-                height: "100%",
-                width: "100%",
-              }}
-            />
-            <div
-              className="photo-tile tile-3"
-              style={{
-                backgroundImage: `url(${me6})`,
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "100% 80%",
-                backgroundSize: "113% auto", // increase to zoom: 105%..120%
-                borderRadius: "12px",
-                borderBottomLeftRadius: "43px",
-                imageRendering: "auto",
-                WebkitFilter: "none",
-                height: "100%",
-                width: "100%",
-              }}
-            />
-            <div
-              className="photo-tile tile-4"
-              style={{
-                backgroundImage: `url(${me7})`,
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "center",
-                borderRadius: "12px",
-                borderBottomRightRadius: "43px",
-                imageRendering: "auto",
-                WebkitFilter: "none",
-                height: "100%",
-                width: "100%",
+                borderRadius: "40px",
+                height: "650px",
+                width: "85%",
+                margin: "auto",
               }}
             />
           </div>
