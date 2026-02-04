@@ -4,10 +4,7 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import Typewriter from "typewriter-effect";
 import { introdata, meta } from "../../content_option";
 import { Link } from "react-router-dom";
-import me2 from "../../assets/images/me2.jpg";
-import me3 from "../../assets/images/me3.png";
-import me6 from "../../assets/images/me6.png";
-import me7 from "../../assets/images/me7.png";
+import me_final from "../../assets/images/me_final.png";
 
 export const Home = () => {
   return (
@@ -24,7 +21,7 @@ export const Home = () => {
           <div className="h_bg-image order-1 order-lg-2 h-100 d-flex align-items-center justify-content-center">
             <div
               style={{
-                backgroundImage: `url(${me3})`,
+                backgroundImage: `url(${me_final})`,
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
