@@ -79,12 +79,14 @@ export const Home = () => {
           <div
             className="overlay-rect"
             style={{
-              position: "relative",
-              width: "80%",
-              maxWidth: "600px",
-              height: "10vh",
+              position: "absolute",
+              width: "60.3%",
+              maxWidth: "774px",
+              top: "836px",
+              left: "572px",
+              height: "12vh",
               zIndex: 9999,
-              backgroundColor: "rgb(255, 255, 255)",
+              backgroundColor: "rgb(12, 12, 12)",
             }}
           />
           <div className="text order-2 order-lg-1 h-100 d-lg-flex justify-content-center">
