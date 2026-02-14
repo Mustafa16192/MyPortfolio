@@ -80,8 +80,9 @@ export const Home = () => {
             className="overlay-rect"
             style={{
               position: "relative",
-              width: "200px",
-              height: "100px",
+              width: "80%",
+              maxWidth: "600px",
+              height: "10vh",
               zIndex: 9999,
               backgroundColor: "rgb(255, 255, 255)",
             }}
