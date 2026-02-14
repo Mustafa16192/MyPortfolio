@@ -66,6 +66,8 @@ export const Home = () => {
           className="overlay-rect"
           style={{
             position: "absolute",
+            height: 20%,
+            width:40%,
             zIndex: 9999,
             // backgroundColor: "var(--primary-color)",
             backgroundColor: "rgba(0, 0, 255, 0.5)",
