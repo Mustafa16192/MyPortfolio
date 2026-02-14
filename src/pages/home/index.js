@@ -62,6 +62,15 @@ export const Home = () => {
           <title> {meta.title}</title>
           <meta name="description" content={meta.description} />
         </Helmet>
+        <div
+          className="overlay-rect"
+          style={{
+            position: "absolute",
+            zIndex: 9999,
+            // backgroundColor: "var(--primary-color)",
+            backgroundColor: "rgba(0, 0, 255, 0.5)",
+          }}
+        />
         <div className="intro_sec d-block d-lg-flex align-items-center ">
           <div className="h_bg-image order-1 order-lg-2 h-100 d-flex align-items-center justify-content-center">
             <div
