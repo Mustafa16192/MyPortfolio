@@ -72,7 +72,7 @@ export const Home = () => {
             left: "50%",
             transform: "translate(-50%, -50%)",
             zIndex: 9999,
-            backgroundColor: "rgba(0, 0, 255, 0.5)",
+            backgroundColor: "rgb(255, 255, 255)",
           }}
         />
         <div className="intro_sec d-block d-lg-flex align-items-center ">
