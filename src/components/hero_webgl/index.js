@@ -21,7 +21,6 @@ const FRAGMENT_SHADER_SOURCE = `
   uniform vec2 u_mouse;
   uniform sampler2D u_image;
   uniform float u_image_mix;
-  uniform float u_hover_mix;
 
   float hash(vec2 p) {
     p = fract(p * vec2(123.34, 456.21));
@@ -62,21 +61,21 @@ const FRAGMENT_SHADER_SOURCE = `
       vec2 wave = vec2(
         sin(frame_uv.y * 25.0 + u_time * 1.4),
         cos(frame_uv.x * 22.0 + u_time * 1.2)
-      ) * (0.007 * u_hover_mix);
+      ) * 0.007;
 
-      vec2 mouse_push = (frame_uv - mouse) * (0.018 * u_hover_mix) * exp(-9.0 * distance(frame_uv, mouse));
+      vec2 mouse_push = (frame_uv - mouse) * 0.018 * exp(-9.0 * distance(frame_uv, mouse));
       vec2 sample_uv = clamp(frame_uv + wave - mouse_push, 0.0, 1.0);
 
-      float chroma = (0.004 + glow_at_mouse * 0.004) * u_hover_mix;
+      float chroma = 0.004 + glow_at_mouse * 0.004;
       vec3 portrait = vec3(
         texture2D(u_image, clamp(sample_uv + vec2(chroma, 0.0), 0.0, 1.0)).r,
         texture2D(u_image, sample_uv).g,
         texture2D(u_image, clamp(sample_uv - vec2(chroma, 0.0), 0.0, 1.0)).b
       );
 
-      float scan_line = sin((sample_uv.y * u_resolution.y * 0.85) + u_time * 40.0) * (0.02 * u_hover_mix);
+      float scan_line = sin((sample_uv.y * u_resolution.y * 0.85) + u_time * 40.0) * 0.02;
       portrait += scan_line;
-      portrait += grain * (0.75 * u_hover_mix);
+      portrait += grain * 0.75;
 
       float edge = min(
         min(frame_uv.x, 1.0 - frame_uv.x),
@@ -191,17 +190,8 @@ export const HeroWebGL = ({ imageSrc, alt }) => {
     const mouseLocation = gl.getUniformLocation(program, "u_mouse");
     const imageLocation = gl.getUniformLocation(program, "u_image");
     const imageMixLocation = gl.getUniformLocation(program, "u_image_mix");
-    const hoverMixLocation = gl.getUniformLocation(program, "u_hover_mix");
 
-    if (
-      positionLocation < 0 ||
-      !resolutionLocation ||
-      !timeLocation ||
-      !mouseLocation ||
-      !imageLocation ||
-      !imageMixLocation ||
-      !hoverMixLocation
-    ) {
+    if (positionLocation < 0 || !resolutionLocation || !timeLocation || !mouseLocation || !imageLocation || !imageMixLocation) {
       gl.deleteProgram(program);
       gl.deleteShader(vertexShader);
       gl.deleteShader(fragmentShader);
@@ -270,15 +260,9 @@ export const HeroWebGL = ({ imageSrc, alt }) => {
 
     const targetMouse = { x: 0.72, y: 0.48 };
     const smoothMouse = { x: targetMouse.x, y: targetMouse.y };
-    const targetHover = { value: 0 };
-    const smoothHover = { value: 0 };
-    const handlePointerEnter = () => {
-      targetHover.value = 1;
-    };
     const resetMouse = () => {
       targetMouse.x = 0.72;
       targetMouse.y = 0.48;
-      targetHover.value = 0;
     };
 
     const handlePointerMove = (event) => {
@@ -292,7 +276,6 @@ export const HeroWebGL = ({ imageSrc, alt }) => {
       targetMouse.y = clamp01(1 - (event.clientY - rect.top) / rect.height);
     };
 
-    canvas.addEventListener("pointerenter", handlePointerEnter);
     canvas.addEventListener("pointermove", handlePointerMove);
     canvas.addEventListener("pointerleave", resetMouse);
 
@@ -328,7 +311,6 @@ export const HeroWebGL = ({ imageSrc, alt }) => {
 
       smoothMouse.x += (targetMouse.x - smoothMouse.x) * 0.08;
       smoothMouse.y += (targetMouse.y - smoothMouse.y) * 0.08;
-      smoothHover.value += (targetHover.value - smoothHover.value) * 0.12;
 
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.clearColor(0, 0, 0, 0);
@@ -347,7 +329,6 @@ export const HeroWebGL = ({ imageSrc, alt }) => {
       gl.uniform1f(timeLocation, (now - startTime) * 0.001);
       gl.uniform2f(mouseLocation, smoothMouse.x, smoothMouse.y);
       gl.uniform1f(imageMixLocation, imageReady ? 1 : 0);
-      gl.uniform1f(hoverMixLocation, smoothHover.value);
 
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
       animationFrameId = window.requestAnimationFrame(renderFrame);
@@ -360,7 +341,6 @@ export const HeroWebGL = ({ imageSrc, alt }) => {
       disposed = true;
       window.cancelAnimationFrame(animationFrameId);
 
-      canvas.removeEventListener("pointerenter", handlePointerEnter);
       canvas.removeEventListener("pointermove", handlePointerMove);
       canvas.removeEventListener("pointerleave", resetMouse);
 
