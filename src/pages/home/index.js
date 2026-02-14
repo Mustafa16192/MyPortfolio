@@ -62,19 +62,6 @@ export const Home = () => {
           <title> {meta.title}</title>
           <meta name="description" content={meta.description} />
         </Helmet>
-        <div
-          className="overlay-rect"
-          style={{
-            position: "fixed",
-            width: "200px",
-            height: "100px",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            zIndex: 9999,
-            backgroundColor: "rgb(255, 255, 255)",
-          }}
-        />
         <div className="intro_sec d-block d-lg-flex align-items-center ">
           <div className="h_bg-image order-1 order-lg-2 h-100 d-flex align-items-center justify-content-center">
             <div
@@ -89,6 +76,19 @@ export const Home = () => {
               }}
             />
           </div>
+          <div
+            className="overlay-rect"
+            style={{
+              position: "fixed",
+              width: "200px",
+              height: "100px",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              zIndex: 9999,
+              backgroundColor: "rgb(255, 255, 255)",
+            }}
+          />
           <div className="text order-2 order-lg-1 h-100 d-lg-flex justify-content-center">
             <div className="align-self-center ">
               <div className="intro mx-auto">
