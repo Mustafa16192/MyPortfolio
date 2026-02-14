@@ -98,11 +98,6 @@ section {
     position: relative;
 }
 
-.intro_sec .h_bg-image .hero-webgl-shell {
-    width: min(76%, 620px);
-    max-width: 100%;
-}
-
 .ac_btn {
     padding: 4px 19px;
     color: var(--secondary-color);
@@ -202,10 +197,6 @@ section {
         height: 600px;
         min-height: 75vh;
         margin-bottom: 30px;
-    }
-    .intro_sec .h_bg-image .hero-webgl-shell {
-        width: min(90vw, 520px);
-        aspect-ratio: 3 / 4;
     }
     .intro_sec .h_bg-image .block {
         top: unset;

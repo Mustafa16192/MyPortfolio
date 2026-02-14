@@ -1,13 +1,57 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./style.css";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import Typewriter from "typewriter-effect";
 import { introdata, meta } from "../../content_option";
 import { Link } from "react-router-dom";
-import { HeroWebGL } from "../../components/hero_webgl";
-import me_final from "../../assets/images/me_final.png";
 
 export const Home = () => {
+  useEffect(() => {
+    const initUnicornStudio = () => {
+      if (window.UnicornStudio && typeof window.UnicornStudio.init === "function") {
+        if (window.__unicornHomeInitialized) {
+          return;
+        }
+        window.__unicornHomeInitialized = true;
+        window.UnicornStudio.init();
+      }
+    };
+
+    if (window.UnicornStudio && window.UnicornStudio.init) {
+      initUnicornStudio();
+      return () => {};
+    }
+
+    window.UnicornStudio = window.UnicornStudio || { isInitialized: false };
+
+    const scriptSrc =
+      "https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.0.5/dist/unicornStudio.umd.js";
+    const existingScript = document.querySelector(`script[src="${scriptSrc}"]`);
+
+    if (existingScript) {
+      existingScript.addEventListener("load", initUnicornStudio, { once: true });
+      return () => {
+        existingScript.removeEventListener("load", initUnicornStudio);
+      };
+    }
+
+    const script = document.createElement("script");
+    script.src = scriptSrc;
+    script.async = true;
+    script.onload = () => {
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initUnicornStudio, { once: true });
+      } else {
+        initUnicornStudio();
+      }
+    };
+    (document.head || document.body).appendChild(script);
+
+    return () => {
+      script.onload = null;
+    };
+  }, []);
+
   return (
     <HelmetProvider>
       <section id="home" className="home">
@@ -20,7 +64,17 @@ export const Home = () => {
         </Helmet>
         <div className="intro_sec d-block d-lg-flex align-items-center ">
           <div className="h_bg-image order-1 order-lg-2 h-100 d-flex align-items-center justify-content-center">
-            <HeroWebGL imageSrc={me_final} alt="Mustafa Ali Mirza" />
+            <div
+              data-us-project="AgiisIdqKQyAZob0mTmh"
+              role="img"
+              aria-label="Mustafa Ali Mirza"
+              style={{
+                width: "1440px",
+                height: "900px",
+                maxWidth: "100%",
+                margin: "auto",
+              }}
+            />
           </div>
           <div className="text order-2 order-lg-1 h-100 d-lg-flex justify-content-center">
             <div className="align-self-center ">
