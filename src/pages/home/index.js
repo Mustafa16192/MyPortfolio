@@ -79,12 +79,9 @@ export const Home = () => {
           <div
             className="overlay-rect"
             style={{
-              position: "fixed",
+              position: "relative",
               width: "200px",
               height: "100px",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
               zIndex: 9999,
               backgroundColor: "rgb(255, 255, 255)",
             }}
