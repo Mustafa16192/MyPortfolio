@@ -9,17 +9,17 @@ export const Home = () => {
   useEffect(() => {
     const initUnicornStudio = () => {
       if (window.UnicornStudio && typeof window.UnicornStudio.init === "function") {
+        if (window.__unicornHomeInitialized) {
+          return;
+        }
+        window.__unicornHomeInitialized = true;
         window.UnicornStudio.init();
       }
     };
 
     if (window.UnicornStudio && window.UnicornStudio.init) {
-      if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", initUnicornStudio, { once: true });
-      } else {
-        initUnicornStudio();
-      }
-      return undefined;
+      initUnicornStudio();
+      return () => {};
     }
 
     window.UnicornStudio = window.UnicornStudio || { isInitialized: false };
