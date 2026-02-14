@@ -65,11 +65,13 @@ export const Home = () => {
         <div
           className="overlay-rect"
           style={{
-            position: "absolute",
-            height: 20%,
-            width:40%,
+            position: "fixed",
+            width: "200px",
+            height: "100px",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
             zIndex: 9999,
-            // backgroundColor: "var(--primary-color)",
             backgroundColor: "rgba(0, 0, 255, 0.5)",
           }}
         />
