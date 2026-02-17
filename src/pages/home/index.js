@@ -21,7 +21,9 @@ export const Home = () => {
           <div className="home_hero">
             <p className="home_eyebrow">
               <span className="status_dot" aria-hidden="true"></span>
-              Building products at Dubizzle Group UAE
+              <span className="status_old">Learning</span>
+              <span className="status_new">Building</span>
+              stuff in UMich
             </p>
             <h1 className="home_title">
               AI-driven Product Manager who speaks engineering

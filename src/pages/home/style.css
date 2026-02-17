@@ -62,6 +62,15 @@ section {
   box-shadow: 0 0 0 4px rgba(118, 200, 95, 0.18);
 }
 
+.status_old {
+  text-decoration: line-through;
+  opacity: 0.68;
+}
+
+.status_new {
+  font-weight: 800;
+}
+
 .hero_proof {
   margin: 34px auto 0;
   max-width: 920px;
