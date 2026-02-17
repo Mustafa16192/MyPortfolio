@@ -180,6 +180,10 @@ section {
 .featured_project_media {
   width: 100%;
   height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
   overflow: hidden;
   background: rgba(0, 0, 0, 0.2);
 }
@@ -187,7 +191,8 @@ section {
 .featured_project_media img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
   display: block;
 }
 
