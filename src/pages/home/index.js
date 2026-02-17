@@ -35,7 +35,7 @@ export const Home = () => {
 
             <div className="home_cta">
               <Link to="/resume" className="text_2">
-                <div className="ac_btn btn btn_primary_fill">
+                <div className="ac_btn btn btn_outline_light">
                   Resume
                   <div className="ring one"></div>
                   <div className="ring two"></div>
@@ -51,7 +51,7 @@ export const Home = () => {
                 </div>
               </Link>
               <Link to="/contact" className="text_2">
-                <div className="ac_btn btn btn_primary_fill">
+                <div className="ac_btn btn btn_outline_light">
                   Contact
                   <div className="ring one"></div>
                   <div className="ring two"></div>
