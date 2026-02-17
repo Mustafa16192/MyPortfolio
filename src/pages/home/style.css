@@ -251,6 +251,11 @@ section {
   border-color: var(--text-color);
 }
 
+.home .ac_btn.btn_outline_light:hover,
+.home .ac_btn.btn_outline_light:focus-visible {
+  color: var(--bg-color);
+}
+
 .bg-gradient-circle {
   position: fixed;
   top: -210px;
