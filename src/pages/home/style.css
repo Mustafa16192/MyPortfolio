@@ -72,15 +72,16 @@ section {
 }
 
 .status_old {
-  opacity: 0.58;
+  opacity: 0.74;
+  font-weight: 700;
   text-decoration: line-through;
-  text-decoration-thickness: 1.6px;
+  text-decoration-thickness: 2.4px;
   text-decoration-color: currentColor;
   margin-right: 0.18em;
 }
 
 .status_new {
-  font-weight: 700;
+  font-weight: 800;
   margin-right: 0.18em;
 }
 
