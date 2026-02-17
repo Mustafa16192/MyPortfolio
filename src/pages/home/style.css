@@ -45,6 +45,15 @@ section {
   letter-spacing: -0.01em;
 }
 
+.home_subtitle {
+  margin: 14px auto 0;
+  max-width: 44ch;
+  font-size: clamp(1rem, 1.75vw, 1.3rem);
+  line-height: 1.45;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
 .status_dot {
   width: 9px;
   height: 9px;

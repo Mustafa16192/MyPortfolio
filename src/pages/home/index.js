@@ -24,8 +24,11 @@ export const Home = () => {
               Building products at Dubizzle Group UAE
             </p>
             <h1 className="home_title">
-              Building user-centered products that drive measurable business growth.
+              AI-driven Product Manager who speaks engineering
             </h1>
+            <p className="home_subtitle">
+              I turn ambiguity into shipped products and business lift
+            </p>
 
             <div className="hero_proof">
               <p className="hero_proof_item">$2M+ monthly revenue impact through shipped product systems</p>
