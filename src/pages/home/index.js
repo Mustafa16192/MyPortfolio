@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.css";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import { introdata, meta, dataportfolio } from "../../content_option";
+import { meta, dataportfolio } from "../../content_option";
 import { Link } from "react-router-dom";
 
 const featuredProjects = dataportfolio.slice(0, 4);
@@ -19,16 +19,18 @@ export const Home = () => {
 
         <div className="home_shell">
           <div className="home_hero">
-            <p className="home_eyebrow">Product Management + UX + Technical Execution</p>
+            <p className="home_eyebrow">
+              <span className="status_dot" aria-hidden="true"></span>
+              Building products at Dubizzle Group UAE
+            </p>
             <h1 className="home_title">
               Building user-centered products that drive measurable business growth.
             </h1>
-            <p className="home_description">{introdata.description}</p>
 
-            <div className="hero_tags">
-              <span className="hero_tag">{introdata.animated.first}</span>
-              <span className="hero_tag">{introdata.animated.second}</span>
-              <span className="hero_tag">{introdata.animated.third}</span>
+            <div className="hero_proof">
+              <p className="hero_proof_item">$2M+ monthly revenue impact through shipped product systems</p>
+              <p className="hero_proof_item">Led product execution across automotive, fintech, and classifieds</p>
+              <p className="hero_proof_item">Admitted to University of Michigan MSI for user-centered product development</p>
             </div>
 
             <div className="home_cta">
