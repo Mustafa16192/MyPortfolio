@@ -22,6 +22,8 @@ section {
 
 .home_hero {
   max-width: 920px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .home_eyebrow {
@@ -47,6 +49,8 @@ section {
   font-size: clamp(1rem, 1.9vw, 1.18rem);
   line-height: 1.7;
   opacity: 0.9;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .hero_tags {
@@ -54,6 +58,7 @@ section {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  justify-content: center;
 }
 
 .hero_tag {
@@ -73,6 +78,7 @@ section {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+  justify-content: center;
 }
 
 .home .ac_btn {
