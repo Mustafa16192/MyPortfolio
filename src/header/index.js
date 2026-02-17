@@ -23,7 +23,6 @@ const Headermain = () => {
               <img src={brandImage} alt={logotext} className="brand_avatar" />
               <span className="brand_text_wrap">
                 <span className="brand_text">{logotext}</span>
-                <span className="brand_subtitle">Product Manager</span>
               </span>
             </span>
           </Link>

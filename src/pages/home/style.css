@@ -84,16 +84,6 @@ section {
   font-weight: 700;
 }
 
-.btn_primary_fill {
-  background: var(--secondary-color);
-  color: var(--primary-color);
-}
-
-.btn_outline_light {
-  background: transparent;
-  color: var(--secondary-color);
-}
-
 .featured_projects {
   width: 100%;
 }
@@ -247,6 +237,18 @@ section {
   background-color: var(--secondary-color);
   z-index: -3;
   transition: all 0.7s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.home .ac_btn.btn_primary_fill {
+  background: var(--text-color);
+  color: var(--bg-color);
+  border-color: var(--text-color);
+}
+
+.home .ac_btn.btn_outline_light {
+  background: transparent;
+  color: var(--text-color);
+  border-color: var(--text-color);
 }
 
 .bg-gradient-circle {
