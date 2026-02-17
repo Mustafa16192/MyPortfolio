@@ -62,13 +62,26 @@ section {
   box-shadow: 0 0 0 4px rgba(118, 200, 95, 0.18);
 }
 
+.status_text {
+  display: inline;
+}
+
+.status_old,
+.status_new {
+  display: inline;
+}
+
 .status_old {
+  opacity: 0.58;
   text-decoration: line-through;
-  opacity: 0.68;
+  text-decoration-thickness: 1.6px;
+  text-decoration-color: currentColor;
+  margin-right: 0.18em;
 }
 
 .status_new {
-  font-weight: 800;
+  font-weight: 700;
+  margin-right: 0.18em;
 }
 
 .hero_proof {
