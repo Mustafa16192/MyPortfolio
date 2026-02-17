@@ -23,7 +23,7 @@ export const Home = () => {
               <span className="status_dot" aria-hidden="true"></span>
               <span className="status_text">
                 <span className="status_old">Learning</span>{" "}
-                <span className="status_new">Building</span> stuff in UMich
+                <span className="status_new">Building</span>stuff in UMich
               </span>
             </p>
             <h1 className="home_title">
