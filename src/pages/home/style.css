@@ -180,23 +180,20 @@ section {
 .featured_project_media {
   width: 100%;
   height: 220px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.22);
 }
 
 .featured_project_media img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
   display: block;
 }
 
 .featured_project_body {
+  border-top: 1px solid rgba(255, 255, 255, 0.11);
   padding: 16px 16px 18px;
 }
 
@@ -408,4 +405,8 @@ section {
 
 [data-theme="light"] .featured_project_media {
   background: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .featured_project_body {
+  border-top-color: rgba(0, 0, 0, 0.1);
 }
