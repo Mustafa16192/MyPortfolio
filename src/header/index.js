@@ -4,6 +4,7 @@ import { VscGrabber, VscClose } from "react-icons/vsc";
 import { Link } from "react-router-dom";
 import { logotext, socialprofils } from "../content_option";
 import Themetoggle from "../components/themetoggle";
+import brandImage from "../assets/images/me_final.png";
 
 const Headermain = () => {
   const [isActive, setActive] = useState("false");
@@ -17,8 +18,14 @@ const Headermain = () => {
     <>
       <header className="fixed-top site__header">
         <div className="d-flex align-items-center justify-content-between">
-          <Link to="/" className="navbar-brand nav_ac">
-            {logotext}
+          <Link to="/" className="navbar-brand nav_ac" aria-label={`${logotext} home`}>
+            <span className="brand_identity">
+              <img src={brandImage} alt={logotext} className="brand_avatar" />
+              <span className="brand_text_wrap">
+                <span className="brand_text">{logotext}</span>
+                <span className="brand_subtitle">Product Manager</span>
+              </span>
+            </span>
           </Link>
 
           <div className="d-flex align-items-center">
@@ -76,7 +83,7 @@ const Headermain = () => {
               <a href={socialprofils.instagram}>Instagram</a>
               <a href={socialprofils.linkedin}>LinkedIn</a>
             </div>
-            <p className="copyright m-0">copyright__{logotext}</p>
+            <p className="copyright m-0">© {new Date().getFullYear()} {logotext}</p>
           </div>
         </div>
       </header>

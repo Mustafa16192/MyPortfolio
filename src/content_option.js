@@ -1,4 +1,4 @@
-const logotext = "MAM";
+const logotext = "Mustafa Ali Mirza";
 const meta = {
   title: "Mustafa Ali Mirza",
   description:

@@ -1,18 +1,78 @@
-.portfolio-item {
-    transition: transform 0.3s ease;
-  }
-  .portfolio-item:hover {
-    transform: translateY(-5px);
-  }
-  .portfolio-thumb img {
-    border-radius: 8px;
-    max-height: 250px;
-    object-fit: cover;
-    width: 100%;
-  }
-  .btn-outline-success {
-    font-weight: 500;
-    padding: 10px 20px;
-    border-radius: 6px;
-  }
-  
+.table {
+  color: var(--text-color);
+  margin-bottom: 0;
+}
+
+.table > :not(caption) > * > * {
+  background-color: transparent;
+  color: var(--text-color);
+  border-bottom-color: rgba(255, 255, 255, 0.18);
+  padding: 0.95rem 0.75rem;
+  vertical-align: middle;
+}
+
+.table th {
+  font-weight: 700;
+  width: 36%;
+}
+
+.progress-title {
+  margin: 0 0 10px;
+  font-family: Raleway, sans-serif;
+  font-size: 0.98rem;
+  font-weight: 700;
+}
+
+.progress {
+  margin-bottom: 16px;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.09);
+  height: 8px;
+  overflow: visible;
+}
+
+.progress-bar {
+  position: relative;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #6ea85b, #3f7e95);
+}
+
+.progress-value {
+  position: absolute;
+  right: 0;
+  top: -24px;
+  font-size: 0.79rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.service_ {
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.service_:first-child {
+  border-top: 0;
+}
+
+.service__title {
+  margin: 0 0 8px;
+  font-size: 1.04rem;
+}
+
+.service_desc {
+  margin: 0;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+[data-theme="light"] .table > :not(caption) > * > * {
+  border-bottom-color: rgba(0, 0, 0, 0.14);
+}
+
+[data-theme="light"] .progress {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .service_ {
+  border-top-color: rgba(0, 0, 0, 0.14);
+}
