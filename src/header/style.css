@@ -148,6 +148,9 @@
 
 .site__header > .d-flex {
     position: relative;
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
     border-radius: 115px;
     border: 1px solid rgba(255, 255, 255, 0.26);
     background: rgba(217, 217, 217, 0.2);
