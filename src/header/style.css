@@ -148,10 +148,7 @@
 
 .site__header > .d-flex {
     position: relative;
-    width: min(1240px, calc(100% - 20px));
-    margin: 0 auto;
-    padding: 8px 12px;
-    border-radius: 18px;
+    border-radius: 14px;
     border: 1px solid rgba(255, 255, 255, 0.24);
     background: linear-gradient(
         145deg,
@@ -194,12 +191,6 @@
 
     .site__header .navbar-brand.nav_ac {
         max-width: calc(100vw - 126px);
-    }
-
-    .site__header > .d-flex {
-        width: calc(100% - 12px);
-        border-radius: 14px;
-        padding: 6px 8px;
     }
 
     .brand_text {
