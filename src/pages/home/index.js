@@ -40,19 +40,128 @@ export const Home = () => {
       "(prefers-reduced-motion: reduce)"
     ).matches;
     const isMobile = window.matchMedia("(max-width: 991px)").matches;
+    const supportsFineHover = window.matchMedia(
+      "(hover: hover) and (pointer: fine)"
+    ).matches;
+    const canUseProofTilt = !prefersReducedMotion && !isMobile && supportsFineHover;
+    const proofItems = Array.from(
+      proofRef.current.querySelectorAll(".hero_proof_item")
+    );
+    let cleanupProofTilt = () => {};
 
     const setProjectFocus = (isProjectFocused) => {
       document.body.classList.toggle("is-project-focus", isProjectFocused);
     };
 
+    const setupProofTilt = (cards) => {
+      const maxRotateX = 4;
+      const maxRotateY = 5;
+      const easing = 0.16;
+
+      const cardStates = cards.map((card) => {
+        const state = {
+          card,
+          targetX: 0,
+          targetY: 0,
+          currentX: 0,
+          currentY: 0,
+          rafId: 0,
+        };
+
+        const stopFrame = () => {
+          if (state.rafId) {
+            cancelAnimationFrame(state.rafId);
+            state.rafId = 0;
+          }
+        };
+
+        const animate = () => {
+          state.currentX += (state.targetX - state.currentX) * easing;
+          state.currentY += (state.targetY - state.currentY) * easing;
+
+          const nearTarget =
+            Math.abs(state.targetX - state.currentX) < 0.02 &&
+            Math.abs(state.targetY - state.currentY) < 0.02;
+
+          if (nearTarget) {
+            state.currentX = state.targetX;
+            state.currentY = state.targetY;
+          }
+
+          if (Math.abs(state.currentX) < 0.01 && Math.abs(state.currentY) < 0.01) {
+            state.card.style.transform = "";
+          } else {
+            state.card.style.transform = `perspective(980px) rotateX(${state.currentX.toFixed(
+              3
+            )}deg) rotateY(${state.currentY.toFixed(3)}deg)`;
+          }
+
+          if (nearTarget && state.targetX === 0 && state.targetY === 0) {
+            state.card.classList.remove("is-tilting");
+            stopFrame();
+            return;
+          }
+
+          state.rafId = requestAnimationFrame(animate);
+        };
+
+        const startFrame = () => {
+          if (!state.rafId) {
+            state.rafId = requestAnimationFrame(animate);
+          }
+        };
+
+        const handlePointerMove = (event) => {
+          const bounds = state.card.getBoundingClientRect();
+          const relativeX = (event.clientX - bounds.left) / bounds.width;
+          const relativeY = (event.clientY - bounds.top) / bounds.height;
+          const clampedX = Math.min(Math.max(relativeX, 0), 1);
+          const clampedY = Math.min(Math.max(relativeY, 0), 1);
+
+          state.targetY = (clampedX - 0.5) * maxRotateY * 2;
+          state.targetX = (0.5 - clampedY) * maxRotateX * 2;
+          state.card.classList.add("is-tilting");
+          startFrame();
+        };
+
+        const handlePointerEnter = (event) => {
+          handlePointerMove(event);
+        };
+
+        const handlePointerLeave = () => {
+          state.targetX = 0;
+          state.targetY = 0;
+          startFrame();
+        };
+
+        state.handlePointerEnter = handlePointerEnter;
+        state.handlePointerMove = handlePointerMove;
+        state.handlePointerLeave = handlePointerLeave;
+
+        card.addEventListener("pointerenter", handlePointerEnter);
+        card.addEventListener("pointermove", handlePointerMove);
+        card.addEventListener("pointerleave", handlePointerLeave);
+
+        return state;
+      });
+
+      return () => {
+        cardStates.forEach((state) => {
+          state.card.removeEventListener("pointerenter", state.handlePointerEnter);
+          state.card.removeEventListener("pointermove", state.handlePointerMove);
+          state.card.removeEventListener("pointerleave", state.handlePointerLeave);
+          if (state.rafId) {
+            cancelAnimationFrame(state.rafId);
+          }
+          state.card.classList.remove("is-tilting");
+          state.card.style.transform = "";
+        });
+      };
+    };
+
     if (prefersReducedMotion) {
       gsap.set(
-        [
-          eyebrowRef.current,
-          titleRef.current,
-          subtitleRef.current,
-          ...proofRef.current.querySelectorAll(".hero_proof_item"),
-        ],
+        [eyebrowRef.current, titleRef.current, subtitleRef.current, ...proofItems],
         { clearProps: "opacity,transform" }
       );
       setProjectFocus(false);
@@ -63,14 +172,13 @@ export const Home = () => {
       const introY = isMobile
         ? { eyebrow: 8, title: 12, subtitle: 10, proof: 14 }
         : { eyebrow: 10, title: 14, subtitle: 12, proof: 18 };
-      const proofItems = proofRef.current.querySelectorAll(".hero_proof_item");
 
       gsap.set(eyebrowRef.current, { opacity: 0, y: introY.eyebrow });
       gsap.set(titleRef.current, { opacity: 0, y: introY.title });
       gsap.set(subtitleRef.current, { opacity: 0, y: introY.subtitle });
       gsap.set(proofItems, { opacity: 0, y: introY.proof });
 
-      gsap
+      const introTimeline = gsap
         .timeline({
           defaults: { ease: "power2.out" },
           delay: 0.14,
@@ -88,6 +196,12 @@ export const Home = () => {
           },
           "-=0.16"
         );
+
+      if (canUseProofTilt) {
+        introTimeline.eventCallback("onComplete", () => {
+          cleanupProofTilt = setupProofTilt(proofItems);
+        });
+      }
 
       if (isMobile) {
         ScrollTrigger.create({
@@ -156,6 +270,7 @@ export const Home = () => {
 
     return () => {
       setProjectFocus(false);
+      cleanupProofTilt();
       ctx.revert();
     };
   }, []);

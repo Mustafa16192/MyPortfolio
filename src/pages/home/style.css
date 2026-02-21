@@ -100,6 +100,7 @@ section {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
   align-items: stretch;
+  perspective: 1200px;
 }
 
 .hero_proof_item {
@@ -117,6 +118,18 @@ section {
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.03);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform, border-color, box-shadow;
+  transition:
+    border-color 0.22s ease,
+    box-shadow 0.22s ease,
+    background-color 0.22s ease;
+}
+
+.hero_proof_item.is-tilting {
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.2);
 }
 
 .hero_umich_hover {
@@ -384,6 +397,11 @@ section {
     grid-template-columns: 1fr;
     max-width: 680px;
     gap: 10px;
+    perspective: none;
+  }
+
+  .hero_proof_item {
+    will-change: auto;
   }
 
   .featured_projects_list {
@@ -443,6 +461,11 @@ section {
   background: rgba(0, 0, 0, 0.025);
 }
 
+[data-theme="light"] .hero_proof_item.is-tilting {
+  border-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.11);
+}
+
 [data-theme="light"] .status_dot {
   box-shadow: 0 0 0 4px rgba(118, 200, 95, 0.24);
 }
@@ -491,5 +514,11 @@ section {
   .featured_project_row:hover {
     transition: none;
     transform: none;
+  }
+
+  .hero_proof_item,
+  .hero_proof_item.is-tilting {
+    transition: border-color 0.18s ease, background-color 0.18s ease;
+    box-shadow: none;
   }
 }
