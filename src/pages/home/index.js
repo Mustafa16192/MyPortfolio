@@ -10,7 +10,6 @@ export const Home = () => {
   return (
     <HelmetProvider>
       <section id="home" className="home">
-        <div className="bg-gradient-circle" aria-hidden="true" />
         <Helmet>
           <meta charSet="utf-8" />
           <title>{meta.title}</title>

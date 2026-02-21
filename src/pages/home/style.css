@@ -296,33 +296,6 @@ section {
   color: var(--bg-color);
 }
 
-.bg-gradient-circle {
-  position: fixed;
-  top: -210px;
-  left: -240px;
-  width: 760px;
-  height: 760px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle at 35% 35%,
-    #ecd86d 0%,
-    #6ea85b 36%,
-    #3f7e95 62%,
-    rgba(255, 255, 255, 0) 84%
-  );
-  filter: blur(92px) hue-rotate(0deg);
-  opacity: 0.52;
-  pointer-events: none;
-  z-index: -1;
-  animation: rotateHue 15s linear infinite;
-}
-
-@keyframes rotateHue {
-  to {
-    filter: blur(92px) hue-rotate(360deg);
-  }
-}
-
 @keyframes pageFadeUp {
   from {
     opacity: 0;
