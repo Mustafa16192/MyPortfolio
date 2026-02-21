@@ -12,6 +12,8 @@ import { Container, Row, Col } from "react-bootstrap";
 import { useParams, Link } from "react-router-dom";
 import { dataportfolio, meta } from "../../content_option";
 import { motion } from "framer-motion";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TypewriterHeading } from "../../components/typewriter_heading";
 
 const NAV_LABEL_ALIASES = [
@@ -65,7 +67,7 @@ const inferSectionTitle = (section, index) => {
   return `Key Section ${index + 1}`;
 };
 
-const toNavLabel = (heading, section) => {
+const toNavLabel = (heading, section, index) => {
   let label = normalizeTitle(heading);
   const alias = NAV_LABEL_ALIASES.find((item) => item.match.test(label));
   if (alias) {
@@ -82,7 +84,7 @@ const toNavLabel = (heading, section) => {
   }
 
   if (!label) {
-    label = inferSectionTitle(section, 0);
+    label = inferSectionTitle(section, index);
   }
 
   if (label.length > 40) {
@@ -158,7 +160,7 @@ export const ProjectOverview = () => {
         typeof customLabels[index] === "string" ? customLabels[index].trim() : "";
       const hasTitle = typeof section.title === "string" && section.title.trim().length > 0;
       const heading = hasTitle ? normalizeTitle(section.title) : inferSectionTitle(section, index);
-      const navLabel = customLabel || toNavLabel(heading, section);
+      const navLabel = customLabel || toNavLabel(heading, section, index);
       return {
         id: toSectionId(heading, index),
         heading,
@@ -293,6 +295,82 @@ export const ProjectOverview = () => {
       if (rafId) {
         cancelAnimationFrame(rafId);
       }
+    };
+  }, [chapterItems, id, isDesktopViewport]);
+
+  useLayoutEffect(() => {
+    if (!chapterItems.length) {
+      return undefined;
+    }
+
+    const sections = chapterItems
+      .map((_, index) => sectionRefs.current[index])
+      .filter(Boolean);
+    if (!sections.length) {
+      return undefined;
+    }
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    const clearSectionFocus = () => {
+      sections.forEach((section) => {
+        section.classList.remove("is-focused");
+        section.style.removeProperty("opacity");
+        section.style.removeProperty("transform");
+      });
+    };
+
+    if (prefersReducedMotion || !isDesktopViewport) {
+      clearSectionFocus();
+      return undefined;
+    }
+
+    gsap.registerPlugin(ScrollTrigger);
+    const scrollerEl = pageContainerRef.current || undefined;
+
+    const ctx = gsap.context(() => {
+      const setFocusedSection = (focusIndex) => {
+        sections.forEach((section, index) => {
+          const isFocused = index === focusIndex;
+          section.classList.toggle("is-focused", isFocused);
+          gsap.to(section, {
+            opacity: isFocused ? 1 : 0.78,
+            y: isFocused ? 0 : 7,
+            scale: isFocused ? 1 : 0.992,
+            duration: 0.32,
+            ease: "power2.out",
+            overwrite: "auto",
+          });
+        });
+      };
+
+      gsap.set(sections, {
+        opacity: 0.86,
+        y: 8,
+        scale: 0.994,
+        transformOrigin: "50% 0%",
+      });
+      setFocusedSection(0);
+
+      sections.forEach((section, index) => {
+        ScrollTrigger.create({
+          trigger: section,
+          scroller: scrollerEl,
+          start: "top 64%",
+          end: "bottom 40%",
+          onEnter: () => setFocusedSection(index),
+          onEnterBack: () => setFocusedSection(index),
+        });
+      });
+    }, pageContainerRef);
+
+    ScrollTrigger.refresh();
+
+    return () => {
+      ctx.revert();
+      clearSectionFocus();
     };
   }, [chapterItems, id, isDesktopViewport]);
 
