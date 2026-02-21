@@ -182,6 +182,99 @@ body.is-project-focus .site__header > .d-flex {
     max-width: min(72vw, 420px);
 }
 
+.header_quick_links {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 auto;
+    min-width: 0;
+    margin: 0 12px;
+    gap: clamp(10px, 1.8vw, 26px);
+}
+
+.header_quick_link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 1px;
+    font-family: Raleway, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-color-2);
+    text-decoration: none;
+    opacity: 0.86;
+    isolation: isolate;
+    overflow: hidden;
+    transition: opacity 220ms ease, text-shadow 220ms ease;
+}
+
+.header_quick_link::before {
+    content: "";
+    position: absolute;
+    inset: -18% -30%;
+    background: linear-gradient(
+        110deg,
+        transparent 35%,
+        rgba(255, 255, 255, 0.44) 50%,
+        transparent 65%
+    );
+    transform: translateX(-130%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.header_quick_link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 1px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, currentColor 22%, currentColor 78%, transparent);
+    opacity: 0;
+    transform: scaleX(0.35);
+    transform-origin: center;
+    transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.header_quick_link:hover,
+.header_quick_link:focus-visible {
+    opacity: 1;
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+.header_quick_link:hover::before,
+.header_quick_link:focus-visible::before {
+    opacity: 0.78;
+    animation: nav-link-shimmer 760ms ease;
+}
+
+.header_quick_link:hover::after,
+.header_quick_link:focus-visible::after {
+    opacity: 0.72;
+    transform: scaleX(1);
+}
+
+.header_quick_link:focus-visible {
+    outline: none;
+}
+
+.header_controls {
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+@keyframes nav-link-shimmer {
+    0% {
+        transform: translateX(-130%);
+    }
+    100% {
+        transform: translateX(130%);
+    }
+}
+
 @media (max-width: 767px) {
     .brand_identity {
         margin-left: 8px;
@@ -203,6 +296,25 @@ body.is-project-focus .site__header > .d-flex {
         width: 65px;
         height: 65px;
         border-radius: 50%;
+    }
+}
+
+@media (min-width: 992px) {
+    .header_quick_links {
+        display: flex;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .header_quick_link::before,
+    .header_quick_link::after {
+        animation: none !important;
+        transition: opacity 0ms ease;
+    }
+
+    .header_quick_link:hover::before,
+    .header_quick_link:focus-visible::before {
+        opacity: 0;
     }
 }
 

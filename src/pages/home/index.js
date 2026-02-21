@@ -141,34 +141,7 @@ export const Home = () => {
             <div className="hero_proof">
               <p className="hero_proof_item">$2M+ monthly revenue impact through shipped product systems</p>
               <p className="hero_proof_item">Led product execution across automotive, fintech, and classifieds</p>
-              <p className="hero_proof_item">Admitted to University of Michigan MSI for user-centered product development</p>
-            </div>
-
-            <div className="home_cta">
-              <Link to="/resume" className="text_2">
-                <div className="ac_btn btn btn_outline_light">
-                  Resume
-                  <div className="ring one"></div>
-                  <div className="ring two"></div>
-                  <div className="ring three"></div>
-                </div>
-              </Link>
-              <Link to="/portfolio" className="text_2">
-                <div className="ac_btn btn btn_outline_light">
-                  Portfolio
-                  <div className="ring one"></div>
-                  <div className="ring two"></div>
-                  <div className="ring three"></div>
-                </div>
-              </Link>
-              <Link to="/contact" className="text_2">
-                <div className="ac_btn btn btn_outline_light">
-                  Contact
-                  <div className="ring one"></div>
-                  <div className="ring two"></div>
-                  <div className="ring three"></div>
-                </div>
-              </Link>
+              <p className="hero_proof_item">Admitted to the University of Michigan School of Information</p>
             </div>
           </div>
 

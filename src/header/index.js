@@ -27,7 +27,19 @@ const Headermain = () => {
             </span>
           </Link>
 
-          <div className="d-flex align-items-center">
+          <nav className="header_quick_links" aria-label="Quick links">
+            <Link to="/resume" className="header_quick_link">
+              Resume
+            </Link>
+            <Link to="/portfolio" className="header_quick_link">
+              Portfolio
+            </Link>
+            <Link to="/contact" className="header_quick_link">
+              Contact
+            </Link>
+          </nav>
+
+          <div className="d-flex align-items-center header_controls">
             <Themetoggle />
             <button className="menu__button  nav_ac" onClick={handleToggle}>
               {!isActive ? <VscClose /> : <VscGrabber />}
