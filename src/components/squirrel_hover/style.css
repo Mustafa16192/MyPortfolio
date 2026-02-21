@@ -1,4 +1,8 @@
 .squirrel-hover {
+  --umich-blue: #00274c;
+  --umich-maize: #f3c300;
+  --umich-maize-soft: rgba(243, 195, 0, 0.55);
+  --umich-blue-soft: rgba(0, 39, 76, 0.32);
   position: relative;
   display: inline-flex;
   align-items: baseline;
@@ -14,7 +18,7 @@
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
   text-decoration-color: rgba(255, 203, 5, 0.65);
-  transition: color 0.3s ease, text-decoration-color 0.3s ease;
+  transition: color 0.26s ease, text-decoration-color 0.26s ease, text-shadow 0.26s ease;
 }
 
 .squirrel-wrapper {
@@ -112,26 +116,22 @@
   }
 }
 
-@keyframes squirrel-sweat-pop {
-  0%,
-  68% {
-    opacity: 0;
-    transform: translateY(0);
-  }
-  76% {
-    opacity: 0.85;
-    transform: translateY(-1px);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(5px);
-  }
-}
-
 @media (hover: hover) and (pointer: fine) {
   .squirrel-hover:hover .squirrel-hover__text {
-    color: #6f3f23;
-    text-decoration-color: rgba(111, 63, 35, 0.75);
+    text-decoration-color: var(--umich-maize-soft);
+    text-shadow: 0 0 0.42em rgba(243, 195, 0, 0.22), 0 0 0.85em var(--umich-blue-soft);
+  }
+
+  [data-theme="dark"] .squirrel-hover:hover .squirrel-hover__text {
+    color: rgba(245, 246, 250, 0.98);
+    text-decoration-color: rgba(243, 195, 0, 0.86);
+    text-shadow: 0 0 0.46em rgba(243, 195, 0, 0.25), 0 0 1em rgba(0, 39, 76, 0.45);
+  }
+
+  [data-theme="light"] .squirrel-hover:hover .squirrel-hover__text {
+    color: var(--umich-blue);
+    text-decoration-color: rgba(243, 195, 0, 0.82);
+    text-shadow: 0 0 0.28em rgba(243, 195, 0, 0.2), 0 0 0.5em var(--umich-blue-soft);
   }
 }
 
@@ -154,11 +154,6 @@
 
 .squirrel-wrapper.is-active .blush {
   animation: squirrel-blush-pop 1.8s ease-out 0.3s infinite;
-}
-
-.squirrel-wrapper.is-active .sweat-drop {
-  transform-origin: center;
-  animation: squirrel-sweat-pop 2.1s ease-out 0.35s infinite;
 }
 
 @media (max-width: 991px) {

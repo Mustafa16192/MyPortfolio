@@ -132,7 +132,7 @@ export const SquirrelHover = ({ text = "University of Michigan", className = "" 
 
           <path d="M117 71 Q 120 73 123 71 L 120 74 Z" fill="#2A1810" />
           <path
-            d="M120 74 L 120 78 M 116 80 Q 120 78 124 80"
+            d="M116 77 Q 120 81 124 77"
             stroke="#2A1810"
             strokeWidth="1.5"
             fill="none"
@@ -144,7 +144,7 @@ export const SquirrelHover = ({ text = "University of Michigan", className = "" 
           <path d="M 138 85 C 150 100, 125 105, 134 96 C 136 90, 130 82, 138 85 Z" fill="#00274C" />
           <line x1="135" y1="94" x2="131" y2="98" stroke="#001529" strokeWidth="3" strokeLinecap="round" />
 
-          <g className="acorn" transform="translate(0, 5)">
+          <g className="acorn" transform="translate(-6, 5)">
             <path d="M112 85 Q120 105 128 85 Z" fill="#D4A373" />
             <path d="M108 85 Q114 80 120 83 Q126 80 132 85 Z" fill="#8B5A2B" />
             <line
@@ -160,15 +160,17 @@ export const SquirrelHover = ({ text = "University of Michigan", className = "" 
 
           <g className="paws">
             <ellipse cx="106" cy="94" rx="6" ry="9" fill="#7A4827" transform="rotate(-15, 106, 94)" />
-            <ellipse cx="134" cy="94" rx="6" ry="9" fill="#7A4827" transform="rotate(15, 134, 94)" />
+            <ellipse
+              className="waving-paw"
+              cx="134"
+              cy="94"
+              rx="6"
+              ry="9"
+              fill="#7A4827"
+              transform="rotate(-60, 134, 94)"
+              style={{ transformOrigin: "134px 94px" }}
+            />
           </g>
-
-          <path
-            className="sweat-drop"
-            d="M142 45 C 146 52, 146 58, 142 58 C 138 58, 138 52, 142 45 Z"
-            fill="#88CCFF"
-            opacity="0"
-          />
         </g>
       </svg>
     </span>
