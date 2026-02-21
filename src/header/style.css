@@ -271,8 +271,35 @@ body.is-project-focus .site__header > .d-flex {
         display: none !important;
     }
 
+    .site__header > .d-flex {
+        width: calc(100% - 0.8rem);
+    }
+
+    .site__header .navbar-brand.nav_ac {
+        max-width: calc(100vw - 170px);
+    }
+
+    .header_controls {
+        gap: 2px;
+        padding-right: 8px;
+        align-items: center;
+    }
+
+    .header_controls .nav_ac {
+        min-height: 42px;
+        padding: 4px 8px;
+        font-size: 1.05rem;
+    }
+
     .menu__button {
         display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .menu__button svg {
+        width: 1.6em;
+        height: 1.6em;
     }
 }
 
@@ -291,11 +318,11 @@ body.is-project-focus .site__header > .d-flex {
     }
 
     .site__header .navbar-brand.nav_ac {
-        max-width: calc(100vw - 126px);
+        max-width: calc(100vw - 170px);
     }
 
     .brand_text {
-        font-size: 1.12rem;
+        font-size: 1.02rem;
     }
 
     .brand_subtitle {

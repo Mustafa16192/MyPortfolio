@@ -124,7 +124,7 @@ export default function App() {
                   />
                 </svg>
               </span>
-              <span className="framer_badge_text">Built &amp; Coded by Me</span>
+              <span className="framer_badge_text">Not Made in Framer ;)</span>
             </div>
 
             <div

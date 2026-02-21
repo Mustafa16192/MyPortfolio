@@ -193,7 +193,7 @@
 
     .framer_badge_wrap {
         right: 12px;
-        bottom: 60px;
+        bottom: calc(env(safe-area-inset-bottom, 0px) + 10px);
     }
 
     .framer_badge {
