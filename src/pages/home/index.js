@@ -47,7 +47,11 @@ export const Home = () => {
     const proofItems = Array.from(
       proofRef.current.querySelectorAll(".hero_proof_item")
     );
+    const featuredRows = Array.from(
+      featuredListRef.current.querySelectorAll(".featured_project_row")
+    );
     let cleanupProofTilt = () => {};
+    let cleanupFeaturedTilt = () => {};
 
     const setProjectFocus = (isProjectFocused) => {
       document.body.classList.toggle("is-project-focus", isProjectFocused);
@@ -271,6 +275,7 @@ export const Home = () => {
       if (canUseProofTilt) {
         introTimeline.eventCallback("onComplete", () => {
           cleanupProofTilt = setupProofTilt(proofItems);
+          cleanupFeaturedTilt = setupProofTilt(featuredRows);
         });
       }
 
@@ -342,6 +347,7 @@ export const Home = () => {
     return () => {
       setProjectFocus(false);
       cleanupProofTilt();
+      cleanupFeaturedTilt();
       ctx.revert();
     };
   }, []);
