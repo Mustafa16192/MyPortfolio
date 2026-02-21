@@ -406,7 +406,7 @@ export const Home = () => {
               </span>
             </p>
             <h1 className="home_title" ref={titleRef}>
-              AI-driven Product Manager who speaks engineering{" "}
+              AI-driven Product Manager who speaks engineering
               <span className="home_title_emoji" aria-hidden="true">🧑‍💻</span>
             </h1>
             <p className="home_subtitle" ref={subtitleRef}>
