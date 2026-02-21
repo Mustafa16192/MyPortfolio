@@ -124,7 +124,7 @@ section {
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.03);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   isolation: isolate;
   transform-style: preserve-3d;
   backface-visibility: hidden;
@@ -516,29 +516,29 @@ section {
 [data-theme="light"] .hero_proof_item::before {
   background: radial-gradient(
     125% 95% at var(--lx) var(--ly),
-    rgba(255, 255, 255, 0.56) 0%,
-    rgba(255, 255, 255, 0.24) 18%,
-    rgba(255, 255, 255, 0.08) 38%,
+    rgba(255, 255, 255, 0.64) 0%,
+    rgba(255, 255, 255, 0.34) 18%,
+    rgba(255, 255, 255, 0.12) 38%,
     rgba(255, 255, 255, 0) 70%
   );
   mix-blend-mode: normal;
-  opacity: calc(var(--spec-alpha) * 0.72);
+  opacity: calc(var(--spec-alpha) * 1);
 }
 
 [data-theme="light"] .hero_proof_item::after {
   background: radial-gradient(
     130% 120% at calc(var(--lx) + var(--spark-shift)) var(--ly),
     rgba(129, 175, 226, 0) 55%,
-    rgba(129, 175, 226, 0.15) 76%,
-    rgba(241, 200, 120, 0.13) 88%,
-    rgba(255, 255, 255, 0.08) 100%
+    rgba(129, 175, 226, 0.2) 76%,
+    rgba(241, 200, 120, 0.17) 88%,
+    rgba(255, 255, 255, 0.11) 100%
   );
-  opacity: calc(var(--edge-alpha) * 0.78);
+  opacity: calc(var(--edge-alpha) * 1.08);
 }
 
 [data-theme="light"] .hero_proof_item.is-tilting {
-  border-color: rgba(0, 0, 0, 0.2);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.11);
+  border-color: rgba(0, 0, 0, 0.24);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.13);
 }
 
 [data-theme="light"] .status_dot {
