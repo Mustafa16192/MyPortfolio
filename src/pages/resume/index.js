@@ -9,7 +9,6 @@ import {
   worktimeline,
   skills,
   milestones,
-  dataportfolio,
 } from "../../content_option";
 
 export const Resume = () => {
@@ -32,13 +31,9 @@ export const Resume = () => {
               download
               target="_blank"
               rel="noopener noreferrer"
+              className="btn ac_btn resume_download_btn"
             >
-              <div id="button_h" className="ac_btn btn">
-                Download PDF
-                <div className="ring one"></div>
-                <div className="ring two"></div>
-                <div className="ring three"></div>
-              </div>
+              Download PDF
             </a>
           </Col>
           <Col lg="12">

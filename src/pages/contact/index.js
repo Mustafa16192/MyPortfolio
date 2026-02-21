@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { meta } from "../../content_option";
-import { Container, Row, Col, Alert } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import emailjs from "emailjs-com";
 import { TypewriterHeading } from "../../components/typewriter_heading";
 
@@ -13,6 +13,7 @@ export const ContactUs = () => {
     loading: false,
     showAlert: false,
     successMessage: "",
+    alertType: "",
   });
 
   const handleSubmit = (e) => {
@@ -31,7 +32,7 @@ export const ContactUs = () => {
         "N3dpK6g0mb2J6ajsg"        // Your EmailJS Public Key
       )
       .then(
-        (response) => {
+        () => {
           setFormData({
             email: "",
             name: "",
@@ -39,6 +40,7 @@ export const ContactUs = () => {
             loading: false,
             showAlert: true,
             successMessage: "Message sent successfully!",
+            alertType: "success",
           });
 
           // Automatically hide the alert after 2 seconds.
@@ -46,12 +48,13 @@ export const ContactUs = () => {
             setFormData((prev) => ({ ...prev, showAlert: false }));
           }, 2000);
         },
-        (error) => {
+        () => {
           setFormData((prev) => ({
             ...prev,
             loading: false,
             showAlert: true,
             successMessage: "Failed to send message. Please try again.",
+            alertType: "error",
           }));
 
           // Automatically hide the alert after 2 seconds.
@@ -85,22 +88,9 @@ export const ContactUs = () => {
         </Row>
 
         <Row className="sec_sp">
-          <Col lg="12">
-            {formData.showAlert && (
-              <Alert
-                variant={
-                  formData.successMessage.includes("Failed")
-                    ? "danger"
-                    : "success"
-                }
-              >
-                {formData.successMessage}
-              </Alert>
-            )}
-          </Col>
-          <Col lg="5" className="mb-5">
+          <Col lg="5" className="mb-5 contact_intro_col">
             <h3 className="color_sec py-4">Get in touch</h3>
-            <address>
+            <address className="contact_info_block">
               <strong>Email:</strong>{" "}
               <a href="mailto:mustafa_mirza_56@outlook.com">
                 mustafa_mirza_56@outlook.com
@@ -108,68 +98,91 @@ export const ContactUs = () => {
               <br />
               <br />
             </address>
-            <p>Or send a message using the form:</p>
+            <p className="contact_intro_text">Or send a message using the form:</p>
           </Col>
 
-          <Col lg="7" className="d-flex align-items-center">
+          <Col lg="7" className="d-flex align-items-start contact_form_col">
             <form
               onSubmit={handleSubmit}
-              className="contact__form w-100"
+              className="contact__form contact_form_shell w-100"
             >
-              <Row>
-                <Col lg="6" className="form-group">
+              <div
+                className={`contact_loading_line ${formData.loading ? "is-active" : ""}`}
+                aria-hidden="true"
+              ></div>
+
+              {formData.showAlert && (
+                <div
+                  className={`contact_status contact_status--${formData.alertType}`}
+                  role="status"
+                  aria-live="polite"
+                >
+                  <span className="contact_status_dot" aria-hidden="true"></span>
+                  <span>{formData.successMessage}</span>
+                </div>
+              )}
+
+              <div className="contact_form_row">
+                <div className="contact_field_group">
+                  <label htmlFor="name" className="contact_field_label">
+                    Name
+                  </label>
                   <input
-                    className="form-control rounded-0"
+                    className="form-control contact_input"
                     id="name"
                     name="name"
-                    placeholder="Name"
+                    placeholder="Your full name"
                     value={formData.name}
                     type="text"
                     required
                     onChange={handleChange}
                   />
-                </Col>
-                <Col lg="6" className="form-group">
+                </div>
+                <div className="contact_field_group">
+                  <label htmlFor="email" className="contact_field_label">
+                    Email
+                  </label>
                   <input
-                    className="form-control rounded-0"
+                    className="form-control contact_input"
                     id="email"
                     name="email"
-                    placeholder="Email"
+                    placeholder="you@example.com"
                     type="email"
                     value={formData.email}
                     required
                     onChange={handleChange}
                   />
-                </Col>
-              </Row>
+                </div>
+              </div>
 
-              <textarea
-                className="form-control rounded-0 mt-3"
-                id="message"
-                name="message"
-                placeholder="Message"
-                rows="5"
-                value={formData.message}
-                onChange={handleChange}
-                required
-              ></textarea>
+              <div className="contact_field_group contact_field_group--message">
+                <label htmlFor="message" className="contact_field_label">
+                  Message
+                </label>
+                <textarea
+                  className="form-control contact_input contact_textarea"
+                  id="message"
+                  name="message"
+                  placeholder="Tell me a bit about your project, role, or what you'd like to collaborate on."
+                  rows="5"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                ></textarea>
+              </div>
 
-              <Row className="mt-3">
-                <Col lg="12" className="form-group">
-                  <button
-                    className="btn ac_btn"
-                    type="submit"
-                    disabled={formData.loading}
-                  >
-                    {formData.loading ? "Sending..." : "Send"}
-                  </button>
-                </Col>
-              </Row>
+              <div className="contact_submit_row">
+                <button
+                  className="btn ac_btn contact_submit_btn"
+                  type="submit"
+                  disabled={formData.loading}
+                >
+                  {formData.loading ? "Sending..." : "Send Message"}
+                </button>
+              </div>
             </form>
           </Col>
         </Row>
-
-        <div className={formData.loading ? "loading-bar" : "d-none"}></div>
       </Container>
     </HelmetProvider>
   );

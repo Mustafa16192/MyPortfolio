@@ -3,6 +3,21 @@
   margin-bottom: 0;
 }
 
+.resume_download_btn {
+  min-width: 152px;
+  border-radius: 12px;
+  padding: 0.46rem 1.2rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.resume_download_btn:hover {
+  text-decoration: none;
+}
+
 .table > :not(caption) > * > * {
   background-color: transparent;
   color: var(--text-color);
