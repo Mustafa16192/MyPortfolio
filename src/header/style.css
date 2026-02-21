@@ -266,6 +266,10 @@ body.is-project-focus .site__header > .d-flex {
     flex-shrink: 0;
 }
 
+.header_controls .theme_toggler_btn {
+    margin-right: 16px;
+}
+
 @media (max-width: 991px) {
     .header_quick_links {
         display: none !important;

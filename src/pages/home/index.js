@@ -50,6 +50,10 @@ export const Home = () => {
     const featuredRows = Array.from(
       featuredListRef.current.querySelectorAll(".featured_project_row")
     );
+    const featuredRect = featuredRef.current.getBoundingClientRect();
+    const shouldIntroFeatured =
+      featuredRect.top <=
+      window.innerHeight * (isMobile ? 1.06 : 1.12);
     let cleanupProofTilt = () => {};
     let cleanupFeaturedTilt = () => {};
 
@@ -252,6 +256,16 @@ export const Home = () => {
       gsap.set(titleRef.current, { opacity: 0, y: introY.title });
       gsap.set(subtitleRef.current, { opacity: 0, y: introY.subtitle });
       gsap.set(proofItems, { opacity: 0, y: introY.proof });
+      if (shouldIntroFeatured) {
+        gsap.set(featuredHeaderRef.current, {
+          opacity: 0,
+          y: isMobile ? 10 : 12,
+        });
+        gsap.set(featuredRows, {
+          opacity: 0,
+          y: isMobile ? 12 : 16,
+        });
+      }
 
       const introTimeline = gsap
         .timeline({
@@ -271,6 +285,29 @@ export const Home = () => {
           },
           "-=0.16"
         );
+
+      if (shouldIntroFeatured) {
+        introTimeline
+          .to(
+            featuredHeaderRef.current,
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.32,
+            },
+            ">+=0.08"
+          )
+          .to(
+            featuredRows,
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.34,
+              stagger: 0.06,
+            },
+            "-=0.2"
+          );
+      }
 
       if (canUseProofTilt) {
         introTimeline.eventCallback("onComplete", () => {
@@ -329,19 +366,7 @@ export const Home = () => {
           { y: 0, scale: 1, opacity: 1 },
           0
         )
-        .to(heroRef.current, { y: -34, scale: 0.965, opacity: 0.56 }, 0)
-        .fromTo(
-          featuredHeaderRef.current,
-          { y: 18, opacity: 0.82 },
-          { y: 0, opacity: 1 },
-          0.1
-        )
-        .fromTo(
-          featuredListRef.current,
-          { y: 26, opacity: 0.86 },
-          { y: 0, opacity: 1 },
-          0.14
-        );
+        .to(heroRef.current, { y: -34, scale: 0.965, opacity: 0.56 }, 0);
     }, homeRef);
 
     return () => {
