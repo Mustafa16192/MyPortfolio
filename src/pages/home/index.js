@@ -270,7 +270,7 @@ export const Home = () => {
       const introTimeline = gsap
         .timeline({
           defaults: { ease: "power2.out" },
-          delay: 0.14,
+          delay: 0.08,
         })
         .to(eyebrowRef.current, { opacity: 1, y: 0, duration: 0.42 })
         .to(titleRef.current, { opacity: 1, y: 0, duration: 0.5 }, "-=0.18")
@@ -287,25 +287,26 @@ export const Home = () => {
         );
 
       if (shouldIntroFeatured) {
+        const featuredOverlap = isMobile ? 0.38 : 0.44;
         introTimeline
           .to(
             featuredHeaderRef.current,
             {
               opacity: 1,
               y: 0,
-              duration: 0.32,
+              duration: 0.28,
             },
-            ">+=0.024"
+            `-=${featuredOverlap}`
           )
           .to(
             featuredRows,
             {
               opacity: 1,
               y: 0,
-              duration: 0.34,
+              duration: 0.3,
               stagger: 0.018,
             },
-            "-=0.2"
+            "-=0.18"
           );
       }
 
