@@ -34,6 +34,9 @@ const Headermain = () => {
             <Link to="/portfolio" className="header_quick_link">
               Portfolio
             </Link>
+            <Link to="/about" className="header_quick_link">
+              About
+            </Link>
             <Link to="/contact" className="header_quick_link">
               Contact
             </Link>

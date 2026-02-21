@@ -3,6 +3,7 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import { meta } from "../../content_option";
 import { Container, Row, Col, Alert } from "react-bootstrap";
 import emailjs from "emailjs-com";
+import { TypewriterHeading } from "../../components/typewriter_heading";
 
 export const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -78,7 +79,7 @@ export const ContactUs = () => {
         </Helmet>
         <Row className="page-heading-row">
           <Col lg="8">
-            <h1 className="display-4 mb-0">Contact Me</h1>
+            <TypewriterHeading text="Contact Me" className="display-4 mb-0" />
             <hr className="t_border my-4 ml-0 text-left" />
           </Col>
         </Row>

@@ -2,6 +2,7 @@ import React from "react";
 import "./style.css";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { Container, Row, Col } from "react-bootstrap";
+import { TypewriterHeading } from "../../components/typewriter_heading";
 import {
   dataabout,
   meta,
@@ -23,7 +24,7 @@ export const Resume = () => {
 
         <Row className="page-heading-row align-items-center justify-content-between">
           <Col lg="6" className="d-flex align-items-center">
-            <h1 className="display-4 mb-0 mr-4">Resume</h1>
+            <TypewriterHeading text="Resume" className="display-4 mb-0 mr-4" />
           </Col>
           <Col lg="6" className="d-flex justify-content-lg-end mt-3 mt-lg-0">
             <a
