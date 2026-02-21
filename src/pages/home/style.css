@@ -388,7 +388,7 @@ section {
 }
 
 .featured_project_emoji {
-  font-size: 1.2rem;
+  font-size: 1.9rem;
   line-height: 1;
   transform: translateY(-1px);
   filter: saturate(1.06);
@@ -569,7 +569,7 @@ section {
   }
 
   .featured_project_emoji {
-    font-size: 1.1rem;
+    font-size: 1.6rem;
   }
 }
 

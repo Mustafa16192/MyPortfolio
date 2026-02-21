@@ -2,18 +2,15 @@ import React, { useCallback, useState } from "react";
 import "./style.css";
 
 export const SquirrelHover = ({ text = "University of Michigan", className = "" }) => {
-  const [isActive, setIsActive] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const classes = ["squirrel-hover", className].filter(Boolean).join(" ");
 
   const triggerAnimation = useCallback(() => {
-    setIsActive(true);
     setIsAnimating(false);
     window.requestAnimationFrame(() => setIsAnimating(true));
   }, []);
 
   const endAnimation = useCallback(() => {
-    setIsActive(false);
     setIsAnimating(false);
   }, []);
 
@@ -21,7 +18,6 @@ export const SquirrelHover = ({ text = "University of Michigan", className = "" 
     if (event.target !== event.currentTarget) {
       return;
     }
-    setIsAnimating(false);
   }, []);
 
   return (
@@ -36,7 +32,7 @@ export const SquirrelHover = ({ text = "University of Michigan", className = "" 
       <span className="squirrel-hover__text">{text}</span>
 
       <svg
-        className={`squirrel-wrapper ${isActive ? "is-active" : ""} ${isAnimating ? "is-animating" : ""}`.trim()}
+        className={`squirrel-wrapper ${isAnimating ? "is-animating" : ""}`}
         viewBox="0 0 220 160"
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
@@ -46,7 +42,6 @@ export const SquirrelHover = ({ text = "University of Michigan", className = "" 
           <path
             d="M65 120 C -5 110, -5 20, 40 15 C 60 10, 85 25, 90 50 C 100 80, 85 110, 75 120 Z"
             fill="#7A4827"
-            className="squirrel-tail"
           />
           <path
             d="M35 85 C 10 55, 25 25, 45 20"
@@ -121,8 +116,7 @@ export const SquirrelHover = ({ text = "University of Michigan", className = "" 
           <g className="eyes">
             <ellipse cx="106" cy="61" rx="5.5" ry="7" fill="#FFFFFF" />
             <ellipse cx="134" cy="61" rx="5.5" ry="7" fill="#FFFFFF" />
-
-            <g className="pupils">
+            <g>
               <ellipse cx="106" cy="61" rx="4.5" ry="5.5" fill="#111111" />
               <ellipse cx="134" cy="61" rx="4.5" ry="5.5" fill="#111111" />
               <circle cx="104.5" cy="59.5" r="1.5" fill="#FFFFFF" />
