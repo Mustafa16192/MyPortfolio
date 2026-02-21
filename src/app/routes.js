@@ -33,7 +33,8 @@ function AppRoutes() {
   const isExcludedPage =
     location.pathname === "/api" ||
     location.pathname === "/about" ||
-    location.pathname === "/resume";
+    location.pathname === "/resume" ||
+    location.pathname.startsWith("/project/");
 
   return (
     <div className="s_c">

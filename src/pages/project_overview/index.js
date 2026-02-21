@@ -14,13 +14,81 @@ import { dataportfolio, meta } from "../../content_option";
 import { motion } from "framer-motion";
 import { TypewriterHeading } from "../../components/typewriter_heading";
 
+const NAV_LABEL_ALIASES = [
+  { match: /^problem/i, label: "Problem Statement" },
+  { match: /^research/i, label: "User Research" },
+  { match: /^insights?/i, label: "Insights & Approach" },
+  { match: /^ideation/i, label: "Ideation & Sketching" },
+  { match: /^solution/i, label: "Solution & Prototype" },
+  { match: /^outcomes?/i, label: "Outcomes & Learnings" },
+];
+
 const toSectionId = (title, index) => {
-  const base = (title || `Section ${index + 1}`)
+  const base = (title || `Key Section ${index + 1}`)
     .toLowerCase()
     .trim()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
   return `chapter-${index + 1}-${base || "section"}`;
+};
+
+const normalizeTitle = (value = "") =>
+  value
+    .replace(/^\s*\d+\s*[\.\)]\s*/, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const inferSectionTitle = (section, index) => {
+  if (!section) {
+    return `Key Section ${index + 1}`;
+  }
+  if (section.type === "video") {
+    return "Prototype Walkthrough";
+  }
+  const textBlob = `${section.content || ""} ${section.caption || ""}`.toLowerCase();
+  const imagePath = (section.img || "").toLowerCase();
+  if (textBlob.includes("smart reminder") || textBlob.includes("settings")) {
+    return "Smart Reminder Controls";
+  }
+  if (textBlob.includes("quick query") || textBlob.includes("suggestion")) {
+    return "Quick Query Exploration";
+  }
+  if (imagePath.includes("sketch2")) {
+    return "Smart Reminder Controls";
+  }
+  if (imagePath.includes("sketch3")) {
+    return "Quick Query Exploration";
+  }
+  if (section.caption) {
+    return normalizeTitle(section.caption).split(":")[0].trim() || `Key Section ${index + 1}`;
+  }
+  return `Key Section ${index + 1}`;
+};
+
+const toNavLabel = (heading, section) => {
+  let label = normalizeTitle(heading);
+  const alias = NAV_LABEL_ALIASES.find((item) => item.match.test(label));
+  if (alias) {
+    label = alias.label;
+  } else if (label.includes(":")) {
+    const [prefix, suffix] = label.split(":");
+    const concisePrefix = normalizeTitle(prefix);
+    const conciseSuffix = normalizeTitle(suffix || "");
+    if (concisePrefix.length <= 20) {
+      label = concisePrefix;
+    } else if (conciseSuffix.length > 0 && conciseSuffix.length <= 40) {
+      label = conciseSuffix;
+    }
+  }
+
+  if (!label) {
+    label = inferSectionTitle(section, 0);
+  }
+
+  if (label.length > 40) {
+    label = `${label.slice(0, 37).trimEnd()}...`;
+  }
+  return label;
 };
 
 const VideoSection = ({ src, caption }) => {
@@ -79,18 +147,22 @@ export const ProjectOverview = () => {
   const pageContainerRef = useRef(null);
   const sectionRefs = useRef([]);
   const [activeChapter, setActiveChapter] = useState(0);
+  const [isDesktopViewport, setIsDesktopViewport] = useState(
+    () => window.innerWidth >= 992
+  );
   const chapterItems = useMemo(() => {
     const sections = project?.sections || [];
     const customLabels = project?.chapterLabels || [];
     return sections.map((section, index) => {
       const customLabel =
         typeof customLabels[index] === "string" ? customLabels[index].trim() : "";
-      const hasTitle =
-        typeof section.title === "string" && section.title.trim().length > 0;
-      const title = customLabel || (hasTitle ? section.title.trim() : `Section ${index + 1}`);
+      const hasTitle = typeof section.title === "string" && section.title.trim().length > 0;
+      const heading = hasTitle ? normalizeTitle(section.title) : inferSectionTitle(section, index);
+      const navLabel = customLabel || toNavLabel(heading, section);
       return {
-        id: toSectionId(title, index),
-        title,
+        id: toSectionId(heading, index),
+        heading,
+        navLabel,
       };
     });
   }, [project]);
@@ -103,14 +175,21 @@ export const ProjectOverview = () => {
   }, [id]);
 
   useEffect(() => {
+    const handleResize = () => {
+      setIsDesktopViewport(window.innerWidth >= 992);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
     if (!chapterItems.length) {
       return undefined;
     }
 
     const visibleRatios = new Map();
     const sectionElements = chapterItems.map((_, index) => sectionRefs.current[index]);
-    const desktopContainer =
-      window.innerWidth >= 992 ? pageContainerRef.current : null;
+    const desktopContainer = isDesktopViewport ? pageContainerRef.current : null;
     const isContainerScroll = Boolean(desktopContainer);
     const scrollRoot = isContainerScroll ? desktopContainer : null;
     let rafId = 0;
@@ -215,7 +294,7 @@ export const ProjectOverview = () => {
         cancelAnimationFrame(rafId);
       }
     };
-  }, [chapterItems, id]);
+  }, [chapterItems, id, isDesktopViewport]);
 
   const handleChapterClick = useCallback((event, chapterId, index) => {
     event.preventDefault();
@@ -268,21 +347,21 @@ export const ProjectOverview = () => {
           </Col>
         </Row>
 
-        <Row className="sec_sp mb-5">
-          <Col lg="6" className="mb-4 mb-lg-0">
+        <Row className="project-summary-row">
+          <Col lg="5" className="project-summary-text-col mb-4 mb-lg-0">
             {(project.role || project.timeline) && (
-              <div className="d-flex flex-wrap mb-4" style={{ gap: "2rem" }}>
+              <div className="project-summary-meta">
                 {project.role && (
-                  <div>
-                    <h5 className="color_sec mb-1" style={{ fontSize: "1rem", opacity: 0.8 }}>
+                  <div className="project-summary-meta-item">
+                    <h5 className="color_sec mb-1">
                       ROLE
                     </h5>
                     <p>{project.role}</p>
                   </div>
                 )}
                 {project.timeline && (
-                  <div>
-                    <h5 className="color_sec mb-1" style={{ fontSize: "1rem", opacity: 0.8 }}>
+                  <div className="project-summary-meta-item">
+                    <h5 className="color_sec mb-1">
                       TIMELINE
                     </h5>
                     <p>{project.timeline}</p>
@@ -291,14 +370,14 @@ export const ProjectOverview = () => {
               </div>
             )}
             <h3 className="color_sec py-4">Overview</h3>
-            <p>{project.details || project.description}</p>
+            <p className="project-overview-copy">{project.details || project.description}</p>
             <div className="mt-4">
               <Link to="/portfolio" className="btn ac_btn">
                 Back to Portfolio
               </Link>
             </div>
           </Col>
-          <Col lg="6" className="d-flex align-items-center justify-content-center">
+          <Col lg="7" className="project-summary-media-col d-flex align-items-center justify-content-center">
             <div className="project-image-container w-100">
               <motion.img
                 layoutId={`project-image-${project.id}`}
@@ -312,8 +391,8 @@ export const ProjectOverview = () => {
         </Row>
 
         {project.sections && project.sections.length > 0 && (
-          <Row className="project-chapter-layout justify-content-center">
-            <Col lg="3" className="project-chapter-nav-col d-none d-lg-block">
+          <Row className="project-chapter-layout">
+            <Col lg="3" xl="3" xxl="3" className="project-chapter-nav-col d-none d-lg-block">
               <nav className="project-chapter-nav" aria-label="Project chapters">
                 <ul className="project-chapter-list">
                   {chapterItems.map((chapter, index) => (
@@ -323,8 +402,9 @@ export const ProjectOverview = () => {
                         className={`project-chapter-link ${activeChapter === index ? "is-active" : ""}`}
                         onClick={(event) => handleChapterClick(event, chapter.id, index)}
                         aria-current={activeChapter === index ? "true" : undefined}
+                        title={chapter.heading}
                       >
-                        {chapter.title}
+                        {chapter.navLabel}
                       </button>
                     </li>
                   ))}
@@ -332,7 +412,7 @@ export const ProjectOverview = () => {
               </nav>
             </Col>
 
-            <Col lg="8" className="project-chapter-content-col">
+            <Col lg="9" xl="9" xxl="9" className="project-chapter-content-col">
               <nav className="project-chapter-mobile" aria-label="Project chapters">
                 <div className="project-chapter-chip-track">
                   {chapterItems.map((chapter, index) => (
@@ -343,7 +423,7 @@ export const ProjectOverview = () => {
                       onClick={(event) => handleChapterClick(event, chapter.id, index)}
                       aria-current={activeChapter === index ? "true" : undefined}
                     >
-                      {chapter.title}
+                      {chapter.navLabel}
                     </button>
                   ))}
                 </div>
@@ -359,7 +439,7 @@ export const ProjectOverview = () => {
                   }}
                   className="project-case-section"
                 >
-                  <h3 className="color_sec py-3 display-6">{chapterItems[index].title}</h3>
+                  <h3 className="color_sec py-3 display-6">{chapterItems[index].heading}</h3>
                   <div className="section-content">
                     {section.type === "video" ? (
                       <VideoSection src={section.src} caption={section.caption} />
@@ -382,7 +462,7 @@ export const ProjectOverview = () => {
                     <div className="mt-4 mb-4">
                       <img
                         src={require(`../../assets/${section.img.includes("/") ? section.img : `images/${section.img}`}`)}
-                        alt={section.title || chapterItems[index].title}
+                        alt={section.title || chapterItems[index].heading}
                         className="img-fluid rounded shadow-sm"
                         style={{
                           width: "auto",
