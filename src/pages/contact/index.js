@@ -70,7 +70,7 @@ export const ContactUs = () => {
 
   return (
     <HelmetProvider>
-      <Container className="About-header">
+      <Container className="About-header page-nav-offset">
         <Helmet>
           <meta charSet="utf-8" />
           <title>{meta.title} | Contact</title>

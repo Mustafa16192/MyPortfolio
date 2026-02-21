@@ -10,6 +10,16 @@
     overflow-x: hidden;
 }
 
+.page-nav-offset {
+    padding-top: 30px;
+}
+
+@media (max-width: 991px) {
+    .page-nav-offset {
+        padding-top: 18px;
+    }
+}
+
 /* Framer Motion Page Transition Helpers */
 .absolute-page {
     top: 60px; 
