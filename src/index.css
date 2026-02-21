@@ -6,6 +6,8 @@
     --text-color-2: #000;
     --text-color-3: rgb(204, 0, 0);
     --overlay-color: rgb(255 255 255 / 70%);
+    --cursor-primary: #00274c;
+    --cursor-secondary: #f3c300;
 }
 
 [data-theme="dark"] {
@@ -16,6 +18,8 @@
     --text-color-2: #fff;
     --text-color-3: rgb(204, 0, 0);
     --overlay-color: rgb(12 12 12 / 63%);
+    --cursor-primary: #00274c;
+    --cursor-secondary: #f3c300;
 }
 
 html,
@@ -79,12 +83,12 @@ code {
 }
 
 .cursor__dot div:last-child {
-    background-color: var(--text-color-3) !important;
+    background-color: var(--cursor-primary) !important;
 }
 
 .cursor__dot div:first-child {
-    filter: invert(1);
-    background-color: var(--overlay-color) !important;
+    filter: none;
+    background-color: var(--cursor-secondary) !important;
 }
 
 .color_pr {
