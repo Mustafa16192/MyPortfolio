@@ -29,13 +29,11 @@ const AnimatedRoutes = withRouter(({ location }) => (
 function AppRoutes() {
   const location = useLocation();
 
-  // Keep social icons off pages where they visually compete with primary content.
+  // Check if the current route is either "/api" or "/about" or "/resume"
   const isExcludedPage =
-    location.pathname === "/" ||
     location.pathname === "/api" ||
     location.pathname === "/about" ||
-    location.pathname === "/resume" ||
-    location.pathname.startsWith("/project/");
+    location.pathname === "/resume";
 
   return (
     <div className="s_c">

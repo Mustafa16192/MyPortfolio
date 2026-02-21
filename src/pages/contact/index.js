@@ -114,11 +114,6 @@ export const ContactUs = () => {
             <form
               onSubmit={handleSubmit}
               className="contact__form w-100"
-              style={{
-                backgroundColor: "#000",
-                border: "1px solid white",
-                padding: "20px",
-              }}
             >
               <Row>
                 <Col lg="6" className="form-group">
@@ -131,7 +126,6 @@ export const ContactUs = () => {
                     type="text"
                     required
                     onChange={handleChange}
-                    style={{ backgroundColor: "#000", color: "#fff" }}
                   />
                 </Col>
                 <Col lg="6" className="form-group">
@@ -144,7 +138,6 @@ export const ContactUs = () => {
                     value={formData.email}
                     required
                     onChange={handleChange}
-                    style={{ backgroundColor: "#000", color: "#fff" }}
                   />
                 </Col>
               </Row>
@@ -158,7 +151,6 @@ export const ContactUs = () => {
                 value={formData.message}
                 onChange={handleChange}
                 required
-                style={{ backgroundColor: "#000", color: "#fff" }}
               ></textarea>
 
               <Row className="mt-3">
