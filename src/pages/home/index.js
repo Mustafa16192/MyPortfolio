@@ -60,12 +60,10 @@ export const Home = () => {
     const setProjectFocus = (isProjectFocused) => {
       document.body.classList.toggle("is-project-focus", isProjectFocused);
     };
-    const focusEase = gsap.parseEase("power1.out");
     const setProjectFocusProgress = (rawProgress) => {
       const clamped = gsap.utils.clamp(0, 1, rawProgress);
-      const eased = focusEase(clamped);
-      document.body.style.setProperty("--project-focus", eased.toFixed(3));
-      setProjectFocus(eased > 0.08);
+      document.body.style.setProperty("--project-focus", clamped.toFixed(3));
+      setProjectFocus(clamped > 0.08);
     };
     const clearProjectFocus = () => {
       setProjectFocus(false);
@@ -367,7 +365,7 @@ export const Home = () => {
             trigger: featuredRef.current,
             start: "top 86%",
             end: "top 20%",
-            scrub: 0.65,
+            scrub: true,
             onUpdate: (self) => setProjectFocusProgress(self.progress),
             onLeaveBack: () => setProjectFocusProgress(0),
           },

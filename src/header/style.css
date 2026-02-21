@@ -160,7 +160,7 @@
     -webkit-backdrop-filter: blur(calc(20px - (6px * var(--focus-progress)))) saturate(calc(140% - (12% * var(--focus-progress))));
     backdrop-filter: blur(calc(20px - (6px * var(--focus-progress)))) saturate(calc(140% - (12% * var(--focus-progress))));
     transform: translateY(calc(2px * var(--focus-progress))) scale(calc(1 - (0.008 * var(--focus-progress))));
-    transition: background 260ms ease, border-color 260ms ease, box-shadow 260ms ease, transform 260ms ease, -webkit-backdrop-filter 260ms ease, backdrop-filter 260ms ease;
+    transition: none;
     overflow: hidden;
 }
 
