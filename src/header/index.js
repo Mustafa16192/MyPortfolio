@@ -52,9 +52,6 @@ const Headermain = () => {
             <Link to="/resume" className="header_quick_link">
               Resume
             </Link>
-            <Link to="/portfolio" className="header_quick_link">
-              Portfolio
-            </Link>
             <Link to="/about" className="header_quick_link">
               About
             </Link>
@@ -89,11 +86,6 @@ const Headermain = () => {
                   <li className="menu_item">
                     <Link onClick={handleToggle} to="/resume" className="my-3">
                       Resume
-                    </Link>
-                  </li>
-                  <li className="menu_item">
-                    <Link onClick={handleToggle} to="/portfolio" className="my-3">
-                      Portfolio
                     </Link>
                   </li>
                   <li className="menu_item">

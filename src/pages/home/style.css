@@ -72,10 +72,23 @@ section {
   border-radius: 50%;
   background: #76c85f;
   box-shadow: 0 0 0 4px rgba(118, 200, 95, 0.18);
+  animation: statusDotBreathe 2.2s ease-in-out infinite;
 }
 
 .status_text {
   display: inline;
+}
+
+@keyframes statusDotBreathe {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 4px rgba(118, 200, 95, 0.18);
+  }
+  50% {
+    transform: scale(1.12);
+    box-shadow: 0 0 0 8px rgba(118, 200, 95, 0.1);
+  }
 }
 
 .status_old,
@@ -668,6 +681,10 @@ section {
 
 @media (prefers-reduced-motion: reduce) {
   .home_shell {
+    animation: none;
+  }
+
+  .status_dot {
     animation: none;
   }
 

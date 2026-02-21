@@ -389,8 +389,8 @@ export const ProjectOverview = () => {
         <Row className="mb-5 mt-3 pt-md-3">
           <Col lg="8">
             <h1 className="display-4 mb-4">Project Not Found</h1>
-            <Link to="/portfolio" className="btn ac_btn">
-              Back to Portfolio
+            <Link to="/#projects" className="btn ac_btn">
+              Back to Projects
             </Link>
           </Col>
         </Row>
@@ -451,8 +451,8 @@ export const ProjectOverview = () => {
             <h3 className="color_sec py-4">Overview</h3>
             <p className="project-overview-copy">{project.details || project.description}</p>
             <div className="mt-4">
-              <Link to="/portfolio" className="btn ac_btn">
-                Back to Portfolio
+              <Link to="/#projects" className="btn ac_btn">
+                Back to Projects
               </Link>
             </div>
           </Col>

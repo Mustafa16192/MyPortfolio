@@ -1,11 +1,10 @@
 import React from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import withRouter from "../hooks/withRouter";
 import { Home } from "../pages/home";
 import { ContactUs } from "../pages/contact";
 import { About } from "../pages/about";
 import { Resume } from "../pages/resume";
-import { Portfolio } from "../pages/portfolio";
 import { ProjectOverview } from "../pages/project_overview";
 import APIPage from "../pages/api"; // Import default export from "../pages/api"
 import { Socialicons } from "../components/socialicons";
@@ -19,7 +18,7 @@ const AnimatedRoutes = withRouter(({ location }) => (
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/api" element={<APIPage />} />
         <Route path="/resume" element={<Resume />} />
-        <Route path="/portfolio" element={<Portfolio />} />
+        <Route path="/portfolio" element={<Navigate to="/" replace />} />
         <Route path="/project/:id" element={<ProjectOverview />} />
         <Route path="*" element={<Home />} />
       </Routes>

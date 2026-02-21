@@ -7,7 +7,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SquirrelHover } from "../../components/squirrel_hover";
 
-const featuredProjects = dataportfolio.slice(0, 4);
+const featuredProjects = dataportfolio;
 
 export const Home = () => {
   const homeRef = useRef(null);
@@ -418,15 +418,13 @@ export const Home = () => {
           </div>
 
           <section
+            id="projects"
             className="featured_projects featured_projects_anim"
             aria-label="Featured projects"
             ref={featuredRef}
           >
             <div className="featured_projects_header" ref={featuredHeaderRef}>
               <h2>Featured Projects</h2>
-              <Link to="/portfolio" className="featured_projects_link">
-                View all
-              </Link>
             </div>
 
             <div className="featured_projects_list" ref={featuredListRef}>
