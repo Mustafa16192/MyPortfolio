@@ -41,7 +41,7 @@ export default function App() {
             <span className="framer_badge_icon" aria-hidden="true">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 140 140"
+                viewBox="44.65 33.992 50.7 76.049"
                 focusable="false"
               >
                 <path
