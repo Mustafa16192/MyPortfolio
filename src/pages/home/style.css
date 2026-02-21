@@ -54,6 +54,7 @@ section {
 
 .home_title_emoji {
   font-size: 0.8em;
+  margin-left: 0.14em;
 }
 
 .home_subtitle {
@@ -84,11 +85,13 @@ section {
 }
 
 @keyframes statusDotBreathe {
+
   0%,
   100% {
     transform: scale(1);
     box-shadow: 0 0 0 4px rgba(118, 200, 95, 0.18);
   }
+
   50% {
     transform: scale(1.12);
     box-shadow: 0 0 0 8px rgba(118, 200, 95, 0.1);
@@ -168,29 +171,25 @@ section {
 }
 
 .hero_proof_item::before {
-  background: radial-gradient(
-    130% 100% at var(--lx) var(--ly),
-    rgba(255, 255, 255, 0.54) 0%,
-    rgba(255, 255, 255, 0.25) 18%,
-    rgba(255, 255, 255, 0.08) 40%,
-    rgba(255, 255, 255, 0) 72%
-  );
+  background: radial-gradient(130% 100% at var(--lx) var(--ly),
+      rgba(255, 255, 255, 0.54) 0%,
+      rgba(255, 255, 255, 0.25) 18%,
+      rgba(255, 255, 255, 0.08) 40%,
+      rgba(255, 255, 255, 0) 72%);
   mix-blend-mode: screen;
   opacity: var(--spec-alpha);
 }
 
 .hero_proof_item::after {
-  background: radial-gradient(
-    130% 120% at calc(var(--lx) + var(--spark-shift)) var(--ly),
-    rgba(176, 222, 255, 0) 54%,
-    rgba(176, 222, 255, 0.22) 76%,
-    rgba(255, 222, 160, 0.2) 88%,
-    rgba(255, 255, 255, 0.09) 100%
-  );
+  background: radial-gradient(130% 120% at calc(var(--lx) + var(--spark-shift)) var(--ly),
+      rgba(176, 222, 255, 0) 54%,
+      rgba(176, 222, 255, 0.22) 76%,
+      rgba(255, 222, 160, 0.2) 88%,
+      rgba(255, 255, 255, 0.09) 100%);
   opacity: var(--edge-alpha);
 }
 
-.hero_proof_item > * {
+.hero_proof_item>* {
   position: relative;
   z-index: 1;
 }
@@ -310,29 +309,25 @@ section {
 }
 
 .featured_project_row::before {
-  background: radial-gradient(
-    130% 100% at var(--lx) var(--ly),
-    rgba(255, 255, 255, 0.54) 0%,
-    rgba(255, 255, 255, 0.25) 18%,
-    rgba(255, 255, 255, 0.08) 40%,
-    rgba(255, 255, 255, 0) 72%
-  );
+  background: radial-gradient(130% 100% at var(--lx) var(--ly),
+      rgba(255, 255, 255, 0.54) 0%,
+      rgba(255, 255, 255, 0.25) 18%,
+      rgba(255, 255, 255, 0.08) 40%,
+      rgba(255, 255, 255, 0) 72%);
   mix-blend-mode: screen;
   opacity: var(--spec-alpha);
 }
 
 .featured_project_row::after {
-  background: radial-gradient(
-    130% 120% at calc(var(--lx) + var(--spark-shift)) var(--ly),
-    rgba(176, 222, 255, 0) 54%,
-    rgba(176, 222, 255, 0.22) 76%,
-    rgba(255, 222, 160, 0.2) 88%,
-    rgba(255, 255, 255, 0.09) 100%
-  );
+  background: radial-gradient(130% 120% at calc(var(--lx) + var(--spark-shift)) var(--ly),
+      rgba(176, 222, 255, 0) 54%,
+      rgba(176, 222, 255, 0.22) 76%,
+      rgba(255, 222, 160, 0.2) 88%,
+      rgba(255, 255, 255, 0.09) 100%);
   opacity: var(--edge-alpha);
 }
 
-.featured_project_row > * {
+.featured_project_row>* {
   position: relative;
   z-index: 1;
 }
@@ -505,6 +500,7 @@ section {
     opacity: 0;
     transform: translateY(8px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -603,25 +599,21 @@ section {
 }
 
 [data-theme="light"] .hero_proof_item::before {
-  background: radial-gradient(
-    125% 95% at var(--lx) var(--ly),
-    rgba(255, 255, 255, 0.64) 0%,
-    rgba(255, 255, 255, 0.34) 18%,
-    rgba(255, 255, 255, 0.12) 38%,
-    rgba(255, 255, 255, 0) 70%
-  );
+  background: radial-gradient(125% 95% at var(--lx) var(--ly),
+      rgba(255, 255, 255, 0.64) 0%,
+      rgba(255, 255, 255, 0.34) 18%,
+      rgba(255, 255, 255, 0.12) 38%,
+      rgba(255, 255, 255, 0) 70%);
   mix-blend-mode: normal;
   opacity: calc(var(--spec-alpha) * 1);
 }
 
 [data-theme="light"] .hero_proof_item::after {
-  background: radial-gradient(
-    130% 120% at calc(var(--lx) + var(--spark-shift)) var(--ly),
-    rgba(129, 175, 226, 0) 55%,
-    rgba(129, 175, 226, 0.2) 76%,
-    rgba(241, 200, 120, 0.17) 88%,
-    rgba(255, 255, 255, 0.11) 100%
-  );
+  background: radial-gradient(130% 120% at calc(var(--lx) + var(--spark-shift)) var(--ly),
+      rgba(129, 175, 226, 0) 55%,
+      rgba(129, 175, 226, 0.2) 76%,
+      rgba(241, 200, 120, 0.17) 88%,
+      rgba(255, 255, 255, 0.11) 100%);
   opacity: calc(var(--edge-alpha) * 1.08);
 }
 
@@ -640,25 +632,21 @@ section {
 }
 
 [data-theme="light"] .featured_project_row::before {
-  background: radial-gradient(
-    125% 95% at var(--lx) var(--ly),
-    rgba(255, 255, 255, 0.64) 0%,
-    rgba(255, 255, 255, 0.34) 18%,
-    rgba(255, 255, 255, 0.12) 38%,
-    rgba(255, 255, 255, 0) 70%
-  );
+  background: radial-gradient(125% 95% at var(--lx) var(--ly),
+      rgba(255, 255, 255, 0.64) 0%,
+      rgba(255, 255, 255, 0.34) 18%,
+      rgba(255, 255, 255, 0.12) 38%,
+      rgba(255, 255, 255, 0) 70%);
   mix-blend-mode: normal;
   opacity: calc(var(--spec-alpha) * 1);
 }
 
 [data-theme="light"] .featured_project_row::after {
-  background: radial-gradient(
-    130% 120% at calc(var(--lx) + var(--spark-shift)) var(--ly),
-    rgba(129, 175, 226, 0) 55%,
-    rgba(129, 175, 226, 0.2) 76%,
-    rgba(241, 200, 120, 0.17) 88%,
-    rgba(255, 255, 255, 0.11) 100%
-  );
+  background: radial-gradient(130% 120% at calc(var(--lx) + var(--spark-shift)) var(--ly),
+      rgba(129, 175, 226, 0) 55%,
+      rgba(129, 175, 226, 0.2) 76%,
+      rgba(241, 200, 120, 0.17) 88%,
+      rgba(255, 255, 255, 0.11) 100%);
   opacity: calc(var(--edge-alpha) * 1.08);
 }
 
