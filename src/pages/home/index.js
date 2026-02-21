@@ -295,7 +295,7 @@ export const Home = () => {
               y: 0,
               duration: 0.32,
             },
-            ">+=0.08"
+            ">+=0.024"
           )
           .to(
             featuredRows,
@@ -303,7 +303,7 @@ export const Home = () => {
               opacity: 1,
               y: 0,
               duration: 0.34,
-              stagger: 0.06,
+              stagger: 0.018,
             },
             "-=0.2"
           );
