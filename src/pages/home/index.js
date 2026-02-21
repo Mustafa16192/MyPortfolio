@@ -363,11 +363,11 @@ export const Home = () => {
         })
         .fromTo(
           featuredRef.current,
-          { y: 64, scale: 0.97, opacity: 0.82 },
+          { y: 70, scale: 0.965, opacity: 0.8 },
           { y: 0, scale: 1, opacity: 1 },
           0
         )
-        .to(heroRef.current, { y: -34, scale: 0.965, opacity: 0.56 }, 0);
+        .to(heroRef.current, { y: -38, scale: 0.96, opacity: 0.52 }, 0);
     }, homeRef);
 
     return () => {
