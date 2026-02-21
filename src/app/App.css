@@ -26,7 +26,7 @@
     transition: box-shadow 220ms ease, transform 220ms ease, border-color 220ms ease;
 }
 
-.framer_badge:hover,
+.framer_badge_wrap.is-open .framer_badge,
 .framer_badge_wrap:focus-within .framer_badge {
     transform: translateY(-1px);
     box-shadow: 0 5px 18px rgba(20, 22, 30, 0.16);
@@ -63,7 +63,7 @@
 .framer_badge_popover {
     position: absolute;
     right: 0;
-    bottom: calc(100% + 12px);
+    bottom: calc(100% + 8px);
     width: min(360px, calc(100vw - 2rem));
     padding: 14px 14px 13px;
     border-radius: 16px;
@@ -80,7 +80,7 @@
     transition: opacity 220ms ease, transform 240ms ease;
 }
 
-.framer_badge_wrap:hover .framer_badge_popover,
+.framer_badge_wrap.is-open .framer_badge_popover,
 .framer_badge_wrap:focus-within .framer_badge_popover {
     opacity: 1;
     transform: translateY(0) scale(1);

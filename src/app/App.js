@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
   BrowserRouter as Router,
@@ -21,6 +21,62 @@ function _ScrollToTop(props) {
 const ScrollToTop = withRouter(_ScrollToTop);
 
 export default function App() {
+  const [isBadgeOpen, setIsBadgeOpen] = useState(false);
+  const badgeWrapRef = useRef(null);
+  const closeTimerRef = useRef(null);
+
+  const clearCloseTimer = useCallback(() => {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+  }, []);
+
+  const openBadgePopover = useCallback(() => {
+    clearCloseTimer();
+    setIsBadgeOpen(true);
+  }, [clearCloseTimer]);
+
+  const scheduleBadgeClose = useCallback(() => {
+    clearCloseTimer();
+    closeTimerRef.current = setTimeout(() => {
+      setIsBadgeOpen(false);
+      closeTimerRef.current = null;
+    }, 180);
+  }, [clearCloseTimer]);
+
+  const handleBadgeBlur = useCallback(
+    (event) => {
+      const nextFocused = event.relatedTarget;
+      if (
+        badgeWrapRef.current &&
+        nextFocused &&
+        badgeWrapRef.current.contains(nextFocused)
+      ) {
+        return;
+      }
+      scheduleBadgeClose();
+    },
+    [scheduleBadgeClose]
+  );
+
+  const handleBadgeKeyDown = useCallback(
+    (event) => {
+      if (event.key === "Escape") {
+        clearCloseTimer();
+        setIsBadgeOpen(false);
+      }
+    },
+    [clearCloseTimer]
+  );
+
+  useEffect(
+    () => () => {
+      clearCloseTimer();
+    },
+    [clearCloseTimer]
+  );
+
   return (
     <Router basename={process.env.PUBLIC_URL}>
       <div className="app_shell">
@@ -38,8 +94,24 @@ export default function App() {
         <ScrollToTop>
           <Headermain />
           <AppRoutes />
-          <div className="framer_badge_wrap">
-            <div className="framer_badge" tabIndex={0} role="note" aria-label="Not Made in framer">
+          <div
+            ref={badgeWrapRef}
+            className={`framer_badge_wrap ${isBadgeOpen ? "is-open" : ""}`}
+            onMouseEnter={openBadgePopover}
+            onMouseLeave={scheduleBadgeClose}
+            onFocus={openBadgePopover}
+            onBlur={handleBadgeBlur}
+            onKeyDown={handleBadgeKeyDown}
+          >
+            <div
+              className="framer_badge"
+              tabIndex={0}
+              role="button"
+              aria-label="Built and coded by me"
+              aria-haspopup="dialog"
+              aria-expanded={isBadgeOpen}
+              aria-controls="framer-badge-popover"
+            >
               <span className="framer_badge_icon" aria-hidden="true">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -52,12 +124,22 @@ export default function App() {
                   />
                 </svg>
               </span>
-              <span className="framer_badge_text">Not Made in framer ;)</span>
+              <span className="framer_badge_text">Built &amp; Coded by Me</span>
             </div>
 
-            <div className="framer_badge_popover" role="dialog" aria-label="Project attribution">
+            <div
+              id="framer-badge-popover"
+              className="framer_badge_popover"
+              role="dialog"
+              aria-label="Project attribution"
+              aria-hidden={!isBadgeOpen}
+              onMouseEnter={openBadgePopover}
+              onMouseLeave={scheduleBadgeClose}
+              onFocus={openBadgePopover}
+              onBlur={handleBadgeBlur}
+            >
               <p className="framer_badge_popover_copy">
-                I built this portfolio myself and translated Framer-style interaction patterns using the same technologies powering this website.
+                Built and coded by me with React, GSAP, and modern web technologies.
               </p>
               <a
                 className="framer_badge_popover_link"
@@ -66,7 +148,7 @@ export default function App() {
                 rel="noopener noreferrer"
               >
                 <FaGithub aria-hidden="true" />
-                <span>Get Project</span>
+                <span>View Source</span>
               </a>
             </div>
           </div>
