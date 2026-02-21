@@ -5,6 +5,7 @@ import { meta, dataportfolio } from "../../content_option";
 import { Link } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { WolverineHover } from "../../components/wolverine_hover";
 
 const featuredProjects = dataportfolio.slice(0, 4);
 
@@ -141,7 +142,11 @@ export const Home = () => {
             <div className="hero_proof">
               <p className="hero_proof_item">$2M+ monthly revenue impact through shipped product systems</p>
               <p className="hero_proof_item">Led product execution across automotive, fintech, and classifieds</p>
-              <p className="hero_proof_item">Admitted to the University of Michigan School of Information</p>
+              <p className="hero_proof_item">
+                Admitted to the{" "}
+                <WolverineHover text="University of Michigan" /> School of
+                Information
+              </p>
             </div>
           </div>
 
