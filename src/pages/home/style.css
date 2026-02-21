@@ -58,6 +58,7 @@ section {
   font-size: clamp(1rem, 1.75vw, 1.3rem);
   line-height: 1.45;
   font-weight: 600;
+  color: #474747;
   opacity: 0.9;
 }
 

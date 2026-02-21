@@ -4,11 +4,15 @@
     isolation: isolate;
 }
 
-.framer_badge {
+.framer_badge_wrap {
     position: fixed;
     right: 20px;
     bottom: 20px;
     z-index: 1200;
+}
+
+.framer_badge {
+    position: relative;
     display: inline-flex;
     align-items: center;
     gap: 14px;
@@ -18,7 +22,20 @@
     background: #ffffff;
     box-shadow: 0 2px 8px rgba(20, 22, 30, 0.08);
     color: #202127;
-    pointer-events: none;
+    pointer-events: auto;
+    transition: box-shadow 220ms ease, transform 220ms ease, border-color 220ms ease;
+}
+
+.framer_badge:hover,
+.framer_badge_wrap:focus-within .framer_badge {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 18px rgba(20, 22, 30, 0.16);
+    border-color: rgba(31, 32, 37, 0.24);
+}
+
+.framer_badge:focus-visible {
+    outline: 2px solid rgba(31, 32, 37, 0.32);
+    outline-offset: 2px;
 }
 
 .framer_badge_icon {
@@ -43,11 +60,103 @@
     white-space: nowrap;
 }
 
+.framer_badge_popover {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 12px);
+    width: min(360px, calc(100vw - 2rem));
+    padding: 14px 14px 13px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.26);
+    background:
+        linear-gradient(160deg, rgba(255, 255, 255, 0.66), rgba(255, 255, 255, 0.36));
+    -webkit-backdrop-filter: blur(16px) saturate(125%);
+    backdrop-filter: blur(16px) saturate(125%);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.14);
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+    transform-origin: 100% 100%;
+    pointer-events: none;
+    transition: opacity 220ms ease, transform 240ms ease;
+}
+
+.framer_badge_wrap:hover .framer_badge_popover,
+.framer_badge_wrap:focus-within .framer_badge_popover {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.framer_badge_popover_copy {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    font-weight: 600;
+    color: rgba(32, 33, 39, 0.92);
+}
+
+.framer_badge_popover_link {
+    margin-top: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 11px;
+    border-radius: 10px;
+    border: 1px solid rgba(31, 32, 37, 0.2);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(32, 33, 39, 0.96);
+    background: rgba(255, 255, 255, 0.5);
+    transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
+}
+
+.framer_badge_popover_link:hover,
+.framer_badge_popover_link:focus-visible {
+    border-color: rgba(31, 32, 37, 0.35);
+    background: rgba(255, 255, 255, 0.72);
+    transform: translateY(-1px);
+}
+
+.framer_badge_popover_link svg {
+    width: 0.95rem;
+    height: 0.95rem;
+}
+
 [data-theme="dark"] .framer_badge {
     border-color: rgba(255, 255, 255, 0.18);
     background: rgba(19, 20, 26, 0.92);
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.34);
     color: #f5f6fa;
+}
+
+[data-theme="dark"] .framer_badge:focus-visible {
+    outline-color: rgba(255, 255, 255, 0.46);
+}
+
+[data-theme="dark"] .framer_badge_popover {
+    border-color: rgba(255, 255, 255, 0.18);
+    background:
+        linear-gradient(160deg, rgba(18, 20, 28, 0.82), rgba(18, 20, 28, 0.66));
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.42);
+}
+
+[data-theme="dark"] .framer_badge_popover_copy {
+    color: rgba(245, 246, 250, 0.93);
+}
+
+[data-theme="dark"] .framer_badge_popover_link {
+    border-color: rgba(255, 255, 255, 0.24);
+    color: rgba(245, 246, 250, 0.96);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .framer_badge_popover_link:hover,
+[data-theme="dark"] .framer_badge_popover_link:focus-visible {
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.14);
 }
 
 .global-ambient-bg {
@@ -82,9 +191,12 @@
         padding-top: 40px;
     }
 
-    .framer_badge {
+    .framer_badge_wrap {
         right: 12px;
         bottom: 60px;
+    }
+
+    .framer_badge {
         padding: 10px 18px 10px 13px;
         gap: 10px;
     }
@@ -96,6 +208,10 @@
 
     .framer_badge_text {
         font-size: 0.9rem;
+    }
+
+    .framer_badge_popover {
+        display: none;
     }
 }
 

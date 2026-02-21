@@ -8,6 +8,7 @@ import withRouter from "../hooks/withRouter";
 import AppRoutes from "./routes";
 import Headermain from "../header";
 import AnimatedCursor from "../hooks/AnimatedCursor";
+import { FaGithub } from "react-icons/fa";
 import "./App.css";
 
 function _ScrollToTop(props) {
@@ -37,20 +38,37 @@ export default function App() {
         <ScrollToTop>
           <Headermain />
           <AppRoutes />
-          <div className="framer_badge" aria-hidden="true">
-            <span className="framer_badge_icon" aria-hidden="true">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="44.65 33.992 50.7 76.049"
-                focusable="false"
+          <div className="framer_badge_wrap">
+            <div className="framer_badge" tabIndex={0} role="note" aria-label="Not Made in framer">
+              <span className="framer_badge_icon" aria-hidden="true">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="44.65 33.992 50.7 76.049"
+                  focusable="false"
+                >
+                  <path
+                    d="M 44.65 33.992 L 95.35 33.992 L 95.35 59.341 L 70 59.341 Z M 44.65 59.341 L 70 59.341 L 95.35 84.691 L 44.65 84.691 Z M 44.65 84.691 L 70 84.691 L 70 110.041 Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              <span className="framer_badge_text">Not Made in framer ;)</span>
+            </div>
+
+            <div className="framer_badge_popover" role="dialog" aria-label="Project attribution">
+              <p className="framer_badge_popover_copy">
+                I built this portfolio myself and translated Framer-style interaction patterns using the same technologies powering this website.
+              </p>
+              <a
+                className="framer_badge_popover_link"
+                href="https://github.com/Mustafa16192/MyPortfolio"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <path
-                  d="M 44.65 33.992 L 95.35 33.992 L 95.35 59.341 L 70 59.341 Z M 44.65 59.341 L 70 59.341 L 95.35 84.691 L 44.65 84.691 Z M 44.65 84.691 L 70 84.691 L 70 110.041 Z"
-                  fill="currentColor"
-                />
-              </svg>
-            </span>
-            <span className="framer_badge_text">Not Made in Framer ;)</span>
+                <FaGithub aria-hidden="true" />
+                <span>Get Project</span>
+              </a>
+            </div>
           </div>
         </ScrollToTop>
       </div>
