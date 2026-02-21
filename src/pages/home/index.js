@@ -409,7 +409,7 @@ export const Home = () => {
               AI-driven Product Manager who speaks engineering 🧑‍💻
             </h1>
             <p className="home_subtitle" ref={subtitleRef}>
-              I turn ambiguity into shipped products and business lift 🚀
+              I turn ambiguity into shipped products and business lift  🚀
             </p>
 
             <div className="hero_proof" ref={proofRef}>
