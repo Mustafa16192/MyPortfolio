@@ -131,6 +131,9 @@ section {
 
 .featured_projects {
   width: 100%;
+  --featured-accent: #e6634f;
+  --featured-link: #8f80ff;
+  --featured-soft-ink: rgba(255, 255, 255, 0.72);
 }
 
 .featured_projects_header {
@@ -138,64 +141,74 @@ section {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 18px;
+  margin-bottom: 26px;
 }
 
 .featured_projects_header h2 {
   margin: 0;
-  font-size: clamp(1.55rem, 3vw, 2.3rem);
-  line-height: 1.1;
+  font-size: clamp(1.95rem, 4vw, 3rem);
+  line-height: 1.02;
+  letter-spacing: -0.018em;
 }
 
 .featured_projects_link {
-  font-size: 0.92rem;
-  font-weight: 700;
+  font-size: 0.81rem;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.11em;
   text-decoration: none;
-  border-bottom: 1px solid currentColor;
-  opacity: 0.88;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 999px;
+  padding: 8px 14px;
+  opacity: 0.92;
+  transition: opacity 0.22s ease, transform 0.22s ease, border-color 0.22s ease;
 }
 
 .featured_projects_link:hover {
   opacity: 1;
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.44);
 }
 
 .featured_projects_list {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
 }
 
 .featured_project_row {
   display: grid;
-  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
   align-items: center;
-  gap: 22px;
-  padding: 18px;
+  gap: 28px;
+  padding: 22px;
   text-decoration: none;
-  border: 1px solid rgba(255, 255, 255, 0.13);
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.04);
-  transition: transform 0.26s ease, border-color 0.26s ease, box-shadow 0.26s ease, background 0.26s ease;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 22px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018));
+  transition: transform 0.26s ease, border-color 0.26s ease, box-shadow 0.26s ease;
 }
 
 .featured_project_row:hover {
-  transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px) scale(1.002);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 15px 34px rgba(0, 0, 0, 0.18);
 }
 
 .featured_project_media {
   width: 100%;
-  aspect-ratio: 16 / 9;
+  min-height: 310px;
+  aspect-ratio: 16 / 10;
   overflow: hidden;
-  border-radius: 12px;
-  background: rgba(0, 0, 0, 0.22);
+  border-radius: 16px;
+  background:
+    linear-gradient(140deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.02)),
+    rgba(0, 0, 0, 0.18);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding: 14px;
 }
 
 .featured_project_media img {
@@ -204,6 +217,11 @@ section {
   object-fit: contain;
   object-position: center;
   display: block;
+  transition: transform 0.36s ease;
+}
+
+.featured_project_row:hover .featured_project_media img {
+  transform: scale(1.015);
 }
 
 .featured_project_info {
@@ -215,33 +233,69 @@ section {
   outline-offset: 3px;
 }
 
-.featured_project_meta {
-  margin: 0;
-  font-size: 0.76rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+.featured_project_meta_row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.featured_project_badge {
+  color: var(--featured-accent);
+  font-size: 1.08rem;
   font-weight: 700;
-  opacity: 0.8;
+  letter-spacing: -0.01em;
+}
+
+.featured_project_sep {
+  font-size: 0.94rem;
+  opacity: 0.6;
+}
+
+.featured_project_timeline,
+.featured_project_role {
+  font-size: 1.08rem;
+  color: var(--featured-soft-ink);
+  letter-spacing: -0.01em;
+}
+
+.featured_project_role {
+  text-transform: none;
 }
 
 .featured_project_title {
-  margin: 8px 0 0;
-  font-size: 1.22rem;
-  line-height: 1.22;
+  margin: 12px 0 0;
+  max-width: 18ch;
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
 }
 
 .featured_project_desc {
-  margin: 10px 0 0;
-  font-size: 0.97rem;
-  line-height: 1.55;
-  opacity: 0.9;
+  margin: 14px 0 0;
+  max-width: 34ch;
+  font-size: clamp(1.1rem, 1.5vw, 1.4rem);
+  line-height: 1.45;
+  opacity: 0.86;
 }
 
 .featured_project_desc:last-child {
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.featured_project_cta {
+  margin-top: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 800;
+  color: var(--featured-link);
 }
 
 .ac_btn {
@@ -342,7 +396,7 @@ section {
   }
 
   .featured_projects_list {
-    gap: 16px;
+    gap: 18px;
   }
 
   .featured_project_row {
@@ -352,7 +406,24 @@ section {
   }
 
   .featured_project_media {
+    min-height: 220px;
     aspect-ratio: 16 / 10;
+  }
+
+  .featured_project_title {
+    max-width: 22ch;
+    font-size: clamp(1.55rem, 6vw, 2.2rem);
+  }
+
+  .featured_project_desc {
+    max-width: 100%;
+    font-size: 1rem;
+  }
+
+  .featured_project_badge,
+  .featured_project_timeline,
+  .featured_project_role {
+    font-size: 0.98rem;
   }
 }
 
@@ -392,16 +463,32 @@ section {
 
 [data-theme="light"] .featured_project_row {
   border-color: rgba(0, 0, 0, 0.12);
-  background: rgba(0, 0, 0, 0.03);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(0, 0, 0, 0.02));
 }
 
 [data-theme="light"] .featured_project_row:hover {
   border-color: rgba(0, 0, 0, 0.24);
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.11);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.09);
 }
 
 [data-theme="light"] .featured_project_media {
-  background: rgba(0, 0, 0, 0.05);
+  background:
+    linear-gradient(140deg, rgba(255, 255, 255, 0.75), rgba(0, 0, 0, 0.03)),
+    rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="light"] .featured_projects {
+  --featured-accent: #d74d36;
+  --featured-link: #6257d6;
+  --featured-soft-ink: rgba(0, 0, 0, 0.62);
+}
+
+[data-theme="light"] .featured_projects_link {
+  border-color: rgba(0, 0, 0, 0.22);
+}
+
+[data-theme="light"] .featured_projects_link:hover {
+  border-color: rgba(0, 0, 0, 0.38);
 }
 
 @media (prefers-reduced-motion: reduce) {

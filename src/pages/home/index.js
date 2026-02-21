@@ -200,12 +200,24 @@ export const Home = () => {
                     />
                   </div>
                   <div className="featured_project_info">
-                    <p className="featured_project_meta">
-                      {project.role || "Product Project"}
-                      {project.timeline ? ` • ${project.timeline}` : ""}
-                    </p>
+                    <div className="featured_project_meta_row">
+                      <span className="featured_project_badge">Featured</span>
+                      {project.timeline && (
+                        <>
+                          <span className="featured_project_sep">•</span>
+                          <span className="featured_project_timeline">
+                            {project.timeline}
+                          </span>
+                        </>
+                      )}
+                      <span className="featured_project_sep">•</span>
+                      <span className="featured_project_role">
+                        {project.role || "Product Case Study"}
+                      </span>
+                    </div>
                     <h3 className="featured_project_title">{project.title}</h3>
                     <p className="featured_project_desc">{project.description}</p>
+                    <span className="featured_project_cta">View Case Study ↗</span>
                   </div>
                 </Link>
               ))}
