@@ -13,12 +13,13 @@
 }
 
 .project-chapter-layout {
-    align-items: flex-start;
+    align-items: stretch;
     margin-top: 6px;
 }
 
 .project-chapter-nav-col {
     position: relative;
+    align-self: stretch;
 }
 
 .project-chapter-nav {

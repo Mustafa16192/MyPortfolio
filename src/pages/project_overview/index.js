@@ -76,6 +76,7 @@ const VideoSection = ({ src, caption }) => {
 export const ProjectOverview = () => {
   const { id } = useParams();
   const project = dataportfolio.find((p) => p.id === id);
+  const pageContainerRef = useRef(null);
   const sectionRefs = useRef([]);
   const [activeChapter, setActiveChapter] = useState(0);
   const chapterItems = useMemo(() => {
@@ -105,10 +106,17 @@ export const ProjectOverview = () => {
 
     const visibleRatios = new Map();
     const sectionElements = chapterItems.map((_, index) => sectionRefs.current[index]);
+    const desktopContainer =
+      window.innerWidth >= 992 ? pageContainerRef.current : null;
+    const isContainerScroll = Boolean(desktopContainer);
+    const scrollRoot = isContainerScroll ? desktopContainer : null;
     let rafId = 0;
 
     const updateActiveFromVisibility = () => {
-      const centerLine = window.innerHeight * 0.48;
+      const centerLine = isContainerScroll
+        ? desktopContainer.getBoundingClientRect().top +
+          desktopContainer.getBoundingClientRect().height * 0.48
+        : window.innerHeight * 0.48;
       let bestIndex = -1;
       let bestScore = -1;
 
@@ -167,7 +175,7 @@ export const ProjectOverview = () => {
         scheduleUpdate();
       },
       {
-        root: null,
+        root: scrollRoot,
         rootMargin: "-40% 0px -45% 0px",
         threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],
       }
@@ -182,19 +190,23 @@ export const ProjectOverview = () => {
     });
 
     const handleScrollEnd = () => {
-      const atBottom =
-        window.innerHeight + window.scrollY >=
-        document.documentElement.scrollHeight - 80;
+      const atBottom = isContainerScroll
+        ? desktopContainer.scrollTop + desktopContainer.clientHeight >=
+          desktopContainer.scrollHeight - 80
+        : window.innerHeight + window.scrollY >=
+          document.documentElement.scrollHeight - 80;
       if (atBottom) {
         setActiveChapter(chapterItems.length - 1);
       }
+      scheduleUpdate();
     };
 
-    window.addEventListener("scroll", handleScrollEnd, { passive: true });
+    const scrollTarget = isContainerScroll ? desktopContainer : window;
+    scrollTarget.addEventListener("scroll", handleScrollEnd, { passive: true });
     scheduleUpdate();
 
     return () => {
-      window.removeEventListener("scroll", handleScrollEnd);
+      scrollTarget.removeEventListener("scroll", handleScrollEnd);
       observer.disconnect();
       if (rafId) {
         cancelAnimationFrame(rafId);
@@ -229,6 +241,7 @@ export const ProjectOverview = () => {
   return (
     <HelmetProvider>
       <Container
+        ref={pageContainerRef}
         className="About-header fixed-page project-overview-page"
         as={motion.div}
         exit={{ opacity: 0 }}
