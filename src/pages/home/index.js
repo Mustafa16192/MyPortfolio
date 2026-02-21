@@ -189,7 +189,7 @@ export const Home = () => {
               <p className="hero_proof_item">$2M+ monthly revenue impact through shipped product systems</p>
               <p className="hero_proof_item">Led product execution across automotive, fintech, and classifieds</p>
               <p className="hero_proof_item">
-                Admitted to the <SquirrelHover text="University of Michigan" /> School of Information
+                Admitted to the <SquirrelHover text="University of Michigan" className="hero_umich_hover" /> School of Information
               </p>
             </div>
           </div>

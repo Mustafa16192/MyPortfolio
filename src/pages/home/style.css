@@ -118,6 +118,10 @@ section {
   background: rgba(255, 255, 255, 0.03);
 }
 
+.hero_umich_hover {
+  margin-left: 3px;
+}
+
 .featured_projects {
   width: 100%;
   --featured-accent: #e6634f;
