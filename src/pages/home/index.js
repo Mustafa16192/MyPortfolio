@@ -12,6 +12,10 @@ const featuredProjects = dataportfolio.slice(0, 4);
 export const Home = () => {
   const homeRef = useRef(null);
   const heroRef = useRef(null);
+  const eyebrowRef = useRef(null);
+  const titleRef = useRef(null);
+  const subtitleRef = useRef(null);
+  const proofRef = useRef(null);
   const featuredRef = useRef(null);
   const featuredHeaderRef = useRef(null);
   const featuredListRef = useRef(null);
@@ -20,6 +24,10 @@ export const Home = () => {
     if (
       !homeRef.current ||
       !heroRef.current ||
+      !eyebrowRef.current ||
+      !titleRef.current ||
+      !subtitleRef.current ||
+      !proofRef.current ||
       !featuredRef.current ||
       !featuredListRef.current
     ) {
@@ -38,11 +46,49 @@ export const Home = () => {
     };
 
     if (prefersReducedMotion) {
+      gsap.set(
+        [
+          eyebrowRef.current,
+          titleRef.current,
+          subtitleRef.current,
+          ...proofRef.current.querySelectorAll(".hero_proof_item"),
+        ],
+        { clearProps: "opacity,transform" }
+      );
       setProjectFocus(false);
       return () => setProjectFocus(false);
     }
 
     const ctx = gsap.context(() => {
+      const introY = isMobile
+        ? { eyebrow: 8, title: 12, subtitle: 10, proof: 14 }
+        : { eyebrow: 10, title: 14, subtitle: 12, proof: 18 };
+      const proofItems = proofRef.current.querySelectorAll(".hero_proof_item");
+
+      gsap.set(eyebrowRef.current, { opacity: 0, y: introY.eyebrow });
+      gsap.set(titleRef.current, { opacity: 0, y: introY.title });
+      gsap.set(subtitleRef.current, { opacity: 0, y: introY.subtitle });
+      gsap.set(proofItems, { opacity: 0, y: introY.proof });
+
+      gsap
+        .timeline({
+          defaults: { ease: "power2.out" },
+          delay: 0.14,
+        })
+        .to(eyebrowRef.current, { opacity: 1, y: 0, duration: 0.42 })
+        .to(titleRef.current, { opacity: 1, y: 0, duration: 0.5 }, "-=0.18")
+        .to(subtitleRef.current, { opacity: 1, y: 0, duration: 0.42 }, "-=0.26")
+        .to(
+          proofItems,
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.4,
+            stagger: 0.08,
+          },
+          "-=0.16"
+        );
+
       if (isMobile) {
         ScrollTrigger.create({
           trigger: featuredRef.current,
@@ -125,21 +171,21 @@ export const Home = () => {
 
         <div className="home_shell">
           <div className="home_hero home_hero_anim" ref={heroRef}>
-            <p className="home_eyebrow">
+            <p className="home_eyebrow" ref={eyebrowRef}>
               <span className="status_dot" aria-hidden="true"></span>
               <span className="status_text">
                 <span className="status_old">Learning</span>{" "}
                 <span className="status_new">Building</span>stuff in UMich
               </span>
             </p>
-            <h1 className="home_title">
+            <h1 className="home_title" ref={titleRef}>
               AI-driven Product Manager who speaks engineering
             </h1>
-            <p className="home_subtitle">
+            <p className="home_subtitle" ref={subtitleRef}>
               I turn ambiguity into shipped products and business lift
             </p>
 
-            <div className="hero_proof">
+            <div className="hero_proof" ref={proofRef}>
               <p className="hero_proof_item">$2M+ monthly revenue impact through shipped product systems</p>
               <p className="hero_proof_item">Led product execution across automotive, fintech, and classifieds</p>
               <p className="hero_proof_item">
