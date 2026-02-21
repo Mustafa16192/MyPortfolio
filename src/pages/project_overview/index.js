@@ -401,6 +401,7 @@ export const ProjectOverview = () => {
   return (
     <HelmetProvider>
       <Container
+        fluid
         ref={pageContainerRef}
         className="About-header fixed-page project-overview-page"
         as={motion.div}
@@ -426,7 +427,7 @@ export const ProjectOverview = () => {
         </Row>
 
         <Row className="project-summary-row">
-          <Col lg="5" className="project-summary-text-col mb-4 mb-lg-0">
+          <Col lg="4" className="project-summary-text-col mb-4 mb-lg-0">
             {(project.role || project.timeline) && (
               <div className="project-summary-meta">
                 {project.role && (
@@ -455,7 +456,7 @@ export const ProjectOverview = () => {
               </Link>
             </div>
           </Col>
-          <Col lg="7" className="project-summary-media-col d-flex align-items-center justify-content-center">
+          <Col lg="8" className="project-summary-media-col d-flex align-items-center justify-content-center">
             <div className="project-image-container w-100">
               <motion.img
                 layoutId={`project-image-${project.id}`}
