@@ -147,29 +147,25 @@
 }
 
 .site__header > .d-flex {
+    --focus-progress: var(--project-focus, 0);
     position: relative;
     width: 85%;
     margin-top: 16px;
     margin-left: auto;
     margin-right: auto;
     border-radius: 115px;
-    border: 1px solid rgba(255, 255, 255, 0.26);
-    background: rgba(217, 217, 217, 0.2);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-    -webkit-backdrop-filter: blur(20px) saturate(140%);
-    backdrop-filter: blur(20px) saturate(140%);
-    transform: translateY(0) scale(1);
+    border: 1px solid rgba(255, 255, 255, calc(0.26 - (0.06 * var(--focus-progress))));
+    background: rgba(217, 217, 217, calc(0.2 - (0.06 * var(--focus-progress))));
+    box-shadow: 0 calc(8px - (3px * var(--focus-progress))) calc(24px - (8px * var(--focus-progress))) rgba(0, 0, 0, calc(0.12 - (0.02 * var(--focus-progress))));
+    -webkit-backdrop-filter: blur(calc(20px - (6px * var(--focus-progress)))) saturate(calc(140% - (12% * var(--focus-progress))));
+    backdrop-filter: blur(calc(20px - (6px * var(--focus-progress)))) saturate(calc(140% - (12% * var(--focus-progress))));
+    transform: translateY(calc(2px * var(--focus-progress))) scale(calc(1 - (0.008 * var(--focus-progress))));
     transition: background 260ms ease, border-color 260ms ease, box-shadow 260ms ease, transform 260ms ease, -webkit-backdrop-filter 260ms ease, backdrop-filter 260ms ease;
     overflow: hidden;
 }
 
 body.is-project-focus .site__header > .d-flex {
-    border-color: rgba(255, 255, 255, 0.2);
-    background: rgba(217, 217, 217, 0.14);
-    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.1);
-    -webkit-backdrop-filter: blur(14px) saturate(128%);
-    backdrop-filter: blur(14px) saturate(128%);
-    transform: translateY(2px) scale(0.992);
+    --focus-progress: var(--project-focus, 1);
 }
 
 .site__header > .d-flex .nav_ac {
@@ -340,11 +336,11 @@ body.is-project-focus .site__header > .d-flex {
 
 @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
     .site__header > .d-flex {
-        background: rgba(217, 217, 217, 0.6);
+        background: rgba(217, 217, 217, calc(0.6 - (0.16 * var(--focus-progress))));
     }
 
     body.is-project-focus .site__header > .d-flex {
-        background: rgba(217, 217, 217, 0.44);
+        --focus-progress: var(--project-focus, 1);
     }
 }
 

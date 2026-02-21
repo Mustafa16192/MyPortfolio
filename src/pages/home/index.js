@@ -60,6 +60,17 @@ export const Home = () => {
     const setProjectFocus = (isProjectFocused) => {
       document.body.classList.toggle("is-project-focus", isProjectFocused);
     };
+    const focusEase = gsap.parseEase("power1.out");
+    const setProjectFocusProgress = (rawProgress) => {
+      const clamped = gsap.utils.clamp(0, 1, rawProgress);
+      const eased = focusEase(clamped);
+      document.body.style.setProperty("--project-focus", eased.toFixed(3));
+      setProjectFocus(eased > 0.08);
+    };
+    const clearProjectFocus = () => {
+      setProjectFocus(false);
+      document.body.style.removeProperty("--project-focus");
+    };
 
     const setupProofTilt = (cards) => {
       const maxRotateX = 4;
@@ -243,8 +254,8 @@ export const Home = () => {
         [eyebrowRef.current, titleRef.current, subtitleRef.current, ...proofItems],
         { clearProps: "opacity,transform" }
       );
-      setProjectFocus(false);
-      return () => setProjectFocus(false);
+      clearProjectFocus();
+      return () => clearProjectFocus();
     }
 
     const ctx = gsap.context(() => {
@@ -356,9 +367,9 @@ export const Home = () => {
             trigger: featuredRef.current,
             start: "top 86%",
             end: "top 20%",
-            scrub: 0.8,
-            onUpdate: (self) => setProjectFocus(self.progress > 0.45),
-            onLeaveBack: () => setProjectFocus(false),
+            scrub: 0.65,
+            onUpdate: (self) => setProjectFocusProgress(self.progress),
+            onLeaveBack: () => setProjectFocusProgress(0),
           },
         })
         .fromTo(
@@ -371,7 +382,7 @@ export const Home = () => {
     }, homeRef);
 
     return () => {
-      setProjectFocus(false);
+      clearProjectFocus();
       cleanupProofTilt();
       cleanupFeaturedTilt();
       ctx.revert();
