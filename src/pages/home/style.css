@@ -202,13 +202,11 @@ section {
   aspect-ratio: 16 / 10;
   overflow: hidden;
   border-radius: 16px;
-  background:
-    linear-gradient(140deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.02)),
-    rgba(0, 0, 0, 0.18);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 14px;
+  background: transparent;
+  padding: 0;
 }
 
 .featured_project_media img {
@@ -472,9 +470,7 @@ section {
 }
 
 [data-theme="light"] .featured_project_media {
-  background:
-    linear-gradient(140deg, rgba(255, 255, 255, 0.75), rgba(0, 0, 0, 0.03)),
-    rgba(0, 0, 0, 0.03);
+  background: transparent;
 }
 
 [data-theme="light"] .featured_projects {
