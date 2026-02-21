@@ -189,9 +189,9 @@ export const Home = () => {
               <p className="hero_proof_item">$2M+ monthly revenue impact through shipped product systems</p>
               <p className="hero_proof_item">Led product execution across automotive, fintech, and classifieds</p>
               <p className="hero_proof_item">
-                Admitted to the{" "}
-                <SquirrelHover text=" University of Michigan" /> School of
-                Information
+                <span>Admitted to the </span>
+                <SquirrelHover text="University of Michigan" />
+                <span>{" "}School of Information</span>
               </p>
             </div>
           </div>

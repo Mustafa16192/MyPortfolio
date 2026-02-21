@@ -107,7 +107,9 @@ section {
   min-height: 86px;
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
+  text-align: center;
   font-size: 0.92rem;
   line-height: 1.5;
   font-weight: 600;
