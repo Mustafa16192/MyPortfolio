@@ -44,7 +44,7 @@ const Headermain = () => {
 
           <div className="d-flex align-items-center header_controls">
             <Themetoggle />
-            <button className="menu__button  nav_ac" onClick={handleToggle}>
+            <button className="menu__button nav_ac" onClick={handleToggle}>
               {!isActive ? <VscClose /> : <VscGrabber />}
             </button>
           </div>
@@ -60,9 +60,6 @@ const Headermain = () => {
                       Home
                     </Link>
                   </li>
-                  {/* <li className="menu_item">
-                    <Link  onClick={handleToggle} to="/api" className="my-3"> Portfolio</Link>
-                  </li> */}
                   <li className="menu_item">
                     <Link onClick={handleToggle} to="/about" className="my-3">
                       About
@@ -70,19 +67,16 @@ const Headermain = () => {
                   </li>
                   <li className="menu_item">
                     <Link onClick={handleToggle} to="/resume" className="my-3">
-                      {" "}
                       Resume
                     </Link>
                   </li>
                   <li className="menu_item">
                     <Link onClick={handleToggle} to="/portfolio" className="my-3">
-                      {" "}
                       Portfolio
                     </Link>
                   </li>
                   <li className="menu_item">
                     <Link onClick={handleToggle} to="/contact" className="my-3">
-                      {" "}
                       Contact
                     </Link>
                   </li>
