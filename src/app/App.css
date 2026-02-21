@@ -4,6 +4,54 @@
     isolation: isolate;
 }
 
+.framer_badge {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1200;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 16px 11px 13px;
+    border-radius: 18px;
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    background: rgba(255, 255, 255, 0.88);
+    -webkit-backdrop-filter: blur(8px) saturate(120%);
+    backdrop-filter: blur(8px) saturate(120%);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    color: #26282e;
+    pointer-events: none;
+}
+
+.framer_badge_icon {
+    display: inline-flex;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.framer_badge_icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.framer_badge_text {
+    font-family: Raleway, sans-serif;
+    font-size: 0.92rem;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+[data-theme="dark"] .framer_badge {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(14, 14, 14, 0.82);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    color: #f5f6fa;
+}
+
 .global-ambient-bg {
     position: fixed;
     top: -210px;
@@ -34,6 +82,22 @@
 @media only screen and (max-width: 991px) {
     .s_c {
         padding-top: 40px;
+    }
+
+    .framer_badge {
+        right: 12px;
+        bottom: 60px;
+        padding: 10px 14px 10px 12px;
+        border-radius: 16px;
+    }
+
+    .framer_badge_icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .framer_badge_text {
+        font-size: 0.82rem;
     }
 }
 

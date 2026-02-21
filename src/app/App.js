@@ -37,6 +37,21 @@ export default function App() {
         <ScrollToTop>
           <Headermain />
           <AppRoutes />
+          <div className="framer_badge" aria-hidden="true">
+            <span className="framer_badge_icon" aria-hidden="true">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 140 140"
+                focusable="false"
+              >
+                <path
+                  d="M 44.65 33.992 L 95.35 33.992 L 95.35 59.341 L 70 59.341 Z M 44.65 59.341 L 70 59.341 L 95.35 84.691 L 44.65 84.691 Z M 44.65 84.691 L 70 84.691 L 70 110.041 Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </span>
+            <span className="framer_badge_text">Not Made in framer ;)</span>
+          </div>
         </ScrollToTop>
       </div>
     </Router>
