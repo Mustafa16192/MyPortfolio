@@ -4,3 +4,179 @@
     border-radius: 8px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
+
+.project-overview-page {
+    --chapter-border: rgba(255, 255, 255, 0.16);
+    --chapter-active-border: rgba(255, 255, 255, 0.34);
+    --chapter-chip-bg: rgba(255, 255, 255, 0.04);
+    --chapter-chip-active-bg: rgba(255, 255, 255, 0.15);
+}
+
+.project-chapter-layout {
+    align-items: flex-start;
+    margin-top: 6px;
+}
+
+.project-chapter-nav-col {
+    position: relative;
+}
+
+.project-chapter-nav {
+    position: sticky;
+    top: clamp(90px, 11vh, 124px);
+    padding: 12px;
+    border-radius: 18px;
+    border: 1px solid var(--chapter-border);
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+    -webkit-backdrop-filter: blur(10px) saturate(122%);
+    backdrop-filter: blur(10px) saturate(122%);
+}
+
+.project-chapter-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.project-chapter-list-item {
+    margin: 0;
+}
+
+.project-chapter-link {
+    width: 100%;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--text-color);
+    text-align: left;
+    padding: 9px 10px;
+    font-size: 1.02rem;
+    line-height: 1.35;
+    opacity: 0.78;
+    cursor: pointer;
+    transition: opacity 180ms ease, background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.project-chapter-link:hover {
+    opacity: 0.98;
+    transform: translateX(1px);
+}
+
+.project-chapter-link.is-active {
+    opacity: 1;
+    border-color: var(--chapter-active-border);
+    background: var(--chapter-chip-active-bg);
+    font-weight: 700;
+}
+
+.project-chapter-link:focus-visible,
+.project-chapter-chip:focus-visible {
+    outline: 2px solid rgba(127, 151, 255, 0.6);
+    outline-offset: 2px;
+}
+
+.project-chapter-content-col {
+    min-width: 0;
+}
+
+.project-chapter-mobile {
+    display: none;
+}
+
+.project-case-section {
+    scroll-margin-top: 112px;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.project-case-section:last-child {
+    margin-bottom: 4px;
+    border-bottom: none;
+}
+
+[data-theme="light"] .project-overview-page {
+    --chapter-border: rgba(0, 0, 0, 0.12);
+    --chapter-active-border: rgba(0, 0, 0, 0.24);
+    --chapter-chip-bg: rgba(0, 0, 0, 0.03);
+    --chapter-chip-active-bg: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .project-chapter-nav {
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0.56));
+}
+
+[data-theme="light"] .project-case-section {
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 991px) {
+    .project-chapter-layout {
+        margin-top: 0;
+    }
+
+    .project-chapter-mobile {
+        display: block;
+        position: sticky;
+        top: 76px;
+        z-index: 20;
+        margin-bottom: 16px;
+        padding: 6px 0;
+        background: linear-gradient(180deg, rgba(12, 12, 12, 0.96), rgba(12, 12, 12, 0.76) 74%, rgba(12, 12, 12, 0));
+    }
+
+    .project-chapter-chip-track {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        overflow-x: auto;
+        scrollbar-width: none;
+        padding: 2px 2px 8px;
+    }
+
+    .project-chapter-chip-track::-webkit-scrollbar {
+        display: none;
+    }
+
+    .project-chapter-chip {
+        border: 1px solid var(--chapter-border);
+        border-radius: 999px;
+        background: var(--chapter-chip-bg);
+        color: var(--text-color);
+        padding: 8px 12px;
+        white-space: nowrap;
+        font-size: 0.87rem;
+        line-height: 1.1;
+        opacity: 0.86;
+        cursor: pointer;
+        transition: opacity 180ms ease, border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
+    }
+
+    .project-chapter-chip.is-active {
+        opacity: 1;
+        border-color: var(--chapter-active-border);
+        background: var(--chapter-chip-active-bg);
+        font-weight: 700;
+        transform: translateY(-1px);
+    }
+
+    .project-case-section {
+        scroll-margin-top: 122px;
+    }
+}
+
+@media (max-width: 991px) {
+    [data-theme="light"] .project-chapter-mobile {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.78) 74%, rgba(255, 255, 255, 0));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .project-chapter-link,
+    .project-chapter-chip {
+        transition: none;
+    }
+}

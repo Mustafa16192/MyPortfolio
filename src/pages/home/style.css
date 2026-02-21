@@ -62,6 +62,10 @@ section {
   opacity: 0.9;
 }
 
+[data-theme="dark"] .home_subtitle {
+  color: #dddddd;
+}
+
 .status_dot {
   width: 9px;
   height: 9px;
