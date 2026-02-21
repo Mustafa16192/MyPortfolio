@@ -122,6 +122,11 @@ section {
   margin-left: 3px;
 }
 
+.hero_proof_text {
+  display: inline;
+  line-height: inherit;
+}
+
 .hero_proof_item .hero_umich_hover.squirrel-hover {
   display: inline;
   line-height: inherit;
@@ -130,6 +135,7 @@ section {
 
 .hero_proof_item .hero_umich_hover .squirrel-hover__text {
   line-height: inherit;
+  text-underline-offset: 1px;
 }
 
 .featured_projects {

@@ -186,10 +186,16 @@ export const Home = () => {
             </p>
 
             <div className="hero_proof" ref={proofRef}>
-              <p className="hero_proof_item">$2M+ monthly revenue impact through shipped product systems</p>
-              <p className="hero_proof_item">Led product execution across automotive, fintech, and classifieds</p>
               <p className="hero_proof_item">
-                Admitted to the <SquirrelHover text="University of Michigan" className="hero_umich_hover" /> School of Information
+                <span className="hero_proof_text">$2M+ monthly revenue impact through shipped product systems</span>
+              </p>
+              <p className="hero_proof_item">
+                <span className="hero_proof_text">Led product execution across automotive, fintech, and classifieds</span>
+              </p>
+              <p className="hero_proof_item">
+                <span className="hero_proof_text">
+                  Admitted to the <SquirrelHover text="University of Michigan" className="hero_umich_hover" /> School of Information
+                </span>
               </p>
             </div>
           </div>
