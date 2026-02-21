@@ -132,7 +132,7 @@ const dataportfolio = [
     details: "This is a research-driven redesign concept for a University of Michigan student campus life assistant experience. It is not an official University product redesign. It is a portfolio project that explores how an AI-powered campus assistant could become more useful, more trustworthy, and easier to adopt. The core issue is not just UI clutter, but adoption and trust.",
     sections: [
         {
-            title: "1. Problem: The Gap Between AI Promise and Student Trust",
+            title: "Problem Statement",
             content: [
                 "University of Michigan students increasingly seek AI assistance, yet a critical barrier prevents widespread adoption: a profound lack of trust. This isn't merely a user interface problem; it's a foundational issue tied to perceived accuracy, reliability, U-M specificity, and privacy.",
                 "The existing GoBlue App suffered from low awareness and usage, failing to meet the core needs and expectations students have for an intelligent campus companion."
@@ -141,7 +141,7 @@ const dataportfolio = [
             caption: "The existing landscape: Low awareness and unmet needs"
         },
         {
-            title: "2. Research: Understanding the Student Landscape",
+            title: "User Research",
             content: [
                 "To uncover the root causes of low trust, I conducted a survey (N=44) and user interviews.",
                 "Key Findings:",
@@ -160,7 +160,7 @@ const dataportfolio = [
             caption: "Direct quotes and likelihood of adoption based on features."
         },
         {
-            title: "3. Insights & Approach",
+            title: "Insights & Approach",
             content: [
                 "The research revealed that trust and utility are two sides of the same coin. Accuracy is king, and privacy is a foundation.",
                 "My design strategy focused on:",
@@ -171,32 +171,35 @@ const dataportfolio = [
             ]
         },
         {
-            title: "4. Ideation & Sketching",
+            title: "Ideation & Sketching",
             content: "I started by mapping out the core user flows—checking deadlines, finding events, and asking quick queries. The goal was to reduce friction and make the 'smart' features accessible without being intrusive.",
             img: "images/Sketches/go_blue_sketch1.png",
             caption: "Early explorations of the home screen and navigation."
         },
         {
+            title: "Smart Reminder Controls",
             content: "Iterating on the 'Smart Reminders' and settings to give users control over what the AI tracks and suggests.",
             img: "images/Sketches/go_blue_sketch2.png",
             caption: "Refining the settings and reminder controls."
         },
         {
+            title: "Quick Query Exploration",
             content: "Drafting the 'Quick Query' interface, focusing on how to present AI suggestions based on recent context (e.g., bus times, dining).",
             img: "images/Sketches/go_blue_sketch3.png",
             caption: "Sketching the query interface and contextual suggestions."
         },
         {
-            title: "5. Solution & Prototype",
+            title: "Solution & Prototype",
             content: "The redesign introduces a proactive, highly relevant assistant. It surfaces critical info like deadlines and course overviews while integrating trust patterns to give students confidence in the data source."
         },
         {
+            title: "Prototype Walkthrough",
             type: "video",
             src: "goblue/goblue.mp4",
             caption: "Concept Walkthrough: Building Trust and Utility"
         },
         {
-            title: "6. Outcomes & Learnings",
+            title: "Outcomes & Learnings",
             content: [
                 "Outcomes: A validated understanding of student needs and a tangible prototype showcasing how a trustworthy AI experience could foster adoption.",
                 "Learnings: Trust is not a feature; it is a foundational requirement. Focusing on immediate, task-oriented utility is crucial for overcoming initial skepticism."

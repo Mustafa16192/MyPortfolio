@@ -81,10 +81,13 @@ export const ProjectOverview = () => {
   const [activeChapter, setActiveChapter] = useState(0);
   const chapterItems = useMemo(() => {
     const sections = project?.sections || [];
+    const customLabels = project?.chapterLabels || [];
     return sections.map((section, index) => {
+      const customLabel =
+        typeof customLabels[index] === "string" ? customLabels[index].trim() : "";
       const hasTitle =
         typeof section.title === "string" && section.title.trim().length > 0;
-      const title = hasTitle ? section.title.trim() : `Section ${index + 1}`;
+      const title = customLabel || (hasTitle ? section.title.trim() : `Section ${index + 1}`);
       return {
         id: toSectionId(title, index),
         title,
@@ -356,11 +359,7 @@ export const ProjectOverview = () => {
                   }}
                   className="project-case-section"
                 >
-                  <h3 className="color_sec py-3 display-6">
-                    {section.title && section.title.trim()
-                      ? section.title
-                      : chapterItems[index].title}
-                  </h3>
+                  <h3 className="color_sec py-3 display-6">{chapterItems[index].title}</h3>
                   <div className="section-content">
                     {section.type === "video" ? (
                       <VideoSection src={section.src} caption={section.caption} />
