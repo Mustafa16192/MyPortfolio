@@ -82,15 +82,26 @@
     padding-top: 30px;
 }
 
+.page-heading-row {
+    margin-top: 0.75rem;
+    margin-bottom: 3rem;
+    padding-top: 1rem;
+}
+
 @media (max-width: 991px) {
     .page-nav-offset {
         padding-top: 18px;
+    }
+
+    .page-heading-row {
+        margin-top: 0.5rem;
+        margin-bottom: 2.5rem;
+        padding-top: 0.25rem;
     }
 }
 
 /* Framer Motion Page Transition Helpers */
 .absolute-page {
-    top: 60px; 
     left: 0;
     right: 0;
     margin-left: auto;

@@ -21,7 +21,7 @@ export const Resume = () => {
           <meta name="description" content={meta.description} />
         </Helmet>
 
-        <Row className="mb-5 mt-3 pt-md-3 align-items-center justify-content-between">
+        <Row className="page-heading-row align-items-center justify-content-between">
           <Col lg="6" className="d-flex align-items-center">
             <h1 className="display-4 mb-0 mr-4">Resume</h1>
           </Col>

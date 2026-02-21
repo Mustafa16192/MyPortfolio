@@ -17,14 +17,14 @@ import {
 export const Portfolio = () => {
   return (
     <HelmetProvider>
-      <Container className="About-header absolute-page" as={motion.div} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }}>
+      <Container className="About-header absolute-page page-nav-offset" as={motion.div} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }}>
         <Helmet>
           <meta charSet="utf-8" />
           <title>Portfolio | {meta.title}</title>
           <meta name="description" content={meta.description} />
         </Helmet>
 
-        <Row className="mb-5 mt-3 pt-md-3 align-items-center justify-content-between">
+        <Row className="page-heading-row align-items-center justify-content-between">
           <Col lg="8" className="d-flex align-items-center">
             <TypewriterHeading text="Featured Projects" className="display-4 mb-0 mr-4" />
           </Col>
