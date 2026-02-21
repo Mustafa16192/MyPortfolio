@@ -13,10 +13,15 @@ export const Home = () => {
   const heroRef = useRef(null);
   const featuredRef = useRef(null);
   const featuredHeaderRef = useRef(null);
-  const featuredGridRef = useRef(null);
+  const featuredListRef = useRef(null);
 
   useLayoutEffect(() => {
-    if (!homeRef.current || !heroRef.current || !featuredRef.current) {
+    if (
+      !homeRef.current ||
+      !heroRef.current ||
+      !featuredRef.current ||
+      !featuredListRef.current
+    ) {
       return undefined;
     }
 
@@ -95,7 +100,7 @@ export const Home = () => {
           0.1
         )
         .fromTo(
-          featuredGridRef.current,
+          featuredListRef.current,
           { y: 26, opacity: 0.86 },
           { y: 0, opacity: 1 },
           0.14
@@ -179,12 +184,12 @@ export const Home = () => {
               </Link>
             </div>
 
-            <div className="featured_projects_grid" ref={featuredGridRef}>
+            <div className="featured_projects_list" ref={featuredListRef}>
               {featuredProjects.map((project) => (
                 <Link
                   key={project.id}
                   to={`/project/${project.id}`}
-                  className="featured_project_card"
+                  className="featured_project_row"
                   aria-label={`Open ${project.title}`}
                 >
                   <div className="featured_project_media">
@@ -194,13 +199,13 @@ export const Home = () => {
                       loading="lazy"
                     />
                   </div>
-                  <div className="featured_project_body">
+                  <div className="featured_project_info">
                     <p className="featured_project_meta">
                       {project.role || "Product Project"}
                       {project.timeline ? ` • ${project.timeline}` : ""}
                     </p>
-                    <h3>{project.title}</h3>
-                    <p>{project.description}</p>
+                    <h3 className="featured_project_title">{project.title}</h3>
+                    <p className="featured_project_desc">{project.description}</p>
                   </div>
                 </Link>
               ))}

@@ -29,7 +29,7 @@ section {
 .home_hero_anim,
 .featured_projects_anim,
 .featured_projects_header,
-.featured_projects_grid {
+.featured_projects_list {
   will-change: transform, opacity;
 }
 
@@ -161,47 +161,58 @@ section {
   opacity: 1;
 }
 
-.featured_projects_grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
-}
-
-.featured_project_card {
+.featured_projects_list {
   display: flex;
   flex-direction: column;
-  text-decoration: none;
-  border: 1px solid rgba(255, 255, 255, 0.13);
-  border-radius: 16px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.04);
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  gap: 20px;
 }
 
-.featured_project_card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, 0.28);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+.featured_project_row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 22px;
+  padding: 18px;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  transition: transform 0.26s ease, border-color 0.26s ease, box-shadow 0.26s ease, background 0.26s ease;
+}
+
+.featured_project_row:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
 }
 
 .featured_project_media {
   width: 100%;
-  height: 220px;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
+  border-radius: 12px;
   background: rgba(0, 0, 0, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
 }
 
 .featured_project_media img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   display: block;
 }
 
-.featured_project_body {
-  border-top: 1px solid rgba(255, 255, 255, 0.11);
-  padding: 16px 16px 18px;
+.featured_project_info {
+  min-width: 0;
+}
+
+.featured_project_row:focus-visible {
+  outline: 2px solid var(--text-color);
+  outline-offset: 3px;
 }
 
 .featured_project_meta {
@@ -213,22 +224,22 @@ section {
   opacity: 0.8;
 }
 
-.featured_project_body h3 {
+.featured_project_title {
   margin: 8px 0 0;
   font-size: 1.22rem;
-  line-height: 1.25;
+  line-height: 1.22;
 }
 
-.featured_project_body p {
+.featured_project_desc {
   margin: 10px 0 0;
   font-size: 0.97rem;
   line-height: 1.55;
   opacity: 0.9;
 }
 
-.featured_project_body p:last-child {
+.featured_project_desc:last-child {
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -330,12 +341,18 @@ section {
     gap: 10px;
   }
 
-  .featured_projects_grid {
+  .featured_projects_list {
+    gap: 16px;
+  }
+
+  .featured_project_row {
     grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 14px;
   }
 
   .featured_project_media {
-    height: 205px;
+    aspect-ratio: 16 / 10;
   }
 }
 
@@ -373,22 +390,18 @@ section {
   box-shadow: 0 0 0 4px rgba(118, 200, 95, 0.24);
 }
 
-[data-theme="light"] .featured_project_card {
+[data-theme="light"] .featured_project_row {
   border-color: rgba(0, 0, 0, 0.12);
   background: rgba(0, 0, 0, 0.03);
 }
 
-[data-theme="light"] .featured_project_card:hover {
+[data-theme="light"] .featured_project_row:hover {
   border-color: rgba(0, 0, 0, 0.24);
-  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.11);
 }
 
 [data-theme="light"] .featured_project_media {
   background: rgba(0, 0, 0, 0.05);
-}
-
-[data-theme="light"] .featured_project_body {
-  border-top-color: rgba(0, 0, 0, 0.1);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -399,12 +412,12 @@ section {
   .home_hero_anim,
   .featured_projects_anim,
   .featured_projects_header,
-  .featured_projects_grid {
+  .featured_projects_list {
     will-change: auto;
   }
 
-  .featured_project_card,
-  .featured_project_card:hover {
+  .featured_project_row,
+  .featured_project_row:hover {
     transition: none;
     transform: none;
   }
