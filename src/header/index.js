@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./style.css";
 import { VscGrabber, VscClose } from "react-icons/vsc";
 import { Link } from "react-router-dom";
@@ -7,12 +7,33 @@ import Themetoggle from "../components/themetoggle";
 import brandImage from "../assets/images/me_final.png";
 
 const Headermain = () => {
-  const [isActive, setActive] = useState("false");
+  const [isActive, setActive] = useState(true);
 
   const handleToggle = () => {
-    setActive(!isActive);
+    setActive((prev) => !prev);
     document.body.classList.toggle("ovhidden");
   };
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 992px)");
+
+    const handleDesktop = (event) => {
+      if (event.matches) {
+        setActive(true);
+        document.body.classList.remove("ovhidden");
+      }
+    };
+
+    handleDesktop(mq);
+
+    if (mq.addEventListener) {
+      mq.addEventListener("change", handleDesktop);
+      return () => mq.removeEventListener("change", handleDesktop);
+    }
+
+    mq.addListener(handleDesktop);
+    return () => mq.removeListener(handleDesktop);
+  }, []);
 
   return (
     <>

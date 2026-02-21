@@ -266,6 +266,16 @@ body.is-project-focus .site__header > .d-flex {
     flex-shrink: 0;
 }
 
+@media (max-width: 991px) {
+    .header_quick_links {
+        display: none !important;
+    }
+
+    .menu__button {
+        display: inline-flex;
+    }
+}
+
 @keyframes nav-link-shimmer {
     0% {
         transform: translateX(-130%);
@@ -305,6 +315,10 @@ body.is-project-focus .site__header > .d-flex {
     }
 
     .menu__button {
+        display: none;
+    }
+
+    .site__navigation {
         display: none;
     }
 }
