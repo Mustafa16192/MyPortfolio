@@ -50,7 +50,7 @@ export default function App() {
                 />
               </svg>
             </span>
-            <span className="framer_badge_text">Not Made in framer ;)</span>
+            <span className="framer_badge_text">Not Made in Framer ;)</span>
           </div>
         </ScrollToTop>
       </div>
