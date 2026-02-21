@@ -129,6 +129,8 @@ const dataportfolio = [
     description: "Independent concept work exploring trust and utility in a campus assistant",
     timeline: "August 2025 - December 2025",
     role: "UX Researcher & Designer",
+    emoji: "🎓",
+    quickGlance: ["0 - 1", "B2C", "UX Research"],
     details: "This is a research-driven redesign concept for a University of Michigan student campus life assistant experience. It is not an official University product redesign. It is a portfolio project that explores how an AI-powered campus assistant could become more useful, more trustworthy, and easier to adopt. The core issue is not just UI clutter, but adoption and trust.",
     sections: [
         {
@@ -215,6 +217,8 @@ const dataportfolio = [
     description: "CarForce CRM – Optimized lead management and automation",
     timeline: "August 2024 - June 2025",
     role: "Product Manager",
+    emoji: "🚗",
+    quickGlance: ["B2B SaaS", "Automotive", "CRM"],
     details:
       "A comprehensive CRM solution designed to streamline lead management and automate sales workflows. Key features include real-time lead tracking, automated follow-ups, and detailed performance analytics, resulting in a significant increase in conversion rates and operational efficiency. Due to NDA restrictions, specific interface designs and internal data cannot be shared publicly.",
     sections: [
@@ -246,6 +250,8 @@ const dataportfolio = [
     description: "CRM WhatsApp Integration – Conversations, tasks, and follow-ups in sync",
     timeline: "August 2024 - June 2025",
     role: "Product Manager",
+    emoji: "💬",
+    quickGlance: ["B2B SaaS", "Conversational UX", "Workflow Automation"],
     details: "Seamlessly integrates WhatsApp conversations directly into the CRM. This allows agents to manage tasks, schedule follow-ups, and maintain a complete communication history within a single platform. Specific implementation details are proprietary.",
     sections: [
         {
@@ -271,6 +277,8 @@ const dataportfolio = [
     description: "Dubizzle Affiliate App – Bank evaluations, approvals, and payouts made simple",
     timeline: "August 2024 - June 2025",
     role: "Product Manager",
+    emoji: "🤝",
+    quickGlance: ["Fintech Ops", "Affiliate Platform", "B2B"],
     details: "A dedicated application for managing affiliate partnerships. It simplifies the complex process of bank evaluations, streamlines approval workflows, and automates payout calculations. Due to the sensitive nature of financial workflows, detailed designs are not public.",
     sections: [
         {
@@ -296,6 +304,8 @@ const dataportfolio = [
     description: "Uber Eats Combo Cart – Mix restaurants into one Uber Eats order",
     timeline: "November 2024",
     role: "UX Designer",
+    emoji: "🍽️",
+    quickGlance: ["Consumer Apps", "Food Delivery", "Experience Design"],
     details: "An innovative feature concept for Uber Eats that allows users to order from multiple restaurants in a single transaction. This project focuses on the UX/UI challenges of combining different menus, delivery logistics, and unified checkout experiences.",
     sections: [
         {
@@ -320,6 +330,8 @@ const dataportfolio = [
     description: "Community driven platform for neighborhood snow assistance",
     timeline: "October 2025 - December 2025",
     role: "Product Lead",
+    emoji: "❄️",
+    quickGlance: ["Civic Tech", "Community", "Service Design"],
     details: "A civic technology project designed to help neighborhoods coordinate snow clearing during winter emergencies. The platform enables residents to request or offer help, builds trust through lightweight verification, and prioritizes accessibility for non-technical users. The project emphasizes human-centered design under real-world constraints.",
     sections: [
         {
@@ -364,6 +376,8 @@ const dataportfolio = [
     description: "AI powered walking tour companion for immersive city exploration",
     timeline: "October 2025 - December 2025",
     role: "Product Designer",
+    emoji: "🏮",
+    quickGlance: ["AI Companion", "Travel", "Mobile UX"],
     details: "An AI-driven walking tour application designed to enhance city exploration through contextual storytelling, location-aware prompts, and adaptive narratives. Lantern focuses on night walks and cultural discovery, balancing immersion with safety and usability.",
     sections: [
         {

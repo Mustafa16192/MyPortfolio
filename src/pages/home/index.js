@@ -444,18 +444,16 @@ export const Home = () => {
                   </div>
                   <div className="featured_project_info">
                     <div className="featured_project_meta_row">
-                      <span className="featured_project_badge">Featured</span>
-                      {project.timeline && (
-                        <>
-                          <span className="featured_project_sep">•</span>
-                          <span className="featured_project_timeline">
-                            {project.timeline}
-                          </span>
-                        </>
-                      )}
-                      <span className="featured_project_sep">•</span>
-                      <span className="featured_project_role">
-                        {project.role || "Product Case Study"}
+                      <span className="featured_project_glance">
+                        <span className="featured_project_emoji" aria-hidden="true">
+                          {project.emoji || "✨"}
+                        </span>
+                        <span className="featured_project_domain">
+                          {(project.quickGlance && project.quickGlance.length
+                            ? project.quickGlance
+                            : [project.role || "Product Case Study"]
+                          ).join(" • ")}
+                        </span>
                       </span>
                     </div>
                     <h3 className="featured_project_title">{project.title}</h3>
