@@ -275,6 +275,7 @@ export const Home = () => {
         .to(eyebrowRef.current, { opacity: 1, y: 0, duration: 0.42 })
         .to(titleRef.current, { opacity: 1, y: 0, duration: 0.5 }, "-=0.18")
         .to(subtitleRef.current, { opacity: 1, y: 0, duration: 0.42 }, "-=0.26")
+        .addLabel("proofStart", "-=0.16")
         .to(
           proofItems,
           {
@@ -283,11 +284,10 @@ export const Home = () => {
             duration: 0.4,
             stagger: 0.08,
           },
-          "-=0.16"
+          "proofStart"
         );
 
       if (shouldIntroFeatured) {
-        const featuredOverlap = isMobile ? 0.38 : 0.44;
         introTimeline
           .to(
             featuredHeaderRef.current,
@@ -296,7 +296,7 @@ export const Home = () => {
               y: 0,
               duration: 0.28,
             },
-            `-=${featuredOverlap}`
+            "proofStart"
           )
           .to(
             featuredRows,
@@ -306,7 +306,7 @@ export const Home = () => {
               duration: 0.3,
               stagger: 0.018,
             },
-            "-=0.18"
+            "proofStart"
           );
       }
 
