@@ -122,6 +122,16 @@ section {
   margin-left: 3px;
 }
 
+.hero_proof_item .hero_umich_hover.squirrel-hover {
+  display: inline;
+  line-height: inherit;
+  vertical-align: baseline;
+}
+
+.hero_proof_item .hero_umich_hover .squirrel-hover__text {
+  line-height: inherit;
+}
+
 .featured_projects {
   width: 100%;
   --featured-accent: #e6634f;
