@@ -144,7 +144,7 @@ export const Home = () => {
               <p className="hero_proof_item">Led product execution across automotive, fintech, and classifieds</p>
               <p className="hero_proof_item">
                 Admitted to the{" "}
-                <SquirrelHover text="University of Michigan" /> School of
+                <SquirrelHover text=" University of Michigan" /> School of
                 Information
               </p>
             </div>
