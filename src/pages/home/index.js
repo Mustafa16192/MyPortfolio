@@ -402,14 +402,14 @@ export const Home = () => {
               <span className="status_dot" aria-hidden="true"></span>
               <span className="status_text">
                 <span className="status_old">Learning</span>{" "}
-                <span className="status_new">Building</span>stuff in UMich
+                <span className="status_new">Building</span>stuff in UMich 〽️
               </span>
             </p>
             <h1 className="home_title" ref={titleRef}>
-              AI-driven Product Manager who speaks engineering
+              AI-driven Product Manager who speaks engineering 🧑‍💻
             </h1>
             <p className="home_subtitle" ref={subtitleRef}>
-              I turn ambiguity into shipped products and business lift
+              I turn ambiguity into shipped products and business lift 🚀
             </p>
 
             <div className="hero_proof" ref={proofRef}>

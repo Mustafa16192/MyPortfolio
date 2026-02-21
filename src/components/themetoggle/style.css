@@ -1,40 +1,144 @@
 .theme_toggler_btn {
   position: relative;
+  border-radius: 12px;
+  isolation: isolate;
+  transform: scale(1.15);
+  transform-origin: center;
+  will-change: transform, box-shadow;
+  transition: transform 180ms ease, box-shadow 220ms ease, background-color 220ms ease;
 }
 
+.theme_toggler_btn svg {
+  display: block;
+  transition: transform 180ms ease, filter 220ms ease;
+}
+
+.theme_toggler_btn::before,
 .theme_toggler_btn::after {
   content: "";
   position: absolute;
-  inset: 8px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  opacity: 0.45;
-  transform: scale(0.94);
-  animation: themePulse 2.2s ease-out infinite;
   pointer-events: none;
 }
 
-[data-theme="light"] .theme_toggler_btn::after {
-  border-color: rgba(0, 0, 0, 0.28);
+.theme_toggler_btn::before {
+  inset: 7px;
+  border-radius: 10px;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.05) 42%,
+    rgba(255, 255, 255, 0) 75%
+  );
+  opacity: 0.24;
+  animation: themeHaloBreathe 3.2s ease-in-out infinite;
+  z-index: -1;
 }
 
-@keyframes themePulse {
-  0% {
-    opacity: 0.52;
-    transform: scale(0.94);
+.theme_toggler_btn::after {
+  inset: 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  opacity: 0.22;
+  transform: scale(0.97);
+  animation: themeRingBreathe 3.2s ease-in-out infinite;
+}
+
+[data-theme="light"] .theme_toggler_btn::before {
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(0, 39, 76, 0.14) 0%,
+    rgba(0, 39, 76, 0.04) 42%,
+    rgba(0, 39, 76, 0) 75%
+  );
+}
+
+[data-theme="light"] .theme_toggler_btn::after {
+  border-color: rgba(0, 0, 0, 0.24);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .theme_toggler_btn:hover,
+  .theme_toggler_btn:focus-visible {
+    transform: translateY(-1px) scale(1.18);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
   }
-  70% {
-    opacity: 0;
-    transform: scale(1.12);
+
+  .theme_toggler_btn:hover svg,
+  .theme_toggler_btn:focus-visible svg {
+    transform: rotate(-8deg) scale(1.03);
+    filter: drop-shadow(0 0 4px rgba(243, 195, 0, 0.34));
   }
+
+  .theme_toggler_btn:hover::before,
+  .theme_toggler_btn:focus-visible::before {
+    opacity: 0.34;
+  }
+
+  .theme_toggler_btn:hover::after,
+  .theme_toggler_btn:focus-visible::after {
+    opacity: 0.36;
+  }
+}
+
+.theme_toggler_btn:active {
+  transform: translateY(0) scale(1.11);
+}
+
+.theme_toggler_btn:active svg {
+  transform: scale(0.94);
+}
+
+.theme_toggler_btn:focus-visible {
+  outline: 2px solid rgba(243, 195, 0, 0.5);
+  outline-offset: 2px;
+}
+
+@keyframes themeHaloBreathe {
+  0%,
   100% {
-    opacity: 0;
-    transform: scale(1.12);
+    opacity: 0.22;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(1.03);
+  }
+}
+
+@keyframes themeRingBreathe {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.97);
+  }
+  50% {
+    opacity: 0.28;
+    transform: scale(1.02);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .theme_toggler_btn,
+  .theme_toggler_btn svg {
+    transition: none;
+  }
+
+  .theme_toggler_btn::before,
   .theme_toggler_btn::after {
     animation: none;
+  }
+
+  .theme_toggler_btn:active,
+  .theme_toggler_btn:hover,
+  .theme_toggler_btn:focus-visible {
+    transform: scale(1.15);
+    box-shadow: none;
+  }
+
+  .theme_toggler_btn:active svg,
+  .theme_toggler_btn:hover svg,
+  .theme_toggler_btn:focus-visible svg {
+    transform: none;
+    filter: none;
   }
 }

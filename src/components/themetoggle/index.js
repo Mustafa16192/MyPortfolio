@@ -18,8 +18,23 @@ const Themetoggle = () => {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      themetoggle();
+    }
+  };
+
   return (
-    <div className="nav_ac theme_toggler_btn" onClick={themetoggle} role="button" aria-label="Toggle theme">
+    <div
+      className="nav_ac theme_toggler_btn"
+      onClick={themetoggle}
+      onKeyDown={handleKeyDown}
+      role="button"
+      tabIndex={0}
+      aria-label="Toggle theme"
+      aria-pressed={theme === "dark"}
+    >
       <WiMoonAltWaningCrescent4 />
     </div>
   );
