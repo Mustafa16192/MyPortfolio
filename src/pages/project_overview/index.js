@@ -404,11 +404,6 @@ export const ProjectOverview = () => {
         fluid
         ref={pageContainerRef}
         className="About-header fixed-page project-overview-page"
-        as={motion.div}
-        exit={{ opacity: 0 }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
       >
         <Helmet>
           <meta charSet="utf-8" />

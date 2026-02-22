@@ -3,7 +3,6 @@ import "./style.css";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { meta, dataportfolio } from "../../content_option";
 import { Link, useLocation, useNavigationType } from "react-router-dom";
-import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SquirrelHover } from "../../components/squirrel_hover";
@@ -482,12 +481,10 @@ export const Home = () => {
 
   return (
     <HelmetProvider>
-      <motion.section
+      <section
         id="home"
         className="home"
         ref={homeRef}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.18 }}
       >
         <Helmet>
           <meta charSet="utf-8" />
@@ -579,7 +576,7 @@ export const Home = () => {
             </div>
           </section>
         </div>
-      </motion.section>
+      </section>
     </HelmetProvider>
   );
 };

@@ -12,7 +12,7 @@ import { AnimatePresence } from "framer-motion";
 import { readHomeProjectReturnScroll } from "../utils/homeScrollRestore";
 
 const AnimatedRoutes = withRouter(({ location, onRouteExitComplete }) => (
-  <AnimatePresence initial={false} mode="wait" onExitComplete={onRouteExitComplete}>
+  <AnimatePresence initial={false} mode="sync" onExitComplete={onRouteExitComplete}>
       <Routes location={location} key={location.pathname}>
         <Route exact path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
