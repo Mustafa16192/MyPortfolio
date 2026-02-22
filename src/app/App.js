@@ -4,13 +4,45 @@ import { BrowserRouter as Router } from "react-router-dom";
 import AppRoutes from "./routes";
 import Headermain from "../header";
 import AnimatedCursor from "../hooks/AnimatedCursor";
+import { PmTerminalShell } from "../components/pm_terminal";
+import { useGlobalTerminalShortcut } from "../components/pm_terminal/useGlobalTerminalShortcut";
 import { FaGithub } from "react-icons/fa";
 import "./App.css";
 
+const stripPublicBase = (path) => {
+  const base = process.env.PUBLIC_URL || "";
+
+  if (!base || base === "/") {
+    return path || "/";
+  }
+
+  if (path === base) {
+    return "/";
+  }
+
+  return path.startsWith(base) ? path.slice(base.length) || "/" : path || "/";
+};
+
+const readCurrentRoutePath = () => {
+  if (typeof window === "undefined") {
+    return "/";
+  }
+
+  const path = `${window.location.pathname}${window.location.hash || ""}`;
+  return stripPublicBase(path);
+};
+
 export default function App() {
   const [isBadgeOpen, setIsBadgeOpen] = useState(false);
+  const [terminalOverlay, setTerminalOverlay] = useState({
+    mounted: false,
+    open: false,
+    sessionKey: 0,
+    path: "/",
+  });
   const badgeWrapRef = useRef(null);
   const closeTimerRef = useRef(null);
+  const focusRestoreRef = useRef(null);
 
   const clearCloseTimer = useCallback(() => {
     if (closeTimerRef.current) {
@@ -64,9 +96,76 @@ export default function App() {
     [clearCloseTimer]
   );
 
+  const openTerminalOverlay = useCallback(() => {
+    const routePath = readCurrentRoutePath();
+
+    if (routePath.startsWith("/terminal")) {
+      return;
+    }
+
+    focusRestoreRef.current =
+      typeof document !== "undefined" ? document.activeElement : null;
+
+    setTerminalOverlay((prev) => {
+      if (prev.mounted && prev.open) {
+        return prev;
+      }
+
+      return {
+        mounted: true,
+        open: true,
+        sessionKey: prev.sessionKey + 1,
+        path: routePath,
+      };
+    });
+  }, []);
+
+  const closeTerminalOverlay = useCallback(() => {
+    setTerminalOverlay((prev) => {
+      if (!prev.mounted || !prev.open) {
+        return prev;
+      }
+
+      return {
+        ...prev,
+        open: false,
+      };
+    });
+  }, []);
+
+  const handleTerminalOverlayExited = useCallback(() => {
+    setTerminalOverlay((prev) => {
+      if (!prev.mounted) {
+        return prev;
+      }
+
+      return {
+        ...prev,
+        mounted: false,
+        open: false,
+      };
+    });
+
+    const focusTarget = focusRestoreRef.current;
+    if (
+      focusTarget &&
+      typeof focusTarget.focus === "function" &&
+      typeof document !== "undefined" &&
+      document.contains(focusTarget)
+    ) {
+      focusTarget.focus();
+    }
+    focusRestoreRef.current = null;
+  }, []);
+
+  useGlobalTerminalShortcut({
+    onTrigger: openTerminalOverlay,
+    enabled: true,
+  });
+
   return (
     <Router basename={process.env.PUBLIC_URL}>
-      <div className="app_shell">
+      <div className={`app_shell ${terminalOverlay.open ? "is-terminal-open" : ""}`}>
         <div className="global-ambient-bg" aria-hidden="true" />
         <div className="cursor__dot">
           <AnimatedCursor
@@ -138,6 +237,16 @@ export default function App() {
             </a>
           </div>
         </div>
+        {terminalOverlay.mounted ? (
+          <PmTerminalShell
+            key={`pm-terminal-overlay-${terminalOverlay.sessionKey}`}
+            mode="overlay"
+            isOpen={terminalOverlay.open}
+            initialPath={terminalOverlay.path}
+            onRequestClose={closeTerminalOverlay}
+            onCloseComplete={handleTerminalOverlayExited}
+          />
+        ) : null}
       </div>
     </Router>
   );

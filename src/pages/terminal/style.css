@@ -1,0 +1,171 @@
+.pm_terminal_route_surface {
+  position: fixed;
+  inset: 0;
+  z-index: 1305;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(255, 203, 5, 0.06), rgba(255, 203, 5, 0) 34%),
+    radial-gradient(circle at 85% 8%, rgba(97, 165, 255, 0.09), rgba(97, 165, 255, 0) 40%),
+    linear-gradient(180deg, rgba(5, 8, 14, 0.96), rgba(5, 8, 14, 0.98));
+  padding:
+    max(env(safe-area-inset-top, 0px), 10px)
+    max(env(safe-area-inset-right, 0px), 10px)
+    max(env(safe-area-inset-bottom, 0px), 10px)
+    max(env(safe-area-inset-left, 0px), 10px);
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.pm_terminal_route_topbar {
+  max-width: 1120px;
+  margin: 0 auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.pm_terminal_route_badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(242, 247, 255, 0.88);
+  padding: 7px 11px;
+  font-family: "JetBrains Mono", "Fira Code", "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pm_terminal_route_actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pm_terminal_route_link {
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(242, 247, 255, 0.84);
+  text-decoration: none;
+  padding: 7px 11px;
+  font-family: Raleway, sans-serif;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  transition: border-color 180ms ease, color 180ms ease, background 180ms ease;
+}
+
+.pm_terminal_route_link:hover,
+.pm_terminal_route_link:focus-visible {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.96);
+  outline: none;
+}
+
+.pm_terminal_mobile_fallback {
+  max-width: 720px;
+  margin: 9vh auto 0;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background:
+    linear-gradient(160deg, rgba(18, 22, 30, 0.86), rgba(14, 18, 26, 0.92));
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+  backdrop-filter: blur(14px) saturate(120%);
+  box-shadow: 0 24px 58px rgba(0, 0, 0, 0.34);
+  padding: 22px 18px 20px;
+  color: rgba(242, 247, 255, 0.92);
+}
+
+.pm_terminal_mobile_eyebrow {
+  font-family: "JetBrains Mono", "Fira Code", "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(142, 190, 255, 0.9);
+}
+
+.pm_terminal_mobile_title {
+  margin: 10px 0 8px;
+  font-family: Marcellus, serif;
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  color: rgba(255, 255, 255, 0.98);
+}
+
+.pm_terminal_mobile_copy {
+  margin: 0;
+  color: rgba(226, 234, 246, 0.8);
+  line-height: 1.6;
+  font-size: 0.96rem;
+}
+
+.pm_terminal_mobile_copy code {
+  color: rgba(255, 203, 5, 0.92);
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  padding: 0.1em 0.35em;
+}
+
+.pm_terminal_mobile_actions {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pm_terminal_mobile_btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.95);
+  text-decoration: none;
+  padding: 10px 14px;
+  font-family: Raleway, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pm_terminal_mobile_btn_secondary {
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(225, 233, 245, 0.86);
+}
+
+@media (max-width: 991px) {
+  .pm_terminal_route_surface {
+    padding: 10px;
+  }
+
+  .pm_terminal_route_topbar {
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+
+  .pm_terminal_route_actions {
+    width: 100%;
+  }
+
+  .pm_terminal_route_link {
+    flex: 1 1 auto;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .pm_terminal_mobile_fallback {
+    margin-top: 8vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pm_terminal_route_link {
+    transition: none;
+  }
+}

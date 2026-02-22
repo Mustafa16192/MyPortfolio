@@ -4,6 +4,18 @@
     isolation: isolate;
 }
 
+.app_shell.is-terminal-open .cursor__dot,
+.app_shell.is-terminal-open .framer_badge_wrap {
+    opacity: 0;
+    pointer-events: none;
+}
+
+body.pm-terminal-route-open .cursor__dot,
+body.pm-terminal-route-open .framer_badge_wrap {
+    opacity: 0;
+    pointer-events: none;
+}
+
 .framer_badge_wrap {
     position: fixed;
     right: 20px;

@@ -7,6 +7,7 @@ import { About } from "../pages/about";
 import { Resume } from "../pages/resume";
 import { ProjectOverview } from "../pages/project_overview";
 import APIPage from "../pages/api"; // Import default export from "../pages/api"
+import { TerminalPage } from "../pages/terminal";
 import { Socialicons } from "../components/socialicons";
 import { AnimatePresence } from "framer-motion";
 import { readHomeProjectReturnScroll } from "../utils/homeScrollRestore";
@@ -19,6 +20,7 @@ const AnimatedRoutes = withRouter(({ location, onRouteExitComplete }) => (
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/api" element={<APIPage />} />
         <Route path="/resume" element={<Resume />} />
+        <Route path="/terminal" element={<TerminalPage />} />
         <Route path="/portfolio" element={<Navigate to="/" replace />} />
         <Route path="/project/:id" element={<ProjectOverview />} />
         <Route path="*" element={<Home />} />
@@ -84,6 +86,7 @@ function AppRoutes() {
     location.pathname === "/api" ||
     location.pathname === "/about" ||
     location.pathname === "/resume" ||
+    location.pathname === "/terminal" ||
     location.pathname.startsWith("/project/");
 
   return (
