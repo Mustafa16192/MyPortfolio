@@ -5,7 +5,7 @@
 .decision-log__header {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 7px;
   margin-bottom: 16px;
 }
 
@@ -29,26 +29,76 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
+  perspective: 1200px;
 }
 
 .decision-log__card {
+  --lx: 50%;
+  --ly: 50%;
+  --edge-alpha: 0.05;
+  --spec-alpha: 0.08;
+  --spark-shift: 0%;
   border-radius: 18px;
   border: 1px solid rgba(255, 255, 255, 0.16);
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-  -webkit-backdrop-filter: blur(12px) saturate(122%);
-  backdrop-filter: blur(12px) saturate(122%);
+  background: rgba(255, 255, 255, 0.03);
   padding: 14px 14px 12px;
   display: flex;
   flex-direction: column;
   gap: 12px;
   min-height: 248px;
+  position: relative;
+  overflow: visible;
+  isolation: isolate;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform, border-color, box-shadow;
   transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.decision-log__card::before,
+.decision-log__card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.22s ease;
+}
+
+.decision-log__card::before {
+  background: radial-gradient(130% 100% at var(--lx) var(--ly),
+      rgba(255, 255, 255, 0.54) 0%,
+      rgba(255, 255, 255, 0.25) 18%,
+      rgba(255, 255, 255, 0.08) 40%,
+      rgba(255, 255, 255, 0) 72%);
+  mix-blend-mode: screen;
+  opacity: var(--spec-alpha);
+}
+
+.decision-log__card::after {
+  background: radial-gradient(130% 120% at calc(var(--lx) + var(--spark-shift)) var(--ly),
+      rgba(176, 222, 255, 0) 54%,
+      rgba(176, 222, 255, 0.22) 76%,
+      rgba(255, 222, 160, 0.2) 88%,
+      rgba(255, 255, 255, 0.09) 100%);
+  opacity: var(--edge-alpha);
+}
+
+.decision-log__card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .decision-log__card:hover {
   border-color: rgba(255, 255, 255, 0.28);
   transform: translateY(-1px);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.16);
+}
+
+.decision-log__card.is-tilting {
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22);
 }
 
 .decision-log__card-head {
@@ -144,12 +194,36 @@
 
 [data-theme="light"] .decision-log__card {
   border-color: rgba(0, 0, 0, 0.11);
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.62));
+  background: rgba(0, 0, 0, 0.025);
+}
+
+[data-theme="light"] .decision-log__card::before {
+  background: radial-gradient(125% 95% at var(--lx) var(--ly),
+      rgba(255, 255, 255, 0.64) 0%,
+      rgba(255, 255, 255, 0.34) 18%,
+      rgba(255, 255, 255, 0.12) 38%,
+      rgba(255, 255, 255, 0) 70%);
+  mix-blend-mode: normal;
+  opacity: calc(var(--spec-alpha) * 1);
+}
+
+[data-theme="light"] .decision-log__card::after {
+  background: radial-gradient(130% 120% at calc(var(--lx) + var(--spark-shift)) var(--ly),
+      rgba(129, 175, 226, 0) 55%,
+      rgba(129, 175, 226, 0.2) 76%,
+      rgba(241, 200, 120, 0.17) 88%,
+      rgba(255, 255, 255, 0.11) 100%);
+  opacity: calc(var(--edge-alpha) * 1.08);
 }
 
 [data-theme="light"] .decision-log__card:hover {
   border-color: rgba(0, 0, 0, 0.2);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .decision-log__card.is-tilting {
+  border-color: rgba(0, 0, 0, 0.24);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.13);
 }
 
 [data-theme="light"] .decision-log__badge,

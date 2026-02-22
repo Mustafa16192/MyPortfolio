@@ -5,9 +5,9 @@
 
 .operating-principles__header {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 14px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
   margin-bottom: 18px;
 }
 
@@ -34,6 +34,7 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
+  perspective: 1200px;
 }
 
 .operating-principles__item {
@@ -45,18 +46,27 @@
   font: inherit;
   -webkit-appearance: none;
   appearance: none;
+  --lx: 50%;
+  --ly: 50%;
+  --edge-alpha: 0.05;
+  --spec-alpha: 0.08;
+  --spark-shift: 0%;
   min-height: 134px;
   padding: 12px 13px 12px;
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.16);
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-  -webkit-backdrop-filter: blur(10px) saturate(120%);
-  backdrop-filter: blur(10px) saturate(120%);
+  background: rgba(255, 255, 255, 0.03);
   color: var(--text-color);
   text-align: left;
   display: flex;
   flex-direction: column;
   gap: 9px;
+  position: relative;
+  overflow: visible;
+  isolation: isolate;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform, border-color, box-shadow;
   cursor: pointer;
   transition:
     border-color 180ms ease,
@@ -65,12 +75,52 @@
     box-shadow 180ms ease;
 }
 
+.operating-principles__card::before,
+.operating-principles__card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.22s ease;
+}
+
+.operating-principles__card::before {
+  background: radial-gradient(130% 100% at var(--lx) var(--ly),
+      rgba(255, 255, 255, 0.54) 0%,
+      rgba(255, 255, 255, 0.25) 18%,
+      rgba(255, 255, 255, 0.08) 40%,
+      rgba(255, 255, 255, 0) 72%);
+  mix-blend-mode: screen;
+  opacity: var(--spec-alpha);
+}
+
+.operating-principles__card::after {
+  background: radial-gradient(130% 120% at calc(var(--lx) + var(--spark-shift)) var(--ly),
+      rgba(176, 222, 255, 0) 54%,
+      rgba(176, 222, 255, 0.22) 76%,
+      rgba(255, 222, 160, 0.2) 88%,
+      rgba(255, 255, 255, 0.09) 100%);
+  opacity: var(--edge-alpha);
+}
+
+.operating-principles__card > * {
+  position: relative;
+  z-index: 1;
+}
+
 .operating-principles__card:hover,
 .operating-principles__card:focus-visible,
 .operating-principles__card.is-expanded {
   border-color: rgba(255, 255, 255, 0.3);
   transform: translateY(-1px);
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.16);
+}
+
+.operating-principles__card.is-tilting {
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22);
 }
 
 .operating-principles__card:focus-visible {
@@ -126,7 +176,26 @@
 
 [data-theme="light"] .operating-principles__card {
   border-color: rgba(0, 0, 0, 0.11);
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.6));
+  background: rgba(0, 0, 0, 0.025);
+}
+
+[data-theme="light"] .operating-principles__card::before {
+  background: radial-gradient(125% 95% at var(--lx) var(--ly),
+      rgba(255, 255, 255, 0.64) 0%,
+      rgba(255, 255, 255, 0.34) 18%,
+      rgba(255, 255, 255, 0.12) 38%,
+      rgba(255, 255, 255, 0) 70%);
+  mix-blend-mode: normal;
+  opacity: calc(var(--spec-alpha) * 1);
+}
+
+[data-theme="light"] .operating-principles__card::after {
+  background: radial-gradient(130% 120% at calc(var(--lx) + var(--spark-shift)) var(--ly),
+      rgba(129, 175, 226, 0) 55%,
+      rgba(129, 175, 226, 0.2) 76%,
+      rgba(241, 200, 120, 0.17) 88%,
+      rgba(255, 255, 255, 0.11) 100%);
+  opacity: calc(var(--edge-alpha) * 1.08);
 }
 
 [data-theme="light"] .operating-principles__card:hover,
@@ -136,6 +205,11 @@
   box-shadow: 0 12px 26px rgba(0, 0, 0, 0.08);
 }
 
+[data-theme="light"] .operating-principles__card.is-tilting {
+  border-color: rgba(0, 0, 0, 0.24);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.13);
+}
+
 [data-theme="light"] .operating-principles__tag {
   border-color: rgba(0, 0, 0, 0.12);
   background: rgba(0, 0, 0, 0.02);
@@ -143,9 +217,6 @@
 
 @media (max-width: 991px) {
   .operating-principles__header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
     margin-bottom: 14px;
   }
 

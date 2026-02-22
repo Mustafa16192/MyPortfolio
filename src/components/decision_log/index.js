@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { setupPremiumTiltCards } from "../../utils/premiumTiltCards";
 import "./style.css";
 
 export const DecisionLog = ({ items = [] }) => {
@@ -16,9 +17,15 @@ export const DecisionLog = ({ items = [] }) => {
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
+    const supportsFineHover = window.matchMedia(
+      "(hover: hover) and (pointer: fine)"
+    ).matches;
+    let cleanupTilt = () => {};
 
     const ctx = gsap.context(() => {
-      const cards = rootRef.current.querySelectorAll(".decision-log__card");
+      const cards = Array.from(
+        rootRef.current.querySelectorAll(".decision-log__card")
+      );
       if (!cards.length) {
         return;
       }
@@ -45,9 +52,17 @@ export const DecisionLog = ({ items = [] }) => {
           },
         }
       );
+
+      if (supportsFineHover && !prefersReducedMotion) {
+        cleanupTilt = setupPremiumTiltCards(cards, {
+          maxRotateX: 3.8,
+          maxRotateY: 4.8,
+        });
+      }
     }, rootRef);
 
     return () => {
+      cleanupTilt();
       ctx.revert();
     };
   }, [items]);
@@ -59,8 +74,8 @@ export const DecisionLog = ({ items = [] }) => {
   return (
     <section ref={rootRef} className="decision-log" aria-labelledby="decision-log-title">
       <div className="decision-log__header">
-        <p className="decision-log__eyebrow">How I decide</p>
         <h2 id="decision-log-title">Decision Log</h2>
+        <p className="decision-log__eyebrow">How I decide</p>
       </div>
 
       <div className="decision-log__grid">

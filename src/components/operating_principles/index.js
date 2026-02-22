@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { setupPremiumTiltCards } from "../../utils/premiumTiltCards";
 import "./style.css";
 
 const PRINCIPLE_TAG_LABELS = {
@@ -26,10 +27,14 @@ export const OperatingPrinciples = ({ items = [] }) => {
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
+    const supportsFineHover = window.matchMedia(
+      "(hover: hover) and (pointer: fine)"
+    ).matches;
+    let cleanupTilt = () => {};
 
     const ctx = gsap.context(() => {
-      const cards = rootRef.current.querySelectorAll(
-        ".operating-principles__card"
+      const cards = Array.from(
+        rootRef.current.querySelectorAll(".operating-principles__card")
       );
       if (!cards.length) {
         return;
@@ -57,9 +62,17 @@ export const OperatingPrinciples = ({ items = [] }) => {
           },
         }
       );
+
+      if (supportsFineHover && !prefersReducedMotion) {
+        cleanupTilt = setupPremiumTiltCards(cards, {
+          maxRotateX: 3.6,
+          maxRotateY: 4.4,
+        });
+      }
     }, rootRef);
 
     return () => {
+      cleanupTilt();
       ctx.revert();
     };
   }, [items]);
@@ -75,8 +88,8 @@ export const OperatingPrinciples = ({ items = [] }) => {
       aria-labelledby="operating-principles-title"
     >
       <div className="operating-principles__header">
-        <p className="operating-principles__eyebrow">How I work</p>
         <h2 id="operating-principles-title">Operating Principles</h2>
+        <p className="operating-principles__eyebrow">How I work</p>
       </div>
 
       <ul

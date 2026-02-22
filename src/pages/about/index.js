@@ -3,6 +3,8 @@ import "./style.css";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { Container, Row, Col } from "react-bootstrap";
 import { TypewriterHeading } from "../../components/typewriter_heading";
+import { OperatingPrinciples } from "../../components/operating_principles";
+import { DecisionLog } from "../../components/decision_log";
 import {
   dataabout,
   meta,
@@ -11,6 +13,8 @@ import {
   playingStyle,
   personalTraits,
   philanthropy,
+  decisionLog,
+  operatingPrinciples,
 } from "../../content_option";
 
 export const About = () => {
@@ -60,6 +64,16 @@ export const About = () => {
           </Col>
           <Col lg="7">
             <p>{playingStyle.description}</p>
+          </Col>
+        </Row>
+        <Row className="sec_sp about-depth-row">
+          <Col lg="12">
+            <OperatingPrinciples items={operatingPrinciples} />
+          </Col>
+        </Row>
+        <Row className="sec_sp about-depth-row">
+          <Col lg="12">
+            <DecisionLog items={decisionLog} />
           </Col>
         </Row>
         <Row className="sec_sp">

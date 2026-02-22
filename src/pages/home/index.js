@@ -4,15 +4,11 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import {
   meta,
   dataportfolio,
-  decisionLog as homeDecisionLog,
-  operatingPrinciples as homeOperatingPrinciples,
 } from "../../content_option";
 import { Link, useLocation, useNavigationType } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SquirrelHover } from "../../components/squirrel_hover";
-import { OperatingPrinciples } from "../../components/operating_principles";
-import { DecisionLog } from "../../components/decision_log";
 import {
   clearHomeProjectReturnScroll,
   readHomeProjectReturnScroll,
@@ -531,9 +527,6 @@ export const Home = () => {
               </p>
             </div>
           </div>
-
-          <OperatingPrinciples items={homeOperatingPrinciples} />
-          <DecisionLog items={homeDecisionLog} />
 
           <section
             id="projects"
