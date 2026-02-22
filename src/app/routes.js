@@ -35,6 +35,13 @@ function AppRoutes() {
   const pendingScrollAction = useMemo(() => {
     const { hash, pathname, state } = location;
 
+    if (pathname.startsWith("/project/")) {
+      return {
+        type: "none",
+        routeKey,
+      };
+    }
+
     if (pathname === "/") {
       const hasPendingRestore = Boolean(readHomeProjectReturnScroll());
       const shouldSkipTopReset =
