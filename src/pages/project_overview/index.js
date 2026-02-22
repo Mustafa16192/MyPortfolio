@@ -389,13 +389,27 @@ export const ProjectOverview = () => {
   const handleBackToProjects = useCallback((event) => {
     event.preventDefault();
 
-    const snapshot = readHomeProjectReturnScroll();
+    const canGoBack =
+      typeof window !== "undefined" &&
+      window.history &&
+      window.history.length > 1;
 
-    // Preferred path: if we have a saved home snapshot OR route state confirms the
-    // page was opened from homepage project cards, use browser history back.
-    // This matches the exact browser-back restoration behavior.
-    if (snapshot || location.state?.fromHomeProjects === true) {
+    // Primary path: mirror browser back behavior exactly.
+    // Browser back already restores the correct scroll position in this app.
+    if (canGoBack) {
       navigate(-1);
+      return;
+    }
+
+    const snapshot = readHomeProjectReturnScroll();
+    if (snapshot || location.state?.fromHomeProjects === true) {
+      navigate("/", {
+        state: {
+          restoreHomeProjectScroll: true,
+          source: "project-detail",
+          projectId: id,
+        },
+      });
       return;
     }
 
