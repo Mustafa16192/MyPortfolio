@@ -9,7 +9,7 @@ import React, {
 import "./style.css";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { Container, Row, Col } from "react-bootstrap";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link, useLocation, useNavigate } from "react-router-dom";
 import { dataportfolio, meta } from "../../content_option";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
@@ -146,6 +146,7 @@ const VideoSection = ({ src, caption }) => {
 
 export const ProjectOverview = () => {
   const { id } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
   const project = dataportfolio.find((p) => p.id === id);
   const pageContainerRef = useRef(null);
@@ -388,6 +389,13 @@ export const ProjectOverview = () => {
   const handleBackToProjects = useCallback((event) => {
     event.preventDefault();
 
+    // Preferred path: if user came from the homepage project card, use browser history back.
+    // This preserves the exact scroll position and already behaves correctly in this app.
+    if (location.state?.fromHomeProjects === true && window.history.length > 1) {
+      navigate(-1);
+      return;
+    }
+
     const snapshot = readHomeProjectReturnScroll();
     if (snapshot) {
       navigate("/", {
@@ -404,7 +412,7 @@ export const ProjectOverview = () => {
       pathname: "/",
       hash: "#projects",
     });
-  }, [id, navigate]);
+  }, [id, location.state, navigate]);
 
   if (!project) {
     return (
