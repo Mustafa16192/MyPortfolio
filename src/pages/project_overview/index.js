@@ -389,19 +389,34 @@ export const ProjectOverview = () => {
   const handleBackToProjects = useCallback((event) => {
     event.preventDefault();
 
+    const snapshot = readHomeProjectReturnScroll();
+    const cameFromHomeProjects = location.state?.fromHomeProjects === true;
+    const hasMatchingHomeSnapshot =
+      Boolean(snapshot) &&
+      (snapshot.projectId === id || snapshot.projectId === null || cameFromHomeProjects);
+
+    if (hasMatchingHomeSnapshot) {
+      navigate("/", {
+        replace: true,
+        state: {
+          restoreHomeProjectScroll: true,
+          source: "project-detail",
+          projectId: id,
+        },
+      });
+      return;
+    }
+
     const canGoBack =
       typeof window !== "undefined" &&
       window.history &&
       window.history.length > 1;
 
-    // Primary path: mirror browser back behavior exactly.
-    // Browser back already restores the correct scroll position in this app.
     if (canGoBack) {
       navigate(-1);
       return;
     }
 
-    const snapshot = readHomeProjectReturnScroll();
     if (snapshot || location.state?.fromHomeProjects === true) {
       navigate("/", {
         state: {
