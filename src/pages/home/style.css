@@ -67,6 +67,10 @@ section {
   opacity: 0.9;
 }
 
+.home_subtitle_tail {
+  white-space: nowrap;
+}
+
 [data-theme="dark"] .home_subtitle {
   color: #dddddd;
 }
