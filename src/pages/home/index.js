@@ -32,10 +32,17 @@ export const Home = () => {
   const featuredListRef = useRef(null);
 
   const handleProjectCardClick = useCallback((projectId, event) => {
+    const clickButton =
+      typeof event?.button === "number"
+        ? event.button
+        : typeof event?.nativeEvent?.button === "number"
+          ? event.nativeEvent.button
+          : null;
+
     if (
       !event ||
       event.defaultPrevented ||
-      event.button !== 0 ||
+      (clickButton !== null && clickButton !== 0) ||
       event.metaKey ||
       event.ctrlKey ||
       event.shiftKey ||

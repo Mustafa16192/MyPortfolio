@@ -391,23 +391,11 @@ export const ProjectOverview = () => {
 
     const snapshot = readHomeProjectReturnScroll();
 
-    // Preferred path: if we have a saved home snapshot (normal homepage -> project flow),
-    // always use browser history back. This matches the exact browser-back restoration behavior.
-    if (snapshot) {
+    // Preferred path: if we have a saved home snapshot OR route state confirms the
+    // page was opened from homepage project cards, use browser history back.
+    // This matches the exact browser-back restoration behavior.
+    if (snapshot || location.state?.fromHomeProjects === true) {
       navigate(-1);
-      return;
-    }
-
-    // Secondary path: if route state confirms homepage origin but snapshot is missing,
-    // use explicit home navigation with restore state.
-    if (location.state?.fromHomeProjects === true) {
-      navigate("/", {
-        state: {
-          restoreHomeProjectScroll: true,
-          source: "project-detail",
-          projectId: id,
-        },
-      });
       return;
     }
 
