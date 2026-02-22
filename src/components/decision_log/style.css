@@ -1,0 +1,196 @@
+.decision-log {
+  width: 100%;
+}
+
+.decision-log__header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.decision-log__eyebrow {
+  margin: 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 800;
+  opacity: 0.72;
+}
+
+.decision-log__header h2 {
+  margin: 0;
+  font-size: clamp(1.45rem, 2.8vw, 2.05rem);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+}
+
+.decision-log__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.decision-log__card {
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  -webkit-backdrop-filter: blur(12px) saturate(122%);
+  backdrop-filter: blur(12px) saturate(122%);
+  padding: 14px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 248px;
+  transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.decision-log__card:hover {
+  border-color: rgba(255, 255, 255, 0.28);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.16);
+}
+
+.decision-log__card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.decision-log__card-head h3 {
+  margin: 0;
+  font-size: 1.03rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.decision-log__badge {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  padding: 4px 8px;
+  font-size: 0.67rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  opacity: 0.86;
+}
+
+.decision-log__details {
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.decision-log__row {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  gap: 8px;
+  align-items: start;
+}
+
+.decision-log__row dt {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+
+.decision-log__row dd {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.42;
+  opacity: 0.92;
+}
+
+.decision-log__footer {
+  margin-top: auto;
+  padding-top: 2px;
+}
+
+.decision-log__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--text-color);
+  opacity: 0.94;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  padding: 8px 11px;
+  transition: opacity 160ms ease, border-color 160ms ease, background-color 160ms ease;
+}
+
+.decision-log__cta:hover,
+.decision-log__cta:focus-visible {
+  opacity: 1;
+  border-color: rgba(255, 255, 255, 0.34);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.decision-log__cta:focus-visible {
+  outline: 2px solid rgba(127, 151, 255, 0.56);
+  outline-offset: 2px;
+}
+
+[data-theme="light"] .decision-log__card {
+  border-color: rgba(0, 0, 0, 0.11);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.62));
+}
+
+[data-theme="light"] .decision-log__card:hover {
+  border-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .decision-log__badge,
+[data-theme="light"] .decision-log__cta {
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .decision-log__cta:hover,
+[data-theme="light"] .decision-log__cta:focus-visible {
+  border-color: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.03);
+}
+
+@media (max-width: 991px) {
+  .decision-log__grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .decision-log__card {
+    min-height: unset;
+    padding: 13px 12px 12px;
+  }
+
+  .decision-log__row {
+    grid-template-columns: 74px minmax(0, 1fr);
+    gap: 7px;
+  }
+
+  .decision-log__row dt {
+    font-size: 0.68rem;
+  }
+
+  .decision-log__row dd {
+    font-size: 0.85rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .decision-log__card,
+  .decision-log__cta {
+    transition: none;
+  }
+}

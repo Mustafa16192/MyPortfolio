@@ -13,6 +13,7 @@ import { useParams, Link } from "react-router-dom";
 import { dataportfolio, meta } from "../../content_option";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ProjectTradeoffs } from "../../components/project_tradeoffs";
 
 const NAV_LABEL_ALIASES = [
   { match: /^problem/i, label: "Problem Statement" },
@@ -529,6 +530,8 @@ export const ProjectOverview = () => {
             </div>
           </Col>
         </Row>
+
+        <ProjectTradeoffs projectId={project.id} items={project.tradeoffs || []} />
 
         {project.sections && project.sections.length > 0 && (
           <Row className="project-chapter-layout">

@@ -121,6 +121,114 @@ const milestones = [
   },
 ];
 
+const operatingPrinciples = [
+  {
+    id: "adoption-before-breadth",
+    principle: "Adoption before breadth",
+    example:
+      "Start with the smallest behavior change users will repeat, then expand scope.",
+    tag: "strategy",
+  },
+  {
+    id: "trust-visible",
+    principle: "Make trust visible",
+    example:
+      "Use source cues, confidence boundaries, and clear fallbacks for AI experiences.",
+    tag: "quality",
+  },
+  {
+    id: "workflow-first",
+    principle: "Design around workflows",
+    example:
+      "Improve handoffs, timing, and defaults before introducing more screens.",
+    tag: "delivery",
+  },
+  {
+    id: "instrument-decisions",
+    principle: "Instrument decisions",
+    example:
+      "Tie product bets to an owner, a metric, and a review date.",
+    tag: "growth",
+  },
+  {
+    id: "reduce-load",
+    principle: "Reduce cognitive load first",
+    example:
+      "Prioritize sequencing and clarity before adding visual complexity.",
+    tag: "research",
+  },
+  {
+    id: "ship-reversible",
+    principle: "Ship with reversibility",
+    example:
+      "Prefer rollout paths that let the team learn quickly without operational risk.",
+    tag: "collaboration",
+  },
+];
+
+const decisionLog = [
+  {
+    id: "goblue-trust-first-ia",
+    title: "GoBlue AI Redesign",
+    context:
+      "Students wanted AI help, but low awareness and low trust blocked adoption.",
+    constraint:
+      "Concept project with no internal product access or institutional rollout path.",
+    call:
+      "Prioritized trust and task-first IA before expanding feature breadth.",
+    outcome:
+      "Produced a research-backed prototype with a clearer adoption and trust hypothesis.",
+    projectId: "goblue-ai-redesign",
+    projectSectionId: "chapter-4-insights-approach",
+    visibility: "public",
+  },
+  {
+    id: "carforce-unify-core-workflow",
+    title: "CarForce CRM",
+    context:
+      "Lead handling across inspections, financing, and affiliates was fragmented.",
+    constraint:
+      "High-volume operations and NDA limits reduced how much could be redesigned at once.",
+    call:
+      "Unified lead-task-follow-up workflow primitives before edge-case feature requests.",
+    outcome:
+      "Improved execution consistency and reduced operational friction across teams.",
+    projectId: "carforce-crm",
+    projectSectionId: "chapter-2-impact-outcomes",
+    visibility: "nda-safe",
+  },
+  {
+    id: "whatsapp-embed-not-mirror",
+    title: "CRM WhatsApp Integration",
+    context:
+      "Agents were switching between devices and systems, losing continuity and accountability.",
+    constraint:
+      "Official channel and compliance constraints ruled out a loose chat-style clone.",
+    call:
+      "Embedded messaging into CRM workflows instead of mirroring consumer chat UX.",
+    outcome:
+      "Improved follow-up continuity and captured client interactions inside one system.",
+    projectId: "crm-whatsapp-integration",
+    projectSectionId: "chapter-2-impact-outcomes",
+    visibility: "nda-safe",
+  },
+  {
+    id: "affiliate-self-serve-vs-ops-bottleneck",
+    title: "Dubizzle Affiliate App",
+    context:
+      "Affiliate evaluations and payouts relied on manual coordination and repetitive checks.",
+    constraint:
+      "Finance/compliance workflows required accuracy and traceability over speed-only shortcuts.",
+    call:
+      "Built a self-serve partner surface with an automated backend for finance operations.",
+    outcome:
+      "Reduced processing friction while improving trust and consistency for partner payouts.",
+    projectId: "dubizzle-affiliate-app",
+    projectSectionId: "chapter-2-impact-outcomes",
+    visibility: "nda-safe",
+  },
+];
+
 const dataportfolio = [
   {
     id: "goblue-ai-redesign",
@@ -132,6 +240,44 @@ const dataportfolio = [
     emoji: "🎓",
     quickGlance: ["0 - 1", "B2C", "UX Research"],
     details: "This is a research-driven redesign concept for a University of Michigan student campus life assistant experience. It is not an official University product redesign. It is a portfolio project that explores how an AI-powered campus assistant could become more useful, more trustworthy, and easier to adopt. The core issue is not just UI clutter, but adoption and trust.",
+    tradeoffs: [
+      {
+        id: "breadth-vs-trust",
+        title: "Narrower AI scope, higher trust",
+        options: "AI feature breadth vs trust clarity",
+        decision:
+          "Focused on a smaller set of high-confidence campus tasks instead of broad AI coverage.",
+        reason:
+          "Students signaled that perceived accuracy and U-M specificity mattered more than novelty.",
+        impact:
+          "The concept reads calmer and more credible, with clearer adoption paths for first use.",
+        confidence: "high",
+      },
+      {
+        id: "proactive-vs-intrusive",
+        title: "Useful prompts without overload",
+        options: "Proactive assistance vs notification fatigue",
+        decision:
+          "Prioritized task-first reminders and contextual quick actions over constant AI prompts.",
+        reason:
+          "The product needed to feel supportive during high-stress academic moments, not distracting.",
+        impact:
+          "The home experience stays focused on deadlines and immediate utility.",
+        confidence: "medium",
+      },
+      {
+        id: "polish-vs-evidence",
+        title: "Research evidence before visual polish",
+        options: "High-fidelity polish vs early validation evidence",
+        decision:
+          "Invested first in survey/interview-backed direction, then translated findings into interface flows.",
+        reason:
+          "Trust problems were behavioral and informational, not only visual.",
+        impact:
+          "The redesign rationale is stronger and easier to defend in critique.",
+        confidence: "high",
+      },
+    ],
     sections: [
         {
             title: "Problem Statement",
@@ -221,6 +367,44 @@ const dataportfolio = [
     quickGlance: ["B2B SaaS", "Automotive", "CRM"],
     details:
       "A comprehensive CRM solution designed to streamline lead management and automate sales workflows. Key features include real-time lead tracking, automated follow-ups, and detailed performance analytics, resulting in a significant increase in conversion rates and operational efficiency. Due to NDA restrictions, specific interface designs and internal data cannot be shared publicly.",
+    tradeoffs: [
+      {
+        id: "configurability-vs-rollout-speed",
+        title: "Opinionated defaults before deep configurability",
+        options: "Configurability vs rollout speed",
+        decision:
+          "Shipped strong workflow defaults first instead of supporting every team variation on day one.",
+        reason:
+          "A unified operating model was needed to reduce process drift and training overhead.",
+        impact:
+          "Faster implementation with clearer behavior, then room for controlled iteration.",
+        confidence: "high",
+      },
+      {
+        id: "automation-vs-exceptions",
+        title: "Automate common paths first",
+        options: "Automation coverage vs exception handling depth",
+        decision:
+          "Automated high-frequency lead and follow-up paths before rare edge-case scenarios.",
+        reason:
+          "Most operational waste came from repetitive actions, not uncommon exceptions.",
+        impact:
+          "Delivered earlier efficiency gains while preserving a manual fallback for outliers.",
+        confidence: "high",
+      },
+      {
+        id: "visibility-vs-nda-disclosure",
+        title: "Proof without oversharing",
+        options: "Public case-study detail vs confidentiality constraints",
+        decision:
+          "Kept the public narrative focused on workflow outcomes, process logic, and scope.",
+        reason:
+          "Sensitive internal flows and metrics could not be exposed in a public portfolio.",
+        impact:
+          "The case remains credible and interview-ready without breaching confidentiality.",
+        confidence: "high",
+      },
+    ],
     sections: [
       {
         title: "Overview",
@@ -253,6 +437,44 @@ const dataportfolio = [
     emoji: "💬",
     quickGlance: ["B2B SaaS", "Conversational UX", "Workflow Automation"],
     details: "Seamlessly integrates WhatsApp conversations directly into the CRM. This allows agents to manage tasks, schedule follow-ups, and maintain a complete communication history within a single platform. Specific implementation details are proprietary.",
+    tradeoffs: [
+      {
+        id: "chat-familiarity-vs-workflow-structure",
+        title: "Workflow-native messaging over chat mimicry",
+        options: "Consumer chat familiarity vs CRM workflow structure",
+        decision:
+          "Designed messaging around tasks, follow-ups, and records instead of recreating a pure chat app.",
+        reason:
+          "The business need was continuity and accountability, not just message exchange speed.",
+        impact:
+          "Agents retained context while managers gained auditable activity visibility.",
+        confidence: "high",
+      },
+      {
+        id: "speed-vs-compliance",
+        title: "Compliance-aware interaction design",
+        options: "Fast interaction shortcuts vs channel/compliance safeguards",
+        decision:
+          "Added guardrails and official-channel patterns even when they introduced minor friction.",
+        reason:
+          "Reliability and policy alignment mattered more than short-term convenience.",
+        impact:
+          "The integration stayed operationally viable and easier to scale across teams.",
+        confidence: "high",
+      },
+      {
+        id: "unification-vs-feature-depth",
+        title: "Unify the core loop first",
+        options: "Unified communication history vs advanced messaging feature depth",
+        decision:
+          "Prioritized centralized conversation history and follow-up continuity before advanced messaging tools.",
+        reason:
+          "Fragmented context was the root problem hurting agent performance.",
+        impact:
+          "Delivered immediate productivity gains without overcomplicating the first release.",
+        confidence: "medium",
+      },
+    ],
     sections: [
         {
             title: "Overview",
@@ -439,6 +661,8 @@ export {
   meta,
   dataabout,
   dataportfolio,
+  decisionLog,
+  operatingPrinciples,
   worktimeline,
   skills,
   milestones,

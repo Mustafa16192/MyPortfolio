@@ -21,6 +21,8 @@ yarn build            # production build to ./build
 yarn predeploy        # build and duplicate index.html to 404.html for static hosting
 ```
 
+Note: In this local environment, `yarn build` is currently unreliable (hangs during CRA production build on this machine). Do not use it as a routine verification step here; use targeted/manual verification instead and document that build was skipped.
+
 ## Coding Style & Naming Conventions
 - React 18 + Create React App; follow CRA ESLint defaults (`react-app` / `react-app/jest`).
 - Two-space indentation, double quotes, semicolons; keep imports ordered: React/libs → hooks → local components/styles.
@@ -60,7 +62,7 @@ yarn predeploy        # build and duplicate index.html to 404.html for static ho
 
 ## Commit & Pull Request Guidelines
 - History favors concise, present-tense messages (e.g., “update header links”, “fix cursor lag”); aim for one logical change per commit.
-- Before opening a PR: run `yarn build` (or at least `yarn test`), note any warnings, and include the commands executed.
+- Before opening a PR: run `yarn test`, note any warnings, and include the commands executed. Treat `yarn build` as optional on this machine because it is currently unreliable/hangs locally.
 - PR description should include: purpose, screenshots for visible UI changes, links to related issues/tasks, and any config/env changes required.
 - If local build is known to be unreliable on the current machine, state that clearly and provide manual verification coverage instead of pretending a build passed.
 
