@@ -4,6 +4,8 @@ import {
   buildFetchProjectsFinalBlocks,
   buildHelpBlocks,
   buildLsBlocks,
+  buildOpenNotFoundBlocks,
+  buildOpenUsageBlocks,
   buildPwdBlocks,
   buildSudoHireBlocks,
   buildThemeDefaultBlocks,
@@ -12,6 +14,8 @@ import {
   buildWhoAmIBlocks,
   getTerminalCatTargets,
   getTerminalCommandNames,
+  getOpenTargetSuggestions,
+  resolveOpenTarget,
 } from "./commandDataAdapters";
 
 const normalizeCommandToken = (value) => String(value || "").trim().toLowerCase();
@@ -44,6 +48,23 @@ export const executeTerminalCommand = ({ rawInput, currentPath }) => {
     case "cat": {
       const target = args.join(" ");
       return { type: "output", blocks: buildCatBlocks(target) };
+    }
+    case "open": {
+      const rawTarget = args.join(" ");
+      if (!rawTarget.trim()) {
+        return { type: "output", blocks: buildOpenUsageBlocks() };
+      }
+
+      const resolved = resolveOpenTarget(rawTarget);
+      if (!resolved) {
+        return { type: "output", blocks: buildOpenNotFoundBlocks(rawTarget) };
+      }
+
+      return {
+        type: "open-target",
+        target: resolved,
+        blocks: [{ kind: "line", text: resolved.successMessage, tone: "success" }],
+      };
     }
     case "fetch": {
       if (normalizeCommandToken(args[0]) === "projects") {
@@ -140,6 +161,39 @@ export const getAutocompleteResolution = ({ rawInput }) => {
   }
 
   if (normalizeCommandToken(tokens[0]) !== "cat") {
+    if (normalizeCommandToken(tokens[0]) === "open") {
+      if (tokens.length === 1 && endsWithSpace) {
+        return {
+          handled: true,
+          nextInput: input,
+          blocks: buildSuggestionBlocks("open targets", getOpenTargetSuggestions()),
+        };
+      }
+
+      const rawTargetPrefix = endsWithSpace ? "" : tokens.slice(1).join(" ");
+      const prefix = rawTargetPrefix.toLowerCase();
+      const candidates = getOpenTargetSuggestions().filter((target) =>
+        target.toLowerCase().startsWith(prefix)
+      );
+
+      if (!candidates.length) {
+        return { handled: false };
+      }
+
+      if (candidates.length === 1) {
+        return {
+          handled: true,
+          nextInput: `open ${candidates[0]}`,
+        };
+      }
+
+      return {
+        handled: true,
+        nextInput: input,
+        blocks: buildSuggestionBlocks("Open target suggestions", candidates),
+      };
+    }
+
     return { handled: false };
   }
 
@@ -174,4 +228,3 @@ export const getAutocompleteResolution = ({ rawInput }) => {
     blocks: buildSuggestionBlocks("File suggestions", candidates.slice(0, 14)),
   };
 };
-

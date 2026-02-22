@@ -177,7 +177,10 @@ export default function App() {
             outerScale={5}
           />
         </div>
-        <Headermain />
+        <Headermain
+          onOpenTerminal={openTerminalOverlay}
+          isTerminalOpen={terminalOverlay.open}
+        />
         <AppRoutes />
         <div
           ref={badgeWrapRef}

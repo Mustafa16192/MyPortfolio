@@ -99,6 +99,7 @@ export const getTerminalCommandNames = () => [
   "date",
   "ls",
   "cat",
+  "open",
   "fetch",
   "sudo",
   "theme",
@@ -126,6 +127,7 @@ export const buildHelpBlocks = () => [
   line("Portfolio", "section"),
   line("  ls                 List virtual files and directories", "muted"),
   line("  cat <file>         Read a text summary (try `cat resume.txt`)", "muted"),
+  line("  open <target>      Open a route or action (e.g. `open contact`)", "muted"),
   line("  fetch projects     Print structured project list", "muted"),
   line("  sudo hire mustafa  Easter egg with a hiring CTA", "muted"),
   spacer(),
@@ -299,6 +301,157 @@ export const buildUnknownCommandBlocks = (command) => [
   line("Type `help` to list commands.", "muted"),
 ];
 
+export const resolveOpenTarget = (rawTarget) => {
+  const target = normalizeToken(rawTarget);
+
+  if (!target) {
+    return null;
+  }
+
+  const openTargetMap = {
+    contact: {
+      href: "/contact",
+      label: "Contact page",
+      internal: true,
+      successMessage: "Opening /contact...",
+    },
+    "/contact": {
+      href: "/contact",
+      label: "Contact page",
+      internal: true,
+      successMessage: "Opening /contact...",
+    },
+    about: {
+      href: "/about",
+      label: "About page",
+      internal: true,
+      successMessage: "Opening /about...",
+    },
+    "/about": {
+      href: "/about",
+      label: "About page",
+      internal: true,
+      successMessage: "Opening /about...",
+    },
+    home: {
+      href: "/",
+      label: "Home page",
+      internal: true,
+      successMessage: "Opening /...",
+    },
+    "/": {
+      href: "/",
+      label: "Home page",
+      internal: true,
+      successMessage: "Opening /...",
+    },
+    resume: {
+      href: "/resume",
+      label: "Resume page",
+      internal: true,
+      successMessage: "Opening /resume...",
+    },
+    "/resume": {
+      href: "/resume",
+      label: "Resume page",
+      internal: true,
+      successMessage: "Opening /resume...",
+    },
+    terminal: {
+      href: "/terminal",
+      label: "PM Terminal route",
+      internal: true,
+      successMessage: "Opening /terminal...",
+    },
+    "/terminal": {
+      href: "/terminal",
+      label: "PM Terminal route",
+      internal: true,
+      successMessage: "Opening /terminal...",
+    },
+    email: {
+      href: `mailto:${contactConfig.YOUR_EMAIL}`,
+      label: "Email Mustafa",
+      internal: false,
+      successMessage: "Opening mail client...",
+    },
+    mail: {
+      href: `mailto:${contactConfig.YOUR_EMAIL}`,
+      label: "Email Mustafa",
+      internal: false,
+      successMessage: "Opening mail client...",
+    },
+    linkedin: {
+      href: socialprofils.linkedin,
+      label: "LinkedIn",
+      internal: false,
+      successMessage: "Opening LinkedIn...",
+    },
+    github: {
+      href: socialprofils.github,
+      label: "GitHub",
+      internal: false,
+      successMessage: "Opening GitHub...",
+    },
+  };
+
+  if (openTargetMap[target]) {
+    return openTargetMap[target];
+  }
+
+  if (target.startsWith("/project/")) {
+    return {
+      href: target,
+      label: target,
+      internal: true,
+      successMessage: `Opening ${target}...`,
+    };
+  }
+
+  if (projectById.has(target)) {
+    return {
+      href: `/project/${target}`,
+      label: `Project ${target}`,
+      internal: true,
+      successMessage: `Opening /project/${target}...`,
+    };
+  }
+
+  if (target.startsWith("/") && !target.includes(" ")) {
+    return {
+      href: target,
+      label: target,
+      internal: true,
+      successMessage: `Opening ${target}...`,
+    };
+  }
+
+  return null;
+};
+
+export const getOpenTargetSuggestions = () => [
+  "contact",
+  "email",
+  "about",
+  "resume",
+  "home",
+  "linkedin",
+  "github",
+  "/contact",
+  "/about",
+  "/resume",
+];
+
+export const buildOpenUsageBlocks = () => [
+  line("[ERROR] Usage: open <target>", "error"),
+  line("Examples: `open contact`, `open email`, `open /resume`, `open goblue-ai-redesign`", "muted"),
+];
+
+export const buildOpenNotFoundBlocks = (rawTarget) => [
+  line(`[ERROR] Unknown open target: ${rawTarget}`, "error"),
+  line("Try: contact, email, about, resume, home, linkedin, github", "muted"),
+];
+
 export const buildSudoHireBlocks = () => [
   line("[ERROR] You lack sufficient equity to execute this command.", "error"),
   line("Try /contact instead. Or better: send a sharp role + scope note.", "muted"),
@@ -353,4 +506,3 @@ export const buildFetchProjectsFinalBlocks = () => {
 
   return blocks;
 };
-

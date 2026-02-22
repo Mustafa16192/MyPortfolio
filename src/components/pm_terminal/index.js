@@ -7,7 +7,7 @@ import React, {
   useState,
 } from "react";
 import { gsap } from "gsap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   buildFetchProjectsIntroBlocks,
   buildFetchProjectsProgressBlock,
@@ -68,6 +68,7 @@ export const PmTerminalShell = ({
   onRequestClose,
   onCloseComplete,
 }) => {
+  const navigate = useNavigate();
   const currentPath = useMemo(() => normalizePath(initialPath), [initialPath]);
   const [entries, setEntries] = useState(() => initialSessionEntries(currentPath));
   const [inputValue, setInputValue] = useState("");
@@ -243,11 +244,50 @@ export const PmTerminalShell = ({
         return;
       }
 
+      if (result.type === "open-target") {
+        appendOutputBlocks(result.blocks || []);
+
+        const target = result.target;
+        if (!target?.href) {
+          return;
+        }
+
+        if (target.internal) {
+          navigate(target.href);
+          if (mode === "overlay") {
+            onRequestClose?.();
+          }
+          return;
+        }
+
+        if (typeof window !== "undefined") {
+          window.open(
+            target.href,
+            target.href.startsWith("mailto:") || target.href.startsWith("tel:")
+              ? "_self"
+              : "_blank",
+            target.href.startsWith("mailto:") || target.href.startsWith("tel:")
+              ? undefined
+              : "noopener,noreferrer"
+          );
+        }
+        return;
+      }
+
       if (result.type === "async-sequence" && result.sequenceKey === "fetch-projects") {
         runAsyncFetchProjects();
       }
     },
-    [appendCommandLine, appendOutputBlocks, busySequence, currentPath, runAsyncFetchProjects]
+    [
+      appendCommandLine,
+      appendOutputBlocks,
+      busySequence,
+      currentPath,
+      mode,
+      navigate,
+      onRequestClose,
+      runAsyncFetchProjects,
+    ]
   );
 
   const handleInputKeyDown = useCallback(
