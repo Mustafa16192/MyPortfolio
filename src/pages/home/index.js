@@ -74,6 +74,48 @@ export const Home = () => {
 
     let rafId = 0;
     let refreshRafId = 0;
+    let fallbackRafId = 0;
+    let fallbackTimeoutId = 0;
+
+    const centerClickedProjectCard = () => {
+      if (!snapshot?.projectId || !featuredListRef.current) {
+        return;
+      }
+
+      const projectCards = Array.from(
+        featuredListRef.current.querySelectorAll(".featured_project_row")
+      );
+      const targetCard = projectCards.find(
+        (card) => card.dataset.projectId === snapshot.projectId
+      );
+
+      if (!targetCard) {
+        return;
+      }
+
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+      const rect = targetCard.getBoundingClientRect();
+      const cardCenterY = rect.top + rect.height / 2;
+      const viewportCenterY = viewportHeight / 2;
+      const centerDistance = Math.abs(cardCenterY - viewportCenterY);
+      const landedNearTop = window.scrollY < 32;
+      const shouldCenterFallback =
+        landedNearTop || centerDistance > Math.max(140, viewportHeight * 0.24);
+
+      if (!shouldCenterFallback) {
+        return;
+      }
+
+      targetCard.scrollIntoView({
+        block: "center",
+        inline: "nearest",
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+      });
+
+      fallbackRafId = window.requestAnimationFrame(() => {
+        ScrollTrigger.refresh();
+      });
+    };
 
     rafId = window.requestAnimationFrame(() => {
       window.scrollTo({
@@ -86,6 +128,10 @@ export const Home = () => {
       refreshRafId = window.requestAnimationFrame(() => {
         ScrollTrigger.refresh();
       });
+
+      fallbackTimeoutId = window.setTimeout(() => {
+        centerClickedProjectCard();
+      }, prefersReducedMotion ? 0 : 160);
     });
 
     return () => {
@@ -94,6 +140,12 @@ export const Home = () => {
       }
       if (refreshRafId) {
         window.cancelAnimationFrame(refreshRafId);
+      }
+      if (fallbackRafId) {
+        window.cancelAnimationFrame(fallbackRafId);
+      }
+      if (fallbackTimeoutId) {
+        window.clearTimeout(fallbackTimeoutId);
       }
     };
   }, [isProjectReturnRestoreFlow, pendingReturnSnapshot]);
@@ -574,6 +626,7 @@ export const Home = () => {
                   to={`/project/${project.id}`}
                   state={{ fromHomeProjects: true, projectId: project.id }}
                   className="featured_project_row"
+                  data-project-id={project.id}
                   aria-label={`Open ${project.title}`}
                   onClick={(event) => handleProjectCardClick(project.id, event)}
                 >
