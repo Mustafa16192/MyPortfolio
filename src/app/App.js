@@ -3,19 +3,37 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {
   BrowserRouter as Router,
   useLocation,
+  useNavigationType,
 } from "react-router-dom";
 import withRouter from "../hooks/withRouter";
 import AppRoutes from "./routes";
 import Headermain from "../header";
 import AnimatedCursor from "../hooks/AnimatedCursor";
 import { FaGithub } from "react-icons/fa";
+import { readHomeProjectReturnScroll } from "../utils/homeScrollRestore";
 import "./App.css";
 
 function _ScrollToTop(props) {
-  const { pathname } = useLocation();
+  const location = useLocation();
+  const navigationType = useNavigationType();
+  const { hash, pathname, state } = location;
+
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    if (pathname !== "/") {
+      window.scrollTo(0, 0);
+      return;
+    }
+
+    const hasPendingRestore = Boolean(readHomeProjectReturnScroll());
+    const shouldSkipTopReset =
+      hash === "#projects" ||
+      state?.restoreHomeProjectScroll === true ||
+      (navigationType === "POP" && hasPendingRestore);
+
+    if (!shouldSkipTopReset) {
+      window.scrollTo(0, 0);
+    }
+  }, [hash, navigationType, pathname, state]);
   return props.children;
 }
 const ScrollToTop = withRouter(_ScrollToTop);

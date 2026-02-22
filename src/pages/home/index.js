@@ -1,15 +1,22 @@
-import React, { useLayoutEffect, useRef } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 import "./style.css";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { meta, dataportfolio } from "../../content_option";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigationType } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SquirrelHover } from "../../components/squirrel_hover";
+import {
+  clearHomeProjectReturnScroll,
+  readHomeProjectReturnScroll,
+  saveHomeProjectReturnScroll,
+} from "../../utils/homeScrollRestore";
 
 const featuredProjects = dataportfolio;
 
 export const Home = () => {
+  const location = useLocation();
+  const navigationType = useNavigationType();
   const homeRef = useRef(null);
   const heroRef = useRef(null);
   const eyebrowRef = useRef(null);
@@ -19,6 +26,70 @@ export const Home = () => {
   const featuredRef = useRef(null);
   const featuredHeaderRef = useRef(null);
   const featuredListRef = useRef(null);
+
+  const handleProjectCardClick = useCallback((projectId, event) => {
+    if (
+      !event ||
+      event.defaultPrevented ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
+
+    saveHomeProjectReturnScroll({
+      y: window.scrollY,
+      projectId,
+    });
+  }, []);
+
+  useEffect(() => {
+    const snapshot = readHomeProjectReturnScroll();
+    const shouldRestore =
+      Boolean(snapshot) &&
+      (location.state?.restoreHomeProjectScroll === true ||
+        navigationType === "POP");
+
+    if (!shouldRestore) {
+      return undefined;
+    }
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    let raf1 = 0;
+    let raf2 = 0;
+    let timeoutId = 0;
+
+    raf1 = window.requestAnimationFrame(() => {
+      raf2 = window.requestAnimationFrame(() => {
+        timeoutId = window.setTimeout(() => {
+          window.scrollTo({
+            top: snapshot.y,
+            left: 0,
+            behavior: prefersReducedMotion ? "auto" : "smooth",
+          });
+          clearHomeProjectReturnScroll();
+        }, 80);
+      });
+    });
+
+    return () => {
+      if (raf1) {
+        window.cancelAnimationFrame(raf1);
+      }
+      if (raf2) {
+        window.cancelAnimationFrame(raf2);
+      }
+      if (timeoutId) {
+        window.clearTimeout(timeoutId);
+      }
+    };
+  }, [location.state, navigationType]);
 
   useLayoutEffect(() => {
     if (
@@ -444,8 +515,10 @@ export const Home = () => {
                 <Link
                   key={project.id}
                   to={`/project/${project.id}`}
+                  state={{ fromHomeProjects: true, projectId: project.id }}
                   className="featured_project_row"
                   aria-label={`Open ${project.title}`}
+                  onClick={(event) => handleProjectCardClick(project.id, event)}
                 >
                   <div className="featured_project_media">
                     <img

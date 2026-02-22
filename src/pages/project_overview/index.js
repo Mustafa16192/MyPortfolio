@@ -9,12 +9,13 @@ import React, {
 import "./style.css";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { Container, Row, Col } from "react-bootstrap";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { dataportfolio, meta } from "../../content_option";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TypewriterHeading } from "../../components/typewriter_heading";
+import { readHomeProjectReturnScroll } from "../../utils/homeScrollRestore";
 
 const NAV_LABEL_ALIASES = [
   { match: /^problem/i, label: "Problem Statement" },
@@ -145,6 +146,7 @@ const VideoSection = ({ src, caption }) => {
 
 export const ProjectOverview = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const project = dataportfolio.find((p) => p.id === id);
   const pageContainerRef = useRef(null);
   const sectionRefs = useRef([]);
@@ -383,6 +385,27 @@ export const ProjectOverview = () => {
     }
   }, []);
 
+  const handleBackToProjects = useCallback((event) => {
+    event.preventDefault();
+
+    const snapshot = readHomeProjectReturnScroll();
+    if (snapshot) {
+      navigate("/", {
+        state: {
+          restoreHomeProjectScroll: true,
+          source: "project-detail",
+          projectId: id,
+        },
+      });
+      return;
+    }
+
+    navigate({
+      pathname: "/",
+      hash: "#projects",
+    });
+  }, [id, navigate]);
+
   if (!project) {
     return (
       <Container className="About-header">
@@ -451,7 +474,7 @@ export const ProjectOverview = () => {
             <h3 className="color_sec py-4">Overview</h3>
             <p className="project-overview-copy">{project.details || project.description}</p>
             <div className="mt-4">
-              <Link to="/#projects" className="btn ac_btn">
+              <Link to="/" onClick={handleBackToProjects} className="btn ac_btn">
                 Back to Projects
               </Link>
             </div>
