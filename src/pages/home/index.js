@@ -410,8 +410,8 @@ export const Home = () => {
               <span className="home_title_emoji" aria-hidden="true">🧑‍💻</span>
             </h1>
             <p className="home_subtitle" ref={subtitleRef}>
-              I turn ambiguity into shipped products and business
-              <span className="home_subtitle_tail"> lift 🚀</span>
+              I turn ambiguity into shipped products and{" "}
+              <span className="home_subtitle_tail">business lift 🚀</span>
             </p>
 
             <div className="hero_proof" ref={proofRef}>

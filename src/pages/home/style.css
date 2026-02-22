@@ -65,6 +65,8 @@ section {
   font-weight: 600;
   color: #474747;
   opacity: 0.9;
+  -webkit-hyphens: none;
+  hyphens: none;
 }
 
 .home_subtitle_tail {
