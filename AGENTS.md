@@ -4,7 +4,7 @@ These notes keep contributors aligned on how this React portfolio is structured,
 
 ## Project Structure & Module Organization
 - `src/app`: App shell (`App.js`), route transitions (`routes.js`), and global cursor behavior.
-- `src/pages`: Individual screens (`home`, `about`, `resume`, `portfolio`, `api`, `contact`) paired with a `style.css` in each folder.
+- `src/pages`: Individual screens (`home`, `about`, `resume`, `api`, `contact`, `project_overview`) paired with a `style.css` in each folder. `portfolio` is deprecated/redirected.
 - `src/components`: Reusable UI such as `socialicons` and `themetoggle`.
 - `src/content_option.js`: Centralized copy, timelines, skills, and contact config (edit here before touching layout files).
 - `src/assets/images`: Portfolio and avatar imagery; keep filenames lowercase with hyphens when adding new assets.
@@ -26,16 +26,43 @@ yarn predeploy        # build and duplicate index.html to 404.html for static ho
 - Two-space indentation, double quotes, semicolons; keep imports ordered: React/libs → hooks → local components/styles.
 - Components/hooks in PascalCase, files matching export (`Home`, `AnimatedCursor`); CSS stays as `style.css` alongside the component folder.
 - Keep text/content in `content_option.js` to avoid hardcoding in JSX; prefer prop-driven components over duplicating markup.
+- For navigation/route UX changes, preserve existing Framer Motion + GSAP behavior and extend it rather than replacing it.
+
+## Design & Interaction Philosophy (Project-Specific)
+- Visual bar: premium, polished, tasteful, cohesive. Avoid flashy, gimmicky, or noisy interactions.
+- Motion should communicate hierarchy and focus, not decorate for its own sake.
+- Prefer subtle depth, opacity, and scale changes over dramatic transitions.
+- Keep interaction language consistent across pages (hover states, reveal timing, transitions, card behavior).
+- Maintain the current frosted-glass/ambient-gradient visual system and reuse it instead of introducing new disconnected styles.
+- Homepage is the canonical project listing surface; do not reintroduce a separate portfolio listing page without explicit request.
+- Preserve the “Not Made in Framer ;)” badge wording unless explicitly asked to change it.
+
+## Motion & Micro-Interaction Guidelines
+- Use GSAP for scroll-linked focus shifts and nuanced section emphasis; use Framer Motion for route/page transitions and shared element polish.
+- New animations should feel responsive to user input (scroll/hover), not delayed by unnecessary time-based easing.
+- Favor short, controlled durations and restrained easing curves.
+- For hover effects (tilt, shimmer, glows), ensure they remain visible in both light and dark mode and degrade gracefully on touch devices.
+- Respect `prefers-reduced-motion` for any new animated behavior.
+- When changing navigation/scroll behavior, preserve context (e.g., return-to-scroll-position flows) and avoid abrupt jumps.
+
+## UX Consistency & Quality Checks
+- Check desktop and mobile layouts before finalizing visual changes; mobile navbar behavior is intentionally different from desktop.
+- Verify Safari and Chrome rendering for typography/emoji wrapping when editing hero text or tightly spaced headings.
+- Maintain consistent page heading offsets and divider spacing across About / Resume / Contact / Project pages.
+- Keep project metadata concise and recruiter-readable (quick domain/context at a glance).
+- Do not introduce UI “fixes” that solve one breakpoint/browser while regressing another.
 
 ## Testing Guidelines
 - Tests run via `yarn test`; for CI or coverage use `CI=true yarn test --watch=false --coverage`.
 - Co-locate specs as `ComponentName.test.js` near the component or in `__tests__` under the same folder.
 - Validate renders, navigation, and key interactions (e.g., route transitions, form submission states); add snapshot tests only for stable UI blocks.
+- For UI/interaction work, include manual verification notes for: desktop, mobile, light mode, dark mode, and at least one non-Chrome browser when relevant.
 
 ## Commit & Pull Request Guidelines
 - History favors concise, present-tense messages (e.g., “update header links”, “fix cursor lag”); aim for one logical change per commit.
 - Before opening a PR: run `yarn build` (or at least `yarn test`), note any warnings, and include the commands executed.
 - PR description should include: purpose, screenshots for visible UI changes, links to related issues/tasks, and any config/env changes required.
+- If local build is known to be unreliable on the current machine, state that clearly and provide manual verification coverage instead of pretending a build passed.
 
 ## Security & Configuration Tips
 - Do not commit secrets; keep EmailJS keys and similar values in `.env.local` and reference via `process.env`.

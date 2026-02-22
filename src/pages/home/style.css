@@ -20,6 +20,10 @@ section {
   animation: pageFadeUp 0.6s ease-out;
 }
 
+.home_shell--returning {
+  animation: none;
+}
+
 .home_hero {
   max-width: 980px;
   margin: 0 auto;

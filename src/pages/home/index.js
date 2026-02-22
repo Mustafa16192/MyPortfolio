@@ -3,6 +3,7 @@ import "./style.css";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { meta, dataportfolio } from "../../content_option";
 import { Link, useLocation, useNavigationType } from "react-router-dom";
+import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SquirrelHover } from "../../components/squirrel_hover";
@@ -17,6 +18,11 @@ const featuredProjects = dataportfolio;
 export const Home = () => {
   const location = useLocation();
   const navigationType = useNavigationType();
+  const pendingReturnSnapshot = readHomeProjectReturnScroll();
+  const isProjectReturnRestoreFlow =
+    Boolean(pendingReturnSnapshot) &&
+    (location.state?.restoreHomeProjectScroll === true ||
+      navigationType === "POP");
   const homeRef = useRef(null);
   const heroRef = useRef(null);
   const eyebrowRef = useRef(null);
@@ -47,11 +53,8 @@ export const Home = () => {
   }, []);
 
   useEffect(() => {
-    const snapshot = readHomeProjectReturnScroll();
-    const shouldRestore =
-      Boolean(snapshot) &&
-      (location.state?.restoreHomeProjectScroll === true ||
-        navigationType === "POP");
+    const snapshot = pendingReturnSnapshot;
+    const shouldRestore = Boolean(snapshot) && isProjectReturnRestoreFlow;
 
     if (!shouldRestore) {
       return undefined;
@@ -61,35 +64,31 @@ export const Home = () => {
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
-    let raf1 = 0;
-    let raf2 = 0;
-    let timeoutId = 0;
+    let rafId = 0;
+    let refreshRafId = 0;
 
-    raf1 = window.requestAnimationFrame(() => {
-      raf2 = window.requestAnimationFrame(() => {
-        timeoutId = window.setTimeout(() => {
-          window.scrollTo({
-            top: snapshot.y,
-            left: 0,
-            behavior: prefersReducedMotion ? "auto" : "smooth",
-          });
-          clearHomeProjectReturnScroll();
-        }, 80);
+    rafId = window.requestAnimationFrame(() => {
+      window.scrollTo({
+        top: snapshot.y,
+        left: 0,
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+      });
+      clearHomeProjectReturnScroll();
+
+      refreshRafId = window.requestAnimationFrame(() => {
+        ScrollTrigger.refresh();
       });
     });
 
     return () => {
-      if (raf1) {
-        window.cancelAnimationFrame(raf1);
+      if (rafId) {
+        window.cancelAnimationFrame(rafId);
       }
-      if (raf2) {
-        window.cancelAnimationFrame(raf2);
-      }
-      if (timeoutId) {
-        window.clearTimeout(timeoutId);
+      if (refreshRafId) {
+        window.cancelAnimationFrame(refreshRafId);
       }
     };
-  }, [location.state, navigationType]);
+  }, [isProjectReturnRestoreFlow, pendingReturnSnapshot]);
 
   useLayoutEffect(() => {
     if (
@@ -125,6 +124,7 @@ export const Home = () => {
     const shouldIntroFeatured =
       featuredRect.top <=
       window.innerHeight * (isMobile ? 1.06 : 1.12);
+    const isProjectReturnRestore = isProjectReturnRestoreFlow;
     let cleanupProofTilt = () => {};
     let cleanupFeaturedTilt = () => {};
 
@@ -332,69 +332,112 @@ export const Home = () => {
         ? { eyebrow: 8, title: 12, subtitle: 10, proof: 14 }
         : { eyebrow: 10, title: 14, subtitle: 12, proof: 18 };
 
-      gsap.set(eyebrowRef.current, { opacity: 0, y: introY.eyebrow });
-      gsap.set(titleRef.current, { opacity: 0, y: introY.title });
-      gsap.set(subtitleRef.current, { opacity: 0, y: introY.subtitle });
-      gsap.set(proofItems, { opacity: 0, y: introY.proof });
-      if (shouldIntroFeatured) {
-        gsap.set(featuredHeaderRef.current, {
-          opacity: 0,
-          y: isMobile ? 10 : 12,
-        });
-        gsap.set(featuredRows, {
-          opacity: 0,
-          y: isMobile ? 12 : 16,
-        });
-      }
-
-      const introTimeline = gsap
-        .timeline({
-          defaults: { ease: "power2.out" },
-          delay: 0.08,
-        })
-        .to(eyebrowRef.current, { opacity: 1, y: 0, duration: 0.42 })
-        .to(titleRef.current, { opacity: 1, y: 0, duration: 0.5 }, "-=0.18")
-        .to(subtitleRef.current, { opacity: 1, y: 0, duration: 0.42 }, "-=0.26")
-        .addLabel("proofStart", "-=0.16")
-        .to(
-          proofItems,
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.4,
-            stagger: 0.08,
-          },
-          "proofStart"
+      if (isProjectReturnRestore) {
+        gsap.set(
+          [eyebrowRef.current, titleRef.current, subtitleRef.current, ...proofItems],
+          { opacity: 1, y: 0, clearProps: "transform" }
         );
+        gsap.set(featuredHeaderRef.current, { opacity: 1, y: 0 });
+        gsap.set(featuredRows, { opacity: 1, y: 0 });
 
-      if (shouldIntroFeatured) {
-        introTimeline
+        if (!prefersReducedMotion) {
+          const returnTimeline = gsap.timeline({
+            defaults: { ease: "power2.out" },
+          });
+
+          returnTimeline
+            .fromTo(
+              featuredHeaderRef.current,
+              { opacity: 0.92, y: isMobile ? 4 : 6 },
+              { opacity: 1, y: 0, duration: 0.2 }
+            )
+            .fromTo(
+              featuredRows,
+              { opacity: 0.94, y: isMobile ? 6 : 8 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.24,
+                stagger: 0.015,
+              },
+              0.02
+            );
+
+          if (canUseProofTilt) {
+            returnTimeline.eventCallback("onComplete", () => {
+              cleanupProofTilt = setupProofTilt(proofItems);
+              cleanupFeaturedTilt = setupProofTilt(featuredRows);
+            });
+          }
+        } else if (canUseProofTilt) {
+          cleanupProofTilt = setupProofTilt(proofItems);
+          cleanupFeaturedTilt = setupProofTilt(featuredRows);
+        }
+      } else {
+        gsap.set(eyebrowRef.current, { opacity: 0, y: introY.eyebrow });
+        gsap.set(titleRef.current, { opacity: 0, y: introY.title });
+        gsap.set(subtitleRef.current, { opacity: 0, y: introY.subtitle });
+        gsap.set(proofItems, { opacity: 0, y: introY.proof });
+        if (shouldIntroFeatured) {
+          gsap.set(featuredHeaderRef.current, {
+            opacity: 0,
+            y: isMobile ? 10 : 12,
+          });
+          gsap.set(featuredRows, {
+            opacity: 0,
+            y: isMobile ? 12 : 16,
+          });
+        }
+
+        const introTimeline = gsap
+          .timeline({
+            defaults: { ease: "power2.out" },
+            delay: 0.08,
+          })
+          .to(eyebrowRef.current, { opacity: 1, y: 0, duration: 0.42 })
+          .to(titleRef.current, { opacity: 1, y: 0, duration: 0.5 }, "-=0.18")
+          .to(subtitleRef.current, { opacity: 1, y: 0, duration: 0.42 }, "-=0.26")
+          .addLabel("proofStart", "-=0.16")
           .to(
-            featuredHeaderRef.current,
+            proofItems,
             {
               opacity: 1,
               y: 0,
-              duration: 0.28,
-            },
-            "proofStart"
-          )
-          .to(
-            featuredRows,
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.3,
-              stagger: 0.018,
+              duration: 0.4,
+              stagger: 0.08,
             },
             "proofStart"
           );
-      }
 
-      if (canUseProofTilt) {
-        introTimeline.eventCallback("onComplete", () => {
-          cleanupProofTilt = setupProofTilt(proofItems);
-          cleanupFeaturedTilt = setupProofTilt(featuredRows);
-        });
+        if (shouldIntroFeatured) {
+          introTimeline
+            .to(
+              featuredHeaderRef.current,
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.28,
+              },
+              "proofStart"
+            )
+            .to(
+              featuredRows,
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.3,
+                stagger: 0.018,
+              },
+              "proofStart"
+            );
+        }
+
+        if (canUseProofTilt) {
+          introTimeline.eventCallback("onComplete", () => {
+            cleanupProofTilt = setupProofTilt(proofItems);
+            cleanupFeaturedTilt = setupProofTilt(featuredRows);
+          });
+        }
       }
 
       if (isMobile) {
@@ -460,14 +503,20 @@ export const Home = () => {
 
   return (
     <HelmetProvider>
-      <section id="home" className="home" ref={homeRef}>
+      <motion.section
+        id="home"
+        className="home"
+        ref={homeRef}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.18 }}
+      >
         <Helmet>
           <meta charSet="utf-8" />
           <title>{meta.title}</title>
           <meta name="description" content={meta.description} />
         </Helmet>
 
-        <div className="home_shell">
+        <div className={`home_shell ${isProjectReturnRestoreFlow ? "home_shell--returning" : ""}`.trim()}>
           <div className="home_hero home_hero_anim" ref={heroRef}>
             <p className="home_eyebrow" ref={eyebrowRef}>
               <span className="status_dot" aria-hidden="true"></span>
@@ -550,7 +599,7 @@ export const Home = () => {
             </div>
           </section>
         </div>
-      </section>
+      </motion.section>
     </HelmetProvider>
   );
 };

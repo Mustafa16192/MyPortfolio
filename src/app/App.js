@@ -1,42 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {
-  BrowserRouter as Router,
-  useLocation,
-  useNavigationType,
-} from "react-router-dom";
-import withRouter from "../hooks/withRouter";
+import { BrowserRouter as Router } from "react-router-dom";
 import AppRoutes from "./routes";
 import Headermain from "../header";
 import AnimatedCursor from "../hooks/AnimatedCursor";
 import { FaGithub } from "react-icons/fa";
-import { readHomeProjectReturnScroll } from "../utils/homeScrollRestore";
 import "./App.css";
-
-function _ScrollToTop(props) {
-  const location = useLocation();
-  const navigationType = useNavigationType();
-  const { hash, pathname, state } = location;
-
-  useEffect(() => {
-    if (pathname !== "/") {
-      window.scrollTo(0, 0);
-      return;
-    }
-
-    const hasPendingRestore = Boolean(readHomeProjectReturnScroll());
-    const shouldSkipTopReset =
-      hash === "#projects" ||
-      state?.restoreHomeProjectScroll === true ||
-      (navigationType === "POP" && hasPendingRestore);
-
-    if (!shouldSkipTopReset) {
-      window.scrollTo(0, 0);
-    }
-  }, [hash, navigationType, pathname, state]);
-  return props.children;
-}
-const ScrollToTop = withRouter(_ScrollToTop);
 
 export default function App() {
   const [isBadgeOpen, setIsBadgeOpen] = useState(false);
@@ -109,68 +78,66 @@ export default function App() {
             outerScale={5}
           />
         </div>
-        <ScrollToTop>
-          <Headermain />
-          <AppRoutes />
+        <Headermain />
+        <AppRoutes />
+        <div
+          ref={badgeWrapRef}
+          className={`framer_badge_wrap ${isBadgeOpen ? "is-open" : ""}`}
+          onMouseEnter={openBadgePopover}
+          onMouseLeave={scheduleBadgeClose}
+          onFocus={openBadgePopover}
+          onBlur={handleBadgeBlur}
+          onKeyDown={handleBadgeKeyDown}
+        >
           <div
-            ref={badgeWrapRef}
-            className={`framer_badge_wrap ${isBadgeOpen ? "is-open" : ""}`}
+            className="framer_badge"
+            tabIndex={0}
+            role="button"
+            aria-label="Built and coded by me"
+            aria-haspopup="dialog"
+            aria-expanded={isBadgeOpen}
+            aria-controls="framer-badge-popover"
+          >
+            <span className="framer_badge_icon" aria-hidden="true">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="44.65 33.992 50.7 76.049"
+                focusable="false"
+              >
+                <path
+                  d="M 44.65 33.992 L 95.35 33.992 L 95.35 59.341 L 70 59.341 Z M 44.65 59.341 L 70 59.341 L 95.35 84.691 L 44.65 84.691 Z M 44.65 84.691 L 70 84.691 L 70 110.041 Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </span>
+            <span className="framer_badge_text">Not Made in Framer ;)</span>
+          </div>
+
+          <div
+            id="framer-badge-popover"
+            className="framer_badge_popover"
+            role="dialog"
+            aria-label="Project attribution"
+            aria-hidden={!isBadgeOpen}
             onMouseEnter={openBadgePopover}
             onMouseLeave={scheduleBadgeClose}
             onFocus={openBadgePopover}
             onBlur={handleBadgeBlur}
-            onKeyDown={handleBadgeKeyDown}
           >
-            <div
-              className="framer_badge"
-              tabIndex={0}
-              role="button"
-              aria-label="Built and coded by me"
-              aria-haspopup="dialog"
-              aria-expanded={isBadgeOpen}
-              aria-controls="framer-badge-popover"
+            <p className="framer_badge_popover_copy">
+              Built and coded by me with React, GSAP, and modern web technologies.
+            </p>
+            <a
+              className="framer_badge_popover_link"
+              href="https://github.com/Mustafa16192/MyPortfolio"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <span className="framer_badge_icon" aria-hidden="true">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="44.65 33.992 50.7 76.049"
-                  focusable="false"
-                >
-                  <path
-                    d="M 44.65 33.992 L 95.35 33.992 L 95.35 59.341 L 70 59.341 Z M 44.65 59.341 L 70 59.341 L 95.35 84.691 L 44.65 84.691 Z M 44.65 84.691 L 70 84.691 L 70 110.041 Z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </span>
-              <span className="framer_badge_text">Not Made in Framer ;)</span>
-            </div>
-
-            <div
-              id="framer-badge-popover"
-              className="framer_badge_popover"
-              role="dialog"
-              aria-label="Project attribution"
-              aria-hidden={!isBadgeOpen}
-              onMouseEnter={openBadgePopover}
-              onMouseLeave={scheduleBadgeClose}
-              onFocus={openBadgePopover}
-              onBlur={handleBadgeBlur}
-            >
-              <p className="framer_badge_popover_copy">
-                Built and coded by me with React, GSAP, and modern web technologies.
-              </p>
-              <a
-                className="framer_badge_popover_link"
-                href="https://github.com/Mustafa16192/MyPortfolio"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaGithub aria-hidden="true" />
-                <span>View Source</span>
-              </a>
-            </div>
+              <FaGithub aria-hidden="true" />
+              <span>View Source</span>
+            </a>
           </div>
-        </ScrollToTop>
+        </div>
       </div>
     </Router>
   );

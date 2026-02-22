@@ -1,5 +1,5 @@
-import React from "react";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import React, { useCallback, useMemo, useRef } from "react";
+import { Navigate, Route, Routes, useLocation, useNavigationType } from "react-router-dom";
 import withRouter from "../hooks/withRouter";
 import { Home } from "../pages/home";
 import { ContactUs } from "../pages/contact";
@@ -9,9 +9,10 @@ import { ProjectOverview } from "../pages/project_overview";
 import APIPage from "../pages/api"; // Import default export from "../pages/api"
 import { Socialicons } from "../components/socialicons";
 import { AnimatePresence } from "framer-motion";
+import { readHomeProjectReturnScroll } from "../utils/homeScrollRestore";
 
-const AnimatedRoutes = withRouter(({ location }) => (
-  <AnimatePresence initial={false}>
+const AnimatedRoutes = withRouter(({ location, onRouteExitComplete }) => (
+  <AnimatePresence initial={false} mode="wait" onExitComplete={onRouteExitComplete}>
       <Routes location={location} key={location.pathname}>
         <Route exact path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
@@ -27,6 +28,50 @@ const AnimatedRoutes = withRouter(({ location }) => (
 
 function AppRoutes() {
   const location = useLocation();
+  const navigationType = useNavigationType();
+  const pendingScrollActionRef = useRef({ type: "none" });
+  const lastFlushedKeyRef = useRef("");
+  const routeKey = `${location.pathname}${location.hash || ""}`;
+
+  const pendingScrollAction = useMemo(() => {
+    const { hash, pathname, state } = location;
+
+    if (pathname === "/") {
+      const hasPendingRestore = Boolean(readHomeProjectReturnScroll());
+      const shouldSkipTopReset =
+        hash === "#projects" ||
+        state?.restoreHomeProjectScroll === true ||
+        (navigationType === "POP" && hasPendingRestore);
+
+      if (shouldSkipTopReset) {
+        return {
+          type: "none",
+          routeKey,
+        };
+      }
+    }
+
+    return {
+      type: "reset-top",
+      routeKey,
+    };
+  }, [location, navigationType, routeKey]);
+
+  pendingScrollActionRef.current = pendingScrollAction;
+
+  const handleRouteExitComplete = useCallback(() => {
+    const action = pendingScrollActionRef.current;
+    if (!action || action.type !== "reset-top") {
+      return;
+    }
+
+    if (lastFlushedKeyRef.current === action.routeKey) {
+      return;
+    }
+
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    lastFlushedKeyRef.current = action.routeKey;
+  }, []);
 
   // Check if the current route is either "/api" or "/about" or "/resume"
   const isExcludedPage =
@@ -37,7 +82,7 @@ function AppRoutes() {
 
   return (
     <div className="s_c">
-      <AnimatedRoutes />
+      <AnimatedRoutes onRouteExitComplete={handleRouteExitComplete} />
       {/* Conditionally render the Socialicons component */}
       {!isExcludedPage && <Socialicons />}
     </div>
