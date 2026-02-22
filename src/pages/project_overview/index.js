@@ -390,23 +390,17 @@ export const ProjectOverview = () => {
     event.preventDefault();
 
     const snapshot = readHomeProjectReturnScroll();
-    const hasReactHistoryBack =
-      typeof window !== "undefined" &&
-      window.history &&
-      window.history.length > 1 &&
-      Number.isFinite(window.history.state?.idx) &&
-      window.history.state.idx > 0;
 
     // Preferred path: if we have a saved home snapshot (normal homepage -> project flow),
-    // use browser history back. This matches the exact browser-back restoration behavior.
-    if (snapshot && hasReactHistoryBack) {
+    // always use browser history back. This matches the exact browser-back restoration behavior.
+    if (snapshot) {
       navigate(-1);
       return;
     }
 
-    // Secondary path: if route state confirms homepage origin but history back isn't safe,
+    // Secondary path: if route state confirms homepage origin but snapshot is missing,
     // use explicit home navigation with restore state.
-    if (snapshot || location.state?.fromHomeProjects === true) {
+    if (location.state?.fromHomeProjects === true) {
       navigate("/", {
         state: {
           restoreHomeProjectScroll: true,
