@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 import "./style.css";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { meta, dataportfolio } from "../../content_option";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigationType } from "react-router-dom";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -17,10 +17,13 @@ const featuredProjects = dataportfolio;
 
 export const Home = () => {
   const location = useLocation();
+  const navigationType = useNavigationType();
   const pendingReturnSnapshot = readHomeProjectReturnScroll();
+  const hasExplicitRestoreFlag = location.state?.restoreHomeProjectScroll === true;
+  const isHistoryReturn = navigationType === "POP";
   const isProjectReturnRestoreFlow =
     Boolean(pendingReturnSnapshot) &&
-    location.state?.restoreHomeProjectScroll === true;
+    (hasExplicitRestoreFlag || isHistoryReturn);
   const homeRef = useRef(null);
   const heroRef = useRef(null);
   const eyebrowRef = useRef(null);

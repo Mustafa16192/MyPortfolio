@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useRef } from "react";
-import { Navigate, Route, Routes, useLocation, useNavigationType } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import withRouter from "../hooks/withRouter";
 import { Home } from "../pages/home";
 import { ContactUs } from "../pages/contact";
@@ -28,7 +28,6 @@ const AnimatedRoutes = withRouter(({ location, onRouteExitComplete }) => (
 
 function AppRoutes() {
   const location = useLocation();
-  const navigationType = useNavigationType();
   const pendingScrollActionRef = useRef({ type: "none" });
   const lastFlushedKeyRef = useRef("");
   const routeKey = `${location.pathname}${location.hash || ""}`;
@@ -41,7 +40,7 @@ function AppRoutes() {
       const shouldSkipTopReset =
         hash === "#projects" ||
         state?.restoreHomeProjectScroll === true ||
-        (navigationType === "POP" && hasPendingRestore);
+        hasPendingRestore;
 
       if (shouldSkipTopReset) {
         return {
@@ -55,7 +54,7 @@ function AppRoutes() {
       type: "reset-top",
       routeKey,
     };
-  }, [location, navigationType, routeKey]);
+  }, [location, routeKey]);
 
   pendingScrollActionRef.current = pendingScrollAction;
 

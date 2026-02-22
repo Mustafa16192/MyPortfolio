@@ -9,7 +9,7 @@ import React, {
 import "./style.css";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { Container, Row, Col } from "react-bootstrap";
-import { useParams, Link, useLocation, useNavigate } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { dataportfolio, meta } from "../../content_option";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
@@ -146,7 +146,6 @@ const VideoSection = ({ src, caption }) => {
 
 export const ProjectOverview = () => {
   const { id } = useParams();
-  const location = useLocation();
   const navigate = useNavigate();
   const project = dataportfolio.find((p) => p.id === id);
   const pageContainerRef = useRef(null);
@@ -388,31 +387,12 @@ export const ProjectOverview = () => {
 
   const handleBackToProjects = useCallback(() => {
     const snapshot = readHomeProjectReturnScroll();
-    const cameFromHomeProjects = location.state?.fromHomeProjects === true;
-    const canGoBack =
-      typeof window !== "undefined" &&
-      window.history &&
-      window.history.length > 1;
-
-    // Match native browser back for Home -> Project transitions (this preserves scroll).
-    if (cameFromHomeProjects && canGoBack) {
-      navigate(-1);
-      return;
-    }
-
     const hasMatchingHomeSnapshot =
       Boolean(snapshot) &&
-      (snapshot.projectId === id || snapshot.projectId === null || cameFromHomeProjects);
+      (snapshot.projectId === id || snapshot.projectId === null);
 
     if (hasMatchingHomeSnapshot) {
-      navigate("/", {
-        replace: true,
-        state: {
-          restoreHomeProjectScroll: true,
-          source: "project-detail",
-          projectId: id,
-        },
-      });
+      navigate(-1);
       return;
     }
 
@@ -420,7 +400,7 @@ export const ProjectOverview = () => {
       pathname: "/",
       hash: "#projects",
     });
-  }, [id, location.state, navigate]);
+  }, [id, navigate]);
 
   if (!project) {
     return (
