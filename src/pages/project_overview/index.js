@@ -386,11 +386,20 @@ export const ProjectOverview = () => {
     }
   }, []);
 
-  const handleBackToProjects = useCallback((event) => {
-    event.preventDefault();
-
+  const handleBackToProjects = useCallback(() => {
     const snapshot = readHomeProjectReturnScroll();
     const cameFromHomeProjects = location.state?.fromHomeProjects === true;
+    const canGoBack =
+      typeof window !== "undefined" &&
+      window.history &&
+      window.history.length > 1;
+
+    // Match native browser back for Home -> Project transitions (this preserves scroll).
+    if (cameFromHomeProjects && canGoBack) {
+      navigate(-1);
+      return;
+    }
+
     const hasMatchingHomeSnapshot =
       Boolean(snapshot) &&
       (snapshot.projectId === id || snapshot.projectId === null || cameFromHomeProjects);
@@ -398,27 +407,6 @@ export const ProjectOverview = () => {
     if (hasMatchingHomeSnapshot) {
       navigate("/", {
         replace: true,
-        state: {
-          restoreHomeProjectScroll: true,
-          source: "project-detail",
-          projectId: id,
-        },
-      });
-      return;
-    }
-
-    const canGoBack =
-      typeof window !== "undefined" &&
-      window.history &&
-      window.history.length > 1;
-
-    if (canGoBack) {
-      navigate(-1);
-      return;
-    }
-
-    if (snapshot || location.state?.fromHomeProjects === true) {
-      navigate("/", {
         state: {
           restoreHomeProjectScroll: true,
           source: "project-detail",
@@ -502,9 +490,9 @@ export const ProjectOverview = () => {
             <h3 className="color_sec py-4">Overview</h3>
             <p className="project-overview-copy">{project.details || project.description}</p>
             <div className="mt-4">
-              <Link to="/" onClick={handleBackToProjects} className="btn ac_btn">
+              <button type="button" onClick={handleBackToProjects} className="btn ac_btn">
                 Back to Projects
-              </Link>
+              </button>
             </div>
           </Col>
           <Col lg="8" className="project-summary-media-col d-flex align-items-center justify-content-center">
