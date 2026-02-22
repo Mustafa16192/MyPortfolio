@@ -56,13 +56,21 @@
     background: transparent;
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
+    isolation: isolate;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 .project-image-container img {
     width: 100%;
     height: auto;
+    display: block;
     border-radius: 14px;
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.34);
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 .project-chapter-layout {

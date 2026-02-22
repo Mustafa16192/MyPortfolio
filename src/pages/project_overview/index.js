@@ -11,10 +11,8 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import { Container, Row, Col } from "react-bootstrap";
 import { useParams, Link } from "react-router-dom";
 import { dataportfolio, meta } from "../../content_option";
-import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { TypewriterHeading } from "../../components/typewriter_heading";
 
 const NAV_LABEL_ALIASES = [
   { match: /^problem/i, label: "Problem Statement" },
@@ -147,6 +145,8 @@ export const ProjectOverview = () => {
   const { id } = useParams();
   const project = dataportfolio.find((p) => p.id === id);
   const pageContainerRef = useRef(null);
+  const projectIntroRowRef = useRef(null);
+  const projectImageContainerRef = useRef(null);
   const sectionRefs = useRef([]);
   const [activeChapter, setActiveChapter] = useState(0);
   const [isDesktopViewport, setIsDesktopViewport] = useState(
@@ -174,6 +174,77 @@ export const ProjectOverview = () => {
     if (window.innerWidth < 992) {
       window.scrollTo(0, 0);
     }
+  }, [id]);
+
+  useLayoutEffect(() => {
+    if (!projectIntroRowRef.current || !projectImageContainerRef.current) {
+      return undefined;
+    }
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    const introRowEl = projectIntroRowRef.current;
+    const imageContainerEl = projectImageContainerRef.current;
+
+    gsap.killTweensOf([introRowEl, imageContainerEl]);
+
+    if (prefersReducedMotion) {
+      gsap.set([introRowEl, imageContainerEl], {
+        clearProps: "opacity,visibility,transform",
+      });
+      return undefined;
+    }
+
+    const ctx = gsap.context(() => {
+      gsap.set(introRowEl, {
+        autoAlpha: 0,
+        y: 8,
+        force3D: true,
+      });
+      gsap.set(imageContainerEl, {
+        autoAlpha: 0,
+        y: 12,
+        scale: 0.996,
+        force3D: true,
+        transformOrigin: "50% 50%",
+      });
+
+      gsap
+        .timeline({
+          defaults: {
+            ease: "power2.out",
+            overwrite: "auto",
+          },
+        })
+        .to(
+          introRowEl,
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.24,
+            clearProps: "opacity,visibility,transform",
+          },
+          0
+        )
+        .to(
+          imageContainerEl,
+          {
+            autoAlpha: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.32,
+            clearProps: "opacity,visibility,transform",
+          },
+          0.05
+        );
+    }, pageContainerRef);
+
+    return () => {
+      ctx.revert();
+      gsap.killTweensOf([introRowEl, imageContainerEl]);
+    };
   }, [id]);
 
   useEffect(() => {
@@ -411,12 +482,11 @@ export const ProjectOverview = () => {
           <meta name="description" content={project.description} />
         </Helmet>
 
-        <Row className="mb-5 mt-3 pt-md-3">
+        <Row className="mb-5 mt-3 pt-md-3" ref={projectIntroRowRef}>
           <Col lg="12">
-            <TypewriterHeading
-              text={project.title || project.description}
-              className="display-4 mb-0"
-            />
+            <h1 className="display-4 mb-0">
+              {project.title || project.description}
+            </h1>
             <hr className="t_border my-4 ml-0 text-left" />
           </Col>
         </Row>
@@ -447,10 +517,11 @@ export const ProjectOverview = () => {
             <p className="project-overview-copy">{project.details || project.description}</p>
           </Col>
           <Col lg="8" className="project-summary-media-col d-flex align-items-center justify-content-center">
-            <div className="project-image-container w-100">
-              <motion.img
-                layoutId={`project-image-${project.id}`}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            <div
+              className="project-image-container w-100"
+              ref={projectImageContainerRef}
+            >
+              <img
                 src={require(`../../assets/images/${project.img}`)}
                 alt={project.title}
                 className="img-fluid rounded shadow-sm"
