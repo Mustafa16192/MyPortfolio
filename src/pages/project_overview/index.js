@@ -389,15 +389,24 @@ export const ProjectOverview = () => {
   const handleBackToProjects = useCallback((event) => {
     event.preventDefault();
 
-    // Preferred path: if user came from the homepage project card, use browser history back.
-    // This preserves the exact scroll position and already behaves correctly in this app.
-    if (location.state?.fromHomeProjects === true && window.history.length > 1) {
+    const snapshot = readHomeProjectReturnScroll();
+    const hasReactHistoryBack =
+      typeof window !== "undefined" &&
+      window.history &&
+      window.history.length > 1 &&
+      Number.isFinite(window.history.state?.idx) &&
+      window.history.state.idx > 0;
+
+    // Preferred path: if we have a saved home snapshot (normal homepage -> project flow),
+    // use browser history back. This matches the exact browser-back restoration behavior.
+    if (snapshot && hasReactHistoryBack) {
       navigate(-1);
       return;
     }
 
-    const snapshot = readHomeProjectReturnScroll();
-    if (snapshot) {
+    // Secondary path: if route state confirms homepage origin but history back isn't safe,
+    // use explicit home navigation with restore state.
+    if (snapshot || location.state?.fromHomeProjects === true) {
       navigate("/", {
         state: {
           restoreHomeProjectScroll: true,
