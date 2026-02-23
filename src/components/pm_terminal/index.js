@@ -18,6 +18,7 @@ import {
   getAutocompleteResolution,
   resolveTerminalAsyncSequence,
 } from "./commandEngine";
+import { useInteractionSound } from "../interaction_sound";
 import "./style.css";
 
 const OVERLAY_Z_INDEX = 1000005;
@@ -69,6 +70,7 @@ export const PmTerminalShell = ({
   onCloseComplete,
 }) => {
   const navigate = useNavigate();
+  const { play: playInteractionSound } = useInteractionSound();
   const currentPath = useMemo(() => normalizePath(initialPath), [initialPath]);
   const [entries, setEntries] = useState(() => initialSessionEntries(currentPath));
   const [inputValue, setInputValue] = useState("");
@@ -85,6 +87,7 @@ export const PmTerminalShell = ({
   const backdropRef = useRef(null);
   const panelRef = useRef(null);
   const closeTweenRef = useRef(null);
+  const previousOverlayOpenRef = useRef(null);
   const mountedRef = useRef(true);
   const timeoutIdsRef = useRef([]);
   const closeCompleteCalledRef = useRef(false);
@@ -144,6 +147,29 @@ export const PmTerminalShell = ({
       }
     };
   }, []);
+
+  useEffect(() => {
+    if (mode !== "overlay") {
+      return undefined;
+    }
+
+    const previousValue = previousOverlayOpenRef.current;
+
+    if (previousValue === null) {
+      if (isOpen) {
+        playInteractionSound("ui.terminal.open");
+      }
+      previousOverlayOpenRef.current = isOpen;
+      return undefined;
+    }
+
+    if (previousValue !== isOpen) {
+      playInteractionSound(isOpen ? "ui.terminal.open" : "ui.terminal.close");
+      previousOverlayOpenRef.current = isOpen;
+    }
+
+    return undefined;
+  }, [isOpen, mode, playInteractionSound]);
 
   useEffect(() => {
     focusInput();

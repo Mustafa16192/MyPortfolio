@@ -6,6 +6,7 @@ import Headermain from "../header";
 import AnimatedCursor from "../hooks/AnimatedCursor";
 import { PmTerminalShell } from "../components/pm_terminal";
 import { useGlobalTerminalShortcut } from "../components/pm_terminal/useGlobalTerminalShortcut";
+import { InteractionSoundProvider } from "../components/interaction_sound";
 import { FaGithub } from "react-icons/fa";
 import "./App.css";
 
@@ -165,92 +166,94 @@ export default function App() {
 
   return (
     <Router basename={process.env.PUBLIC_URL}>
-      <div className={`app_shell ${terminalOverlay.open ? "is-terminal-open" : ""}`}>
-        <div className="global-ambient-bg" aria-hidden="true" />
-        <div className="cursor__dot">
-          <AnimatedCursor
-            innerSize={15}
-            outerSize={15}
-            color="255, 255 ,255"
-            outerAlpha={0.4}
-            innerScale={0.7}
-            outerScale={5}
-          />
-        </div>
-        <Headermain
-          onOpenTerminal={openTerminalOverlay}
-          isTerminalOpen={terminalOverlay.open}
-        />
-        <AppRoutes />
-        <div
-          ref={badgeWrapRef}
-          className={`framer_badge_wrap ${isBadgeOpen ? "is-open" : ""}`}
-          onMouseEnter={openBadgePopover}
-          onMouseLeave={scheduleBadgeClose}
-          onFocus={openBadgePopover}
-          onBlur={handleBadgeBlur}
-          onKeyDown={handleBadgeKeyDown}
-        >
-          <div
-            className="framer_badge"
-            tabIndex={0}
-            role="button"
-            aria-label="Built and coded by me"
-            aria-haspopup="dialog"
-            aria-expanded={isBadgeOpen}
-            aria-controls="framer-badge-popover"
-          >
-            <span className="framer_badge_icon" aria-hidden="true">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="44.65 33.992 50.7 76.049"
-                focusable="false"
-              >
-                <path
-                  d="M 44.65 33.992 L 95.35 33.992 L 95.35 59.341 L 70 59.341 Z M 44.65 59.341 L 70 59.341 L 95.35 84.691 L 44.65 84.691 Z M 44.65 84.691 L 70 84.691 L 70 110.041 Z"
-                  fill="currentColor"
-                />
-              </svg>
-            </span>
-            <span className="framer_badge_text">Not Made in Framer ;)</span>
+      <InteractionSoundProvider isTerminalOverlayOpen={terminalOverlay.open}>
+        <div className={`app_shell ${terminalOverlay.open ? "is-terminal-open" : ""}`}>
+          <div className="global-ambient-bg" aria-hidden="true" />
+          <div className="cursor__dot">
+            <AnimatedCursor
+              innerSize={15}
+              outerSize={15}
+              color="255, 255 ,255"
+              outerAlpha={0.4}
+              innerScale={0.7}
+              outerScale={5}
+            />
           </div>
-
+          <Headermain
+            onOpenTerminal={openTerminalOverlay}
+            isTerminalOpen={terminalOverlay.open}
+          />
+          <AppRoutes />
           <div
-            id="framer-badge-popover"
-            className="framer_badge_popover"
-            role="dialog"
-            aria-label="Project attribution"
-            aria-hidden={!isBadgeOpen}
+            ref={badgeWrapRef}
+            className={`framer_badge_wrap ${isBadgeOpen ? "is-open" : ""}`}
             onMouseEnter={openBadgePopover}
             onMouseLeave={scheduleBadgeClose}
             onFocus={openBadgePopover}
             onBlur={handleBadgeBlur}
+            onKeyDown={handleBadgeKeyDown}
           >
-            <p className="framer_badge_popover_copy">
-              Built and coded by me with React, GSAP, and modern web technologies.
-            </p>
-            <a
-              className="framer_badge_popover_link"
-              href="https://github.com/Mustafa16192/MyPortfolio"
-              target="_blank"
-              rel="noopener noreferrer"
+            <div
+              className="framer_badge"
+              tabIndex={0}
+              role="button"
+              aria-label="Built and coded by me"
+              aria-haspopup="dialog"
+              aria-expanded={isBadgeOpen}
+              aria-controls="framer-badge-popover"
             >
-              <FaGithub aria-hidden="true" />
-              <span>View Source</span>
-            </a>
+              <span className="framer_badge_icon" aria-hidden="true">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="44.65 33.992 50.7 76.049"
+                  focusable="false"
+                >
+                  <path
+                    d="M 44.65 33.992 L 95.35 33.992 L 95.35 59.341 L 70 59.341 Z M 44.65 59.341 L 70 59.341 L 95.35 84.691 L 44.65 84.691 Z M 44.65 84.691 L 70 84.691 L 70 110.041 Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              <span className="framer_badge_text">Not Made in Framer ;)</span>
+            </div>
+
+            <div
+              id="framer-badge-popover"
+              className="framer_badge_popover"
+              role="dialog"
+              aria-label="Project attribution"
+              aria-hidden={!isBadgeOpen}
+              onMouseEnter={openBadgePopover}
+              onMouseLeave={scheduleBadgeClose}
+              onFocus={openBadgePopover}
+              onBlur={handleBadgeBlur}
+            >
+              <p className="framer_badge_popover_copy">
+                Built and coded by me with React, GSAP, and modern web technologies.
+              </p>
+              <a
+                className="framer_badge_popover_link"
+                href="https://github.com/Mustafa16192/MyPortfolio"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaGithub aria-hidden="true" />
+                <span>View Source</span>
+              </a>
+            </div>
           </div>
+          {terminalOverlay.mounted ? (
+            <PmTerminalShell
+              key={`pm-terminal-overlay-${terminalOverlay.sessionKey}`}
+              mode="overlay"
+              isOpen={terminalOverlay.open}
+              initialPath={terminalOverlay.path}
+              onRequestClose={closeTerminalOverlay}
+              onCloseComplete={handleTerminalOverlayExited}
+            />
+          ) : null}
         </div>
-        {terminalOverlay.mounted ? (
-          <PmTerminalShell
-            key={`pm-terminal-overlay-${terminalOverlay.sessionKey}`}
-            mode="overlay"
-            isOpen={terminalOverlay.open}
-            initialPath={terminalOverlay.path}
-            onRequestClose={closeTerminalOverlay}
-            onCloseComplete={handleTerminalOverlayExited}
-          />
-        ) : null}
-      </div>
+      </InteractionSoundProvider>
     </Router>
   );
 }

@@ -14,6 +14,7 @@ import { dataportfolio, meta } from "../../content_option";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ProjectTradeoffs } from "../../components/project_tradeoffs";
+import { useInteractionSound } from "../../components/interaction_sound";
 
 const NAV_LABEL_ALIASES = [
   { match: /^problem/i, label: "Problem Statement" },
@@ -143,6 +144,7 @@ const VideoSection = ({ src, caption }) => {
 };
 
 export const ProjectOverview = () => {
+  const { play: playInteractionSound } = useInteractionSound();
   const { id } = useParams();
   const project = dataportfolio.find((p) => p.id === id);
   const pageContainerRef = useRef(null);
@@ -455,13 +457,22 @@ export const ProjectOverview = () => {
     }
   }, []);
 
+  const handleBackToProjectsClick = useCallback(() => {
+    playInteractionSound("ui.card.click");
+    playInteractionSound("ui.route.project-back", { delayMs: 35 });
+  }, [playInteractionSound]);
+
   if (!project) {
     return (
       <Container className="About-header">
         <Row className="mb-5 mt-3 pt-md-3">
           <Col lg="8">
             <h1 className="display-4 mb-4">Project Not Found</h1>
-            <Link to="/#projects" className="btn ac_btn">
+            <Link
+              to="/#projects"
+              className="btn ac_btn"
+              onClick={handleBackToProjectsClick}
+            >
               Back to Projects
             </Link>
           </Col>

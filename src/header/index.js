@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "./style.css";
-import { VscGrabber, VscClose } from "react-icons/vsc";
+import { VscGrabber, VscClose, VscMute, VscUnmute } from "react-icons/vsc";
 import { Link, useLocation } from "react-router-dom";
 import { logotext, socialprofils } from "../content_option";
 import Themetoggle from "../components/themetoggle";
+import { useInteractionSound } from "../components/interaction_sound";
 import brandImage from "../assets/images/me_final.png";
 
 const DEV_MODE_HINT_STORAGE_KEY = "pm-terminal-devmode-hint-seen-v1";
@@ -46,6 +47,12 @@ const getHintDesktopCapable = () => {
 
 const Headermain = ({ onOpenTerminal, isTerminalOpen = false }) => {
   const location = useLocation();
+  const {
+    isEnabled: isSoundEnabled,
+    toggleSound,
+    play: playInteractionSound,
+    isPromptVisible: isSoundPromptVisible,
+  } = useInteractionSound();
   const [isActive, setActive] = useState(true);
   const [isDevModeHintVisible, setIsDevModeHintVisible] = useState(false);
   const [hasDevModeHintBeenSeen, setHasDevModeHintBeenSeen] = useState(() =>
@@ -61,6 +68,14 @@ const Headermain = ({ onOpenTerminal, isTerminalOpen = false }) => {
     setActive((prev) => !prev);
     document.body.classList.toggle("ovhidden");
   };
+
+  const handleThemeToggleSound = useCallback(() => {
+    playInteractionSound("ui.header.control-click");
+  }, [playInteractionSound]);
+
+  const handleSoundToggleClick = useCallback(() => {
+    toggleSound();
+  }, [toggleSound]);
 
   const clearDevModeHintTimers = useCallback(() => {
     if (hintShowTimerRef.current) {
@@ -160,6 +175,7 @@ const Headermain = ({ onOpenTerminal, isTerminalOpen = false }) => {
       isHintDesktopCapable &&
       !hasDevModeHintBeenSeen &&
       !isTerminalOpen &&
+      !isSoundPromptVisible &&
       !isHintSuppressedRoute;
 
     if (!canShowHint) {
@@ -184,6 +200,7 @@ const Headermain = ({ onOpenTerminal, isTerminalOpen = false }) => {
     hasDevModeHintBeenSeen,
     isHintDesktopCapable,
     isHintSuppressedRoute,
+    isSoundPromptVisible,
     isTerminalOpen,
     markDevModeHintSeen,
   ]);
@@ -210,7 +227,11 @@ const Headermain = ({ onOpenTerminal, isTerminalOpen = false }) => {
   ]);
 
   const shouldRenderDevModeHint =
-    isHintDesktopCapable && !isHintSuppressedRoute && !isTerminalOpen && !hasDevModeHintBeenSeen;
+    isHintDesktopCapable &&
+    !isHintSuppressedRoute &&
+    !isTerminalOpen &&
+    !isSoundPromptVisible &&
+    !hasDevModeHintBeenSeen;
 
   return (
     <>
@@ -238,7 +259,19 @@ const Headermain = ({ onOpenTerminal, isTerminalOpen = false }) => {
           </nav>
 
           <div className="d-flex align-items-center header_controls">
-            <Themetoggle />
+            <Themetoggle onToggle={handleThemeToggleSound} />
+            <button
+              type="button"
+              className={`sound_toggle_btn nav_ac ${isSoundEnabled ? "is-on" : "is-off"}`}
+              onClick={handleSoundToggleClick}
+              aria-label={isSoundEnabled ? "Mute interaction sounds" : "Enable interaction sounds"}
+              aria-pressed={isSoundEnabled}
+            >
+              <span className="sound_toggle_icon" aria-hidden="true">
+                {isSoundEnabled ? <VscUnmute /> : <VscMute />}
+              </span>
+              <span className="sound_toggle_label">Sound</span>
+            </button>
             {shouldRenderDevModeHint ? (
               <div className="terminal_hint_slot" aria-hidden={!isDevModeHintVisible}>
                 <button

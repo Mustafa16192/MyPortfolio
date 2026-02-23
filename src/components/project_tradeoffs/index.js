@@ -1,6 +1,7 @@
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useInteractionSound } from "../interaction_sound";
 import "./style.css";
 
 const getDefaultOpenItemId = (items) => {
@@ -15,6 +16,7 @@ const getDefaultOpenItemId = (items) => {
 
 export const ProjectTradeoffs = ({ projectId, items = [] }) => {
   const rootRef = useRef(null);
+  const { play: playInteractionSound } = useInteractionSound();
   const visibleItems = useMemo(() => items.slice(0, 3), [items]);
   const [openTradeoffId, setOpenTradeoffId] = useState(() =>
     getDefaultOpenItemId(visibleItems)
@@ -102,9 +104,13 @@ export const ProjectTradeoffs = ({ projectId, items = [] }) => {
                 className="project-tradeoffs__trigger"
                 aria-expanded={isOpen}
                 aria-controls={panelId}
-                onClick={() =>
-                  setOpenTradeoffId((prev) => (prev === item.id ? null : item.id))
-                }
+                onClick={() => {
+                  const willCollapse = openTradeoffId === item.id;
+                  playInteractionSound(
+                    willCollapse ? "ui.card.collapse" : "ui.card.expand"
+                  );
+                  setOpenTradeoffId((prev) => (prev === item.id ? null : item.id));
+                }}
               >
                 <span className="project-tradeoffs__trigger-index">
                   {String(index + 1).padStart(2, "0")}

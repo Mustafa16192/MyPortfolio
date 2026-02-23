@@ -14,10 +14,12 @@ import {
   readHomeProjectReturnScroll,
   saveHomeProjectReturnScroll,
 } from "../../utils/homeScrollRestore";
+import { useInteractionSound } from "../../components/interaction_sound";
 
 const featuredProjects = dataportfolio;
 
 export const Home = () => {
+  const { play: playInteractionSound } = useInteractionSound();
   const location = useLocation();
   const navigationType = useNavigationType();
   const pendingReturnSnapshot = readHomeProjectReturnScroll();
@@ -56,11 +58,18 @@ export const Home = () => {
       return;
     }
 
+    playInteractionSound("ui.card.click");
+    playInteractionSound("ui.route.project-open", { delayMs: 45 });
+
     saveHomeProjectReturnScroll({
       y: window.scrollY,
       projectId,
     });
-  }, []);
+  }, [playInteractionSound]);
+
+  const handleProjectCardHover = useCallback(() => {
+    playInteractionSound("ui.card.hover-enter");
+  }, [playInteractionSound]);
 
   useEffect(() => {
     if (!pendingReturnSnapshot || !isProjectReturnRestoreFlow) {
@@ -548,6 +557,7 @@ export const Home = () => {
                   data-project-id={project.id}
                   aria-label={`Open ${project.title}`}
                   onClick={(event) => handleProjectCardClick(project.id, event)}
+                  onMouseEnter={handleProjectCardHover}
                 >
                   <div className="featured_project_media">
                     <img

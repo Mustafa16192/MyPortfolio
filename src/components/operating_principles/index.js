@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { setupPremiumTiltCards } from "../../utils/premiumTiltCards";
+import { useInteractionSound } from "../interaction_sound";
 import "./style.css";
 
 const PRINCIPLE_TAG_LABELS = {
@@ -15,6 +16,7 @@ const PRINCIPLE_TAG_LABELS = {
 
 export const OperatingPrinciples = ({ items = [] }) => {
   const rootRef = useRef(null);
+  const { play: playInteractionSound } = useInteractionSound();
   const [activeId, setActiveId] = useState(null);
   const [hoveredId, setHoveredId] = useState(null);
 
@@ -107,10 +109,17 @@ export const OperatingPrinciples = ({ items = [] }) => {
                 className={`operating-principles__card ${
                   isExpanded ? "is-expanded" : ""
                 }`.trim()}
-                onClick={() =>
-                  setActiveId((prev) => (prev === item.id ? null : item.id))
-                }
-                onMouseEnter={() => setHoveredId(item.id)}
+                onClick={() => {
+                  const willCollapse = activeId === item.id;
+                  playInteractionSound(
+                    willCollapse ? "ui.card.collapse" : "ui.card.expand"
+                  );
+                  setActiveId((prev) => (prev === item.id ? null : item.id));
+                }}
+                onMouseEnter={() => {
+                  setHoveredId(item.id);
+                  playInteractionSound("ui.card.hover-enter");
+                }}
                 aria-expanded={isExpanded}
               >
                 <span className="operating-principles__topline">

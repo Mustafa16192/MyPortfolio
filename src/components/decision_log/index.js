@@ -1,12 +1,41 @@
-import React, { useLayoutEffect, useRef } from "react";
+import React, { useCallback, useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { setupPremiumTiltCards } from "../../utils/premiumTiltCards";
+import { useInteractionSound } from "../interaction_sound";
 import "./style.css";
 
 export const DecisionLog = ({ items = [] }) => {
   const rootRef = useRef(null);
+  const { play: playInteractionSound } = useInteractionSound();
+
+  const handleProjectLinkClick = useCallback(
+    (event) => {
+      const clickButton =
+        typeof event?.button === "number"
+          ? event.button
+          : typeof event?.nativeEvent?.button === "number"
+            ? event.nativeEvent.button
+            : null;
+
+      if (
+        !event ||
+        event.defaultPrevented ||
+        (clickButton !== null && clickButton !== 0) ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      ) {
+        return;
+      }
+
+      playInteractionSound("ui.card.click");
+      playInteractionSound("ui.route.project-open", { delayMs: 45 });
+    },
+    [playInteractionSound]
+  );
 
   useLayoutEffect(() => {
     if (!rootRef.current || !items.length) {
@@ -80,7 +109,11 @@ export const DecisionLog = ({ items = [] }) => {
 
       <div className="decision-log__grid">
         {items.map((item) => (
-          <article key={item.id} className="decision-log__card">
+          <article
+            key={item.id}
+            className="decision-log__card"
+            onMouseEnter={() => playInteractionSound("ui.card.hover-enter")}
+          >
             <div className="decision-log__card-head">
               <h3>{item.title}</h3>
               {item.visibility === "nda-safe" && (
@@ -112,6 +145,7 @@ export const DecisionLog = ({ items = [] }) => {
                 to={`/project/${item.projectId}`}
                 className="decision-log__cta"
                 aria-label={`Open related project: ${item.title}`}
+                onClick={handleProjectLinkClick}
               >
                 View Related Project
               </Link>
