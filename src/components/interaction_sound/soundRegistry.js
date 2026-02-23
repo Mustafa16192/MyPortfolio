@@ -1,13 +1,11 @@
-import glassHoverSoft from "../../assets/sounds/glass-hover-soft.wav";
-import glassTapSoft from "../../assets/sounds/glass-tap-soft.wav";
-import glassTickOpen from "../../assets/sounds/glass-tick-open.wav";
-import glassTickClose from "../../assets/sounds/glass-tick-close.wav";
-import terminalOpenSoft from "../../assets/sounds/terminal-open-soft.wav";
-import terminalCloseSoft from "../../assets/sounds/terminal-close-soft.wav";
-import routeOpenAir from "../../assets/sounds/route-open-air.wav";
-import routeBackAir from "../../assets/sounds/route-back-air.wav";
-import soundEnableConfirm from "../../assets/sounds/sound-enable-confirm.wav";
-import soundDisableSoft from "../../assets/sounds/sound-disable-soft.wav";
+import glassHoverSoft from "../../assets/sounds/v2/glass-hover-soft.wav";
+import glassTapSoft from "../../assets/sounds/v2/glass-tap-soft.wav";
+import glassTickOpen from "../../assets/sounds/v2/glass-tick-open.wav";
+import glassTickClose from "../../assets/sounds/v2/glass-tick-close.wav";
+import terminalOpenSoft from "../../assets/sounds/v2/terminal-open-soft.wav";
+import terminalCloseSoft from "../../assets/sounds/v2/terminal-close-soft.wav";
+import soundEnableConfirm from "../../assets/sounds/v2/sound-enable-confirm.wav";
+import soundDisableSoft from "../../assets/sounds/v2/sound-disable-soft.wav";
 
 export const SOUND_ASSETS = {
   glassHoverSoft,
@@ -16,8 +14,6 @@ export const SOUND_ASSETS = {
   glassTickClose,
   terminalOpenSoft,
   terminalCloseSoft,
-  routeOpenAir,
-  routeBackAir,
   soundEnableConfirm,
   soundDisableSoft,
 };
@@ -31,7 +27,7 @@ export const SOUND_EVENT_REGISTRY = {
   },
   "ui.card.click": {
     asset: "glassTapSoft",
-    volume: 0.34,
+    volume: 0.3,
     cooldownMs: 50,
     poolSize: 5,
   },
@@ -49,7 +45,7 @@ export const SOUND_EVENT_REGISTRY = {
   },
   "ui.header.control-click": {
     asset: "glassTapSoft",
-    volume: 0.24,
+    volume: 0.3,
     cooldownMs: 70,
     poolSize: 4,
   },
@@ -64,18 +60,6 @@ export const SOUND_EVENT_REGISTRY = {
     volume: 0.25,
     cooldownMs: 100,
     poolSize: 4,
-  },
-  "ui.route.project-open": {
-    asset: "routeOpenAir",
-    volume: 0.17,
-    cooldownMs: 180,
-    poolSize: 3,
-  },
-  "ui.route.project-back": {
-    asset: "routeBackAir",
-    volume: 0.15,
-    cooldownMs: 180,
-    poolSize: 3,
   },
   "ui.sound.enabled": {
     asset: "soundEnableConfirm",
@@ -99,4 +83,3 @@ export const getUniqueSoundAssetUrls = () =>
         .filter(Boolean)
     )
   );
-

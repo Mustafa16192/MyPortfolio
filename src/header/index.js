@@ -64,10 +64,27 @@ const Headermain = ({ onOpenTerminal, isTerminalOpen = false }) => {
   const hintShowTimerRef = useRef(null);
   const hintHideTimerRef = useRef(null);
 
-  const handleToggle = () => {
+  const handleToggle = useCallback(() => {
     setActive((prev) => !prev);
     document.body.classList.toggle("ovhidden");
-  };
+  }, []);
+
+  const handleNavClickSound = useCallback(() => {
+    playInteractionSound("ui.header.control-click");
+  }, [playInteractionSound]);
+
+  const handleMenuToggleClick = useCallback(() => {
+    handleNavClickSound();
+    handleToggle();
+  }, [handleNavClickSound, handleToggle]);
+
+  const handleMenuItemClick = useCallback(
+    () => {
+      handleNavClickSound();
+      handleToggle();
+    },
+    [handleNavClickSound, handleToggle]
+  );
 
   const handleThemeToggleSound = useCallback(() => {
     playInteractionSound("ui.header.control-click");
@@ -237,7 +254,12 @@ const Headermain = ({ onOpenTerminal, isTerminalOpen = false }) => {
     <>
       <header className="fixed-top site__header">
         <div className="d-flex align-items-center justify-content-between">
-          <Link to="/" className="navbar-brand nav_ac" aria-label={`${logotext} home`}>
+          <Link
+            to="/"
+            className="navbar-brand nav_ac"
+            aria-label={`${logotext} home`}
+            onClick={handleNavClickSound}
+          >
             <span className="brand_identity">
               <img src={brandImage} alt={logotext} className="brand_avatar" />
               <span className="brand_text_wrap">
@@ -247,13 +269,13 @@ const Headermain = ({ onOpenTerminal, isTerminalOpen = false }) => {
           </Link>
 
           <nav className="header_quick_links" aria-label="Quick links">
-            <Link to="/resume" className="header_quick_link">
+            <Link to="/resume" className="header_quick_link" onClick={handleNavClickSound}>
               Resume
             </Link>
-            <Link to="/about" className="header_quick_link">
+            <Link to="/about" className="header_quick_link" onClick={handleNavClickSound}>
               About
             </Link>
-            <Link to="/contact" className="header_quick_link">
+            <Link to="/contact" className="header_quick_link" onClick={handleNavClickSound}>
               Contact
             </Link>
           </nav>
@@ -262,7 +284,9 @@ const Headermain = ({ onOpenTerminal, isTerminalOpen = false }) => {
             <Themetoggle onToggle={handleThemeToggleSound} />
             <button
               type="button"
-              className={`sound_toggle_btn nav_ac ${isSoundEnabled ? "is-on" : "is-off"}`}
+              className={`sound_toggle_btn theme_toggler_btn nav_ac ${
+                isSoundEnabled ? "is-on" : "is-off"
+              }`}
               onClick={handleSoundToggleClick}
               aria-label={isSoundEnabled ? "Mute interaction sounds" : "Enable interaction sounds"}
               aria-pressed={isSoundEnabled}
@@ -270,7 +294,6 @@ const Headermain = ({ onOpenTerminal, isTerminalOpen = false }) => {
               <span className="sound_toggle_icon" aria-hidden="true">
                 {isSoundEnabled ? <VscUnmute /> : <VscMute />}
               </span>
-              <span className="sound_toggle_label">Sound</span>
             </button>
             {shouldRenderDevModeHint ? (
               <div className="terminal_hint_slot" aria-hidden={!isDevModeHintVisible}>
@@ -290,7 +313,7 @@ const Headermain = ({ onOpenTerminal, isTerminalOpen = false }) => {
                 </button>
               </div>
             ) : null}
-            <button className="menu__button nav_ac" onClick={handleToggle}>
+            <button className="menu__button nav_ac" onClick={handleMenuToggleClick}>
               {!isActive ? <VscClose /> : <VscGrabber />}
             </button>
           </div>
@@ -302,22 +325,22 @@ const Headermain = ({ onOpenTerminal, isTerminalOpen = false }) => {
               <div className="menu__container p-3">
                 <ul className="the_menu">
                   <li className="menu_item ">
-                    <Link onClick={handleToggle} to="/" className="my-3">
+                    <Link onClick={handleMenuItemClick} to="/" className="my-3">
                       Home
                     </Link>
                   </li>
                   <li className="menu_item">
-                    <Link onClick={handleToggle} to="/about" className="my-3">
+                    <Link onClick={handleMenuItemClick} to="/about" className="my-3">
                       About
                     </Link>
                   </li>
                   <li className="menu_item">
-                    <Link onClick={handleToggle} to="/resume" className="my-3">
+                    <Link onClick={handleMenuItemClick} to="/resume" className="my-3">
                       Resume
                     </Link>
                   </li>
                   <li className="menu_item">
-                    <Link onClick={handleToggle} to="/contact" className="my-3">
+                    <Link onClick={handleMenuItemClick} to="/contact" className="my-3">
                       Contact
                     </Link>
                   </li>

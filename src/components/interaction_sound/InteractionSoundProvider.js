@@ -27,6 +27,8 @@ export const InteractionSoundContext = createContext({
   toggleSound: () => {},
   armAudioFromUserGesture: () => Promise.resolve(false),
   markPromptDismissed: () => {},
+  hoverBedEnter: () => false,
+  hoverBedLeave: () => false,
   play: () => false,
 });
 
@@ -60,6 +62,17 @@ const getDesktopEligible = () => {
   return (
     window.matchMedia("(min-width: 992px)").matches &&
     !window.matchMedia("(pointer: coarse)").matches
+  );
+};
+
+const getHoverBedEligible = () => {
+  if (typeof window === "undefined" || !window.matchMedia) {
+    return false;
+  }
+
+  return (
+    window.matchMedia("(min-width: 992px)").matches &&
+    window.matchMedia("(hover: hover) and (pointer: fine)").matches
   );
 };
 
@@ -134,6 +147,9 @@ export const InteractionSoundProvider = ({
   const [isArmed, setIsArmed] = useState(false);
   const [isDesktopEligible, setIsDesktopEligible] = useState(() =>
     getDesktopEligible()
+  );
+  const [isHoverBedEligible, setIsHoverBedEligible] = useState(() =>
+    getHoverBedEligible()
   );
   const [isPromptMounted, setIsPromptMounted] = useState(false);
   const [isPromptVisible, setIsPromptVisible] = useState(false);
@@ -230,6 +246,20 @@ export const InteractionSoundProvider = ({
     [isEnabled]
   );
 
+  const hoverBedEnter = useCallback(() => {
+    if (!engineRef.current || !isEnabled || !isHoverBedEligible || !isArmed) {
+      return false;
+    }
+    return engineRef.current.hoverBedEnter?.() ?? false;
+  }, [isArmed, isEnabled, isHoverBedEligible]);
+
+  const hoverBedLeave = useCallback(() => {
+    if (!engineRef.current) {
+      return false;
+    }
+    return engineRef.current.hoverBedLeave?.() ?? false;
+  }, []);
+
   const enableSound = useCallback(async () => {
     setIsEnabled(true);
     safeWriteStorage(SOUND_ENABLED_STORAGE_KEY, "1");
@@ -242,6 +272,7 @@ export const InteractionSoundProvider = ({
     if (isEnabled) {
       engineRef.current?.play("ui.sound.disabled", { bypassCooldown: true });
     }
+    engineRef.current?.hoverBedStop?.({ fadeOutMs: 0 });
     setIsEnabled(false);
     safeWriteStorage(SOUND_ENABLED_STORAGE_KEY, "0");
     if (!hasSeenPrompt) {
@@ -269,9 +300,11 @@ export const InteractionSoundProvider = ({
 
     const widthMq = window.matchMedia("(min-width: 992px)");
     const pointerMq = window.matchMedia("(pointer: coarse)");
+    const hoverMq = window.matchMedia("(hover: hover) and (pointer: fine)");
 
     const sync = () => {
       setIsDesktopEligible(widthMq.matches && !pointerMq.matches);
+      setIsHoverBedEligible(widthMq.matches && hoverMq.matches);
     };
 
     sync();
@@ -279,17 +312,21 @@ export const InteractionSoundProvider = ({
     if (widthMq.addEventListener) {
       widthMq.addEventListener("change", sync);
       pointerMq.addEventListener("change", sync);
+      hoverMq.addEventListener("change", sync);
       return () => {
         widthMq.removeEventListener("change", sync);
         pointerMq.removeEventListener("change", sync);
+        hoverMq.removeEventListener("change", sync);
       };
     }
 
     widthMq.addListener(sync);
     pointerMq.addListener(sync);
+    hoverMq.addListener(sync);
     return () => {
       widthMq.removeListener(sync);
       pointerMq.removeListener(sync);
+      hoverMq.removeListener(sync);
     };
   }, []);
 
@@ -359,6 +396,23 @@ export const InteractionSoundProvider = ({
     [clearPromptTimers]
   );
 
+  useEffect(() => {
+    if (typeof document === "undefined") {
+      return undefined;
+    }
+
+    const handleVisibility = () => {
+      if (document.visibilityState !== "visible") {
+        engineRef.current?.hoverBedStop?.({ fadeOutMs: 80 });
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibility);
+    };
+  }, []);
+
   const contextValue = useMemo(
     () => ({
       isEnabled,
@@ -370,6 +424,8 @@ export const InteractionSoundProvider = ({
       toggleSound,
       armAudioFromUserGesture,
       markPromptDismissed,
+      hoverBedEnter,
+      hoverBedLeave,
       play,
     }),
     [
@@ -377,6 +433,8 @@ export const InteractionSoundProvider = ({
       disableSound,
       enableSound,
       hasSeenPrompt,
+      hoverBedEnter,
+      hoverBedLeave,
       isArmed,
       isEnabled,
       isPromptMounted,
@@ -399,4 +457,3 @@ export const InteractionSoundProvider = ({
     </InteractionSoundContext.Provider>
   );
 };
-

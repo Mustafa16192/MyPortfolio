@@ -459,7 +459,6 @@ export const ProjectOverview = () => {
 
   const handleBackToProjectsClick = useCallback(() => {
     playInteractionSound("ui.card.click");
-    playInteractionSound("ui.route.project-back", { delayMs: 35 });
   }, [playInteractionSound]);
 
   if (!project) {

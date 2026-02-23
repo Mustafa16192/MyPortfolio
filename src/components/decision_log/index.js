@@ -8,7 +8,7 @@ import "./style.css";
 
 export const DecisionLog = ({ items = [] }) => {
   const rootRef = useRef(null);
-  const { play: playInteractionSound } = useInteractionSound();
+  const { play: playInteractionSound, hoverBedEnter, hoverBedLeave } = useInteractionSound();
 
   const handleProjectLinkClick = useCallback(
     (event) => {
@@ -32,7 +32,6 @@ export const DecisionLog = ({ items = [] }) => {
       }
 
       playInteractionSound("ui.card.click");
-      playInteractionSound("ui.route.project-open", { delayMs: 45 });
     },
     [playInteractionSound]
   );
@@ -112,7 +111,11 @@ export const DecisionLog = ({ items = [] }) => {
           <article
             key={item.id}
             className="decision-log__card"
-            onMouseEnter={() => playInteractionSound("ui.card.hover-enter")}
+            onMouseEnter={() => {
+              playInteractionSound("ui.card.hover-enter");
+              hoverBedEnter();
+            }}
+            onMouseLeave={() => hoverBedLeave()}
           >
             <div className="decision-log__card-head">
               <h3>{item.title}</h3>

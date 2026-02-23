@@ -19,7 +19,7 @@ import { useInteractionSound } from "../../components/interaction_sound";
 const featuredProjects = dataportfolio;
 
 export const Home = () => {
-  const { play: playInteractionSound } = useInteractionSound();
+  const { play: playInteractionSound, hoverBedEnter, hoverBedLeave } = useInteractionSound();
   const location = useLocation();
   const navigationType = useNavigationType();
   const pendingReturnSnapshot = readHomeProjectReturnScroll();
@@ -59,7 +59,6 @@ export const Home = () => {
     }
 
     playInteractionSound("ui.card.click");
-    playInteractionSound("ui.route.project-open", { delayMs: 45 });
 
     saveHomeProjectReturnScroll({
       y: window.scrollY,
@@ -67,9 +66,14 @@ export const Home = () => {
     });
   }, [playInteractionSound]);
 
-  const handleProjectCardHover = useCallback(() => {
+  const handleProjectCardHoverEnter = useCallback(() => {
     playInteractionSound("ui.card.hover-enter");
-  }, [playInteractionSound]);
+    hoverBedEnter();
+  }, [hoverBedEnter, playInteractionSound]);
+
+  const handleProjectCardHoverLeave = useCallback(() => {
+    hoverBedLeave();
+  }, [hoverBedLeave]);
 
   useEffect(() => {
     if (!pendingReturnSnapshot || !isProjectReturnRestoreFlow) {
@@ -557,7 +561,8 @@ export const Home = () => {
                   data-project-id={project.id}
                   aria-label={`Open ${project.title}`}
                   onClick={(event) => handleProjectCardClick(project.id, event)}
-                  onMouseEnter={handleProjectCardHover}
+                  onMouseEnter={handleProjectCardHoverEnter}
+                  onMouseLeave={handleProjectCardHoverLeave}
                 >
                   <div className="featured_project_media">
                     <img
