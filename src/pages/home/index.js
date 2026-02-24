@@ -71,9 +71,8 @@ export const Home = () => {
   }, [playInteractionSound]);
 
   const handleProjectCardHoverEnter = useCallback(() => {
-    playInteractionSound("ui.card.tilt-hover-enter");
     tiltCardHoverEnter();
-  }, [playInteractionSound, tiltCardHoverEnter]);
+  }, [tiltCardHoverEnter]);
 
   const handleProjectCardHoverLeave = useCallback(() => {
     tiltCardHoverLeave();

@@ -117,7 +117,6 @@ export const DecisionLog = ({ items = [] }) => {
             className="decision-log__card"
             data-sound-hover="tilt-card"
             onMouseEnter={() => {
-              playInteractionSound("ui.card.tilt-hover-enter");
               tiltCardHoverEnter();
             }}
             onMouseLeave={() => tiltCardHoverLeave()}

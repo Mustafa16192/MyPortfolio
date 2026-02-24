@@ -3,7 +3,6 @@ import glassTapSoft from "../../assets/sounds/v2/glass-tap-soft.wav";
 import glassTickOpen from "../../assets/sounds/v2/glass-tick-open.wav";
 import glassTickClose from "../../assets/sounds/v2/glass-tick-close.wav";
 import glassBloomLoop from "../../assets/sounds/v2/Glass_Bloom.mp3";
-import tiltCardHoverPs from "../../assets/sounds/v2/tilt-card-hover-ps.wav";
 import terminalOpenSoft from "../../assets/sounds/v2/terminal-open-soft.wav";
 import terminalCloseSoft from "../../assets/sounds/v2/terminal-close-soft.wav";
 import soundEnableConfirm from "../../assets/sounds/v2/sound-enable-confirm.wav";
@@ -15,7 +14,6 @@ export const SOUND_ASSETS = {
   glassTickOpen,
   glassTickClose,
   glassBloomLoop,
-  tiltCardHoverPs,
   terminalOpenSoft,
   terminalCloseSoft,
   soundEnableConfirm,
@@ -33,12 +31,6 @@ export const SOUND_EVENT_REGISTRY = {
     asset: "glassHoverSoft",
     volume: 0.16,
     cooldownMs: 110,
-    poolSize: 4,
-  },
-  "ui.card.tilt-hover-enter": {
-    asset: "tiltCardHoverPs",
-    volume: 0.17,
-    cooldownMs: 140,
     poolSize: 4,
   },
   "ui.card.click": {

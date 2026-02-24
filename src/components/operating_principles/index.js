@@ -126,7 +126,6 @@ export const OperatingPrinciples = ({ items = [] }) => {
                 }}
                 onMouseEnter={() => {
                   setHoveredId(item.id);
-                  playInteractionSound("ui.card.tilt-hover-enter");
                   tiltCardHoverEnter();
                 }}
                 onMouseLeave={() => tiltCardHoverLeave()}
