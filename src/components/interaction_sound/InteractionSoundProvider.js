@@ -482,6 +482,37 @@ export const InteractionSoundProvider = ({
     };
   }, [armAudioFromUserGesture, isArmed]);
 
+  useEffect(() => {
+    if (typeof document === "undefined") {
+      return undefined;
+    }
+
+    const handleTiltCardPointerDown = (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) {
+        return;
+      }
+
+      if (!target.closest("[data-sound-hover=\"tilt-card\"]")) {
+        return;
+      }
+
+      pendingTiltHoverReplayRef.current = false;
+      engineRef.current?.tiltCardAmbienceStop?.({ fadeOutMs: 140 });
+    };
+
+    document.addEventListener("pointerdown", handleTiltCardPointerDown, true);
+    return () => {
+      document.removeEventListener("pointerdown", handleTiltCardPointerDown, true);
+    };
+  }, []);
+
+  useEffect(() => {
+    pendingTiltHoverReplayRef.current = false;
+    engineRef.current?.tiltCardAmbienceStop?.({ fadeOutMs: 140 });
+    lastHoveredClickableRef.current = null;
+  }, [location.key, location.pathname]);
+
   const isPromptSuppressedRoute = useMemo(() => {
     const pathname = location.pathname || "/";
     return pathname === "/terminal" || pathname.startsWith("/project/");
