@@ -247,9 +247,20 @@ export const InteractionSoundProvider = ({
         return false;
       }
 
-      return engineRef.current.play(eventName, options);
+      const played = engineRef.current.play(eventName, options);
+
+      if (!played && !isArmed) {
+        void armAudioFromUserGesture().then((armed) => {
+          if (!armed || !engineRef.current) {
+            return;
+          }
+          engineRef.current.play(eventName, options);
+        });
+      }
+
+      return played;
     },
-    [isEnabled]
+    [armAudioFromUserGesture, isArmed, isEnabled]
   );
 
   const tiltCardHoverEnter = useCallback(() => {
@@ -257,11 +268,18 @@ export const InteractionSoundProvider = ({
       return false;
     }
 
+    const didStart = engineRef.current.tiltCardAmbienceEnter?.() ?? false;
+
     if (!isArmed) {
-      void armAudioFromUserGesture();
+      void armAudioFromUserGesture().then((armed) => {
+        if (!armed || !engineRef.current || !isEnabled) {
+          return;
+        }
+        engineRef.current.tiltCardAmbienceEnter?.();
+      });
     }
 
-    return engineRef.current.tiltCardAmbienceEnter?.() ?? false;
+    return didStart;
   }, [armAudioFromUserGesture, isArmed, isEnabled, isHoverEligible]);
 
   const tiltCardHoverLeave = useCallback(() => {

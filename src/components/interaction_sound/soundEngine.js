@@ -386,8 +386,6 @@ export const createInteractionSoundEngine = ({
       return false;
     }
 
-    lastPlayedAt.set(cooldownKey, timestamp);
-
     const volumeMultiplier = Number.isFinite(options.volumeMultiplier)
       ? options.volumeMultiplier
       : 1;
@@ -395,10 +393,21 @@ export const createInteractionSoundEngine = ({
 
     const buffer = buffers.get(config.asset);
     if (buffer && playWithBuffer(buffer, volume)) {
+      lastPlayedAt.set(cooldownKey, timestamp);
       return true;
     }
 
-    return playWithAudioPool(assetUrls[config.asset], volume, config.poolSize || 3);
+    const played = playWithAudioPool(
+      assetUrls[config.asset],
+      volume,
+      config.poolSize || 3
+    );
+
+    if (played) {
+      lastPlayedAt.set(cooldownKey, timestamp);
+    }
+
+    return played;
   };
 
   prewarmAudioPools();
