@@ -197,6 +197,7 @@
 
 .contact_submit_btn {
     min-width: 152px;
+    margin-top: 16px;
     border-radius: 12px;
     padding: 0.46rem 1.2rem;
     font-weight: 700;
