@@ -29,6 +29,8 @@ export const InteractionSoundContext = createContext({
   toggleSound: () => {},
   armAudioFromUserGesture: () => Promise.resolve(false),
   markPromptDismissed: () => {},
+  tiltCardHoverEnter: () => false,
+  tiltCardHoverLeave: () => false,
   play: () => false,
 });
 
@@ -247,6 +249,22 @@ export const InteractionSoundProvider = ({
     [isEnabled]
   );
 
+  const tiltCardHoverEnter = useCallback(() => {
+    if (!engineRef.current || !isEnabled || !isArmed || !isHoverEligible) {
+      return false;
+    }
+
+    return engineRef.current.tiltCardAmbienceEnter?.() ?? false;
+  }, [isArmed, isEnabled, isHoverEligible]);
+
+  const tiltCardHoverLeave = useCallback(() => {
+    if (!engineRef.current) {
+      return false;
+    }
+
+    return engineRef.current.tiltCardAmbienceLeave?.() ?? false;
+  }, []);
+
   const enableSound = useCallback(async () => {
     setIsEnabled(true);
     safeWriteStorage(SOUND_ENABLED_STORAGE_KEY, "1");
@@ -259,6 +277,7 @@ export const InteractionSoundProvider = ({
     if (isEnabled) {
       engineRef.current?.play("ui.sound.disabled", { bypassCooldown: true });
     }
+    engineRef.current?.tiltCardAmbienceStop?.({ fadeOutMs: 0 });
     lastHoveredClickableRef.current = null;
     setIsEnabled(false);
     safeWriteStorage(SOUND_ENABLED_STORAGE_KEY, "0");
@@ -361,6 +380,10 @@ export const InteractionSoundProvider = ({
         return;
       }
 
+      if (target.closest("[data-sound-hover=\"tilt-card\"]")) {
+        return;
+      }
+
       const clickable = target.closest(INTERACTIVE_HOVER_SELECTOR);
       if (!clickable || shouldSkipHoverSound(clickable)) {
         return;
@@ -384,6 +407,12 @@ export const InteractionSoundProvider = ({
       window.removeEventListener("blur", resetLastHoveredClickable);
     };
   }, [isArmed, isEnabled, isHoverEligible, play]);
+
+  useEffect(() => {
+    if (!isEnabled || !isArmed || !isHoverEligible) {
+      engineRef.current?.tiltCardAmbienceStop?.({ fadeOutMs: 80 });
+    }
+  }, [isArmed, isEnabled, isHoverEligible]);
 
   useEffect(() => {
     if (isArmed) {
@@ -451,6 +480,24 @@ export const InteractionSoundProvider = ({
     [clearPromptTimers]
   );
 
+  useEffect(() => {
+    if (typeof document === "undefined") {
+      return undefined;
+    }
+
+    const handleVisibility = () => {
+      if (document.visibilityState !== "visible") {
+        engineRef.current?.tiltCardAmbienceStop?.({ fadeOutMs: 80 });
+        lastHoveredClickableRef.current = null;
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibility);
+    };
+  }, []);
+
   const contextValue = useMemo(
     () => ({
       isEnabled,
@@ -462,6 +509,8 @@ export const InteractionSoundProvider = ({
       toggleSound,
       armAudioFromUserGesture,
       markPromptDismissed,
+      tiltCardHoverEnter,
+      tiltCardHoverLeave,
       play,
     }),
     [
@@ -475,6 +524,8 @@ export const InteractionSoundProvider = ({
       isPromptVisible,
       markPromptDismissed,
       play,
+      tiltCardHoverEnter,
+      tiltCardHoverLeave,
       toggleSound,
     ]
   );

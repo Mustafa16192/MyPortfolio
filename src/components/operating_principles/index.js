@@ -16,7 +16,11 @@ const PRINCIPLE_TAG_LABELS = {
 
 export const OperatingPrinciples = ({ items = [] }) => {
   const rootRef = useRef(null);
-  const { play: playInteractionSound } = useInteractionSound();
+  const {
+    play: playInteractionSound,
+    tiltCardHoverEnter,
+    tiltCardHoverLeave,
+  } = useInteractionSound();
   const [activeId, setActiveId] = useState(null);
   const [hoveredId, setHoveredId] = useState(null);
 
@@ -98,6 +102,7 @@ export const OperatingPrinciples = ({ items = [] }) => {
         className="operating-principles__grid"
         onMouseLeave={() => {
           setHoveredId(null);
+          tiltCardHoverLeave();
         }}
       >
         {items.map((item) => {
@@ -122,7 +127,9 @@ export const OperatingPrinciples = ({ items = [] }) => {
                 onMouseEnter={() => {
                   setHoveredId(item.id);
                   playInteractionSound("ui.card.tilt-hover-enter");
+                  tiltCardHoverEnter();
                 }}
+                onMouseLeave={() => tiltCardHoverLeave()}
                 aria-expanded={isExpanded}
               >
                 <span className="operating-principles__topline">

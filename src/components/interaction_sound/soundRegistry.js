@@ -2,6 +2,7 @@ import glassHoverSoft from "../../assets/sounds/v2/glass-hover-soft.wav";
 import glassTapSoft from "../../assets/sounds/v2/glass-tap-soft.wav";
 import glassTickOpen from "../../assets/sounds/v2/glass-tick-open.wav";
 import glassTickClose from "../../assets/sounds/v2/glass-tick-close.wav";
+import glassBloomLoop from "../../assets/sounds/v2/Glass_Bloom.mp3";
 import tiltCardHoverPs from "../../assets/sounds/v2/tilt-card-hover-ps.wav";
 import terminalOpenSoft from "../../assets/sounds/v2/terminal-open-soft.wav";
 import terminalCloseSoft from "../../assets/sounds/v2/terminal-close-soft.wav";
@@ -13,6 +14,7 @@ export const SOUND_ASSETS = {
   glassTapSoft,
   glassTickOpen,
   glassTickClose,
+  glassBloomLoop,
   tiltCardHoverPs,
   terminalOpenSoft,
   terminalCloseSoft,

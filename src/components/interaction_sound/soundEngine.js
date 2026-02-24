@@ -35,6 +35,14 @@ export const createInteractionSoundEngine = ({
   const audioPools = new Map();
   const lastPlayedAt = new Map();
   const timeouts = new Set();
+  const tiltAmbienceState = {
+    desiredOn: false,
+    enterTimeoutId: null,
+    leaveTimeoutId: null,
+    fadeTimeoutId: null,
+    audio: null,
+  };
+
   const uniqueAssets = Array.from(
     new Set(
       Object.values(eventRegistry)
@@ -60,12 +68,22 @@ export const createInteractionSoundEngine = ({
     if (!hasWindow) {
       return 0;
     }
+
     const timeoutId = window.setTimeout(() => {
       timeouts.delete(timeoutId);
       callback();
     }, delayMs);
+
     timeouts.add(timeoutId);
     return timeoutId;
+  };
+
+  const cancelScheduled = (timeoutId) => {
+    if (!timeoutId) {
+      return null;
+    }
+    clearDelay(timeoutId);
+    return null;
   };
 
   const ensureAudioPool = (src, poolSize = 3) => {
@@ -118,6 +136,117 @@ export const createInteractionSoundEngine = ({
     }
 
     return audioContext;
+  };
+
+  const clearTiltAmbienceFade = () => {
+    if (tiltAmbienceState.fadeTimeoutId) {
+      clearDelay(tiltAmbienceState.fadeTimeoutId);
+      tiltAmbienceState.fadeTimeoutId = null;
+    }
+  };
+
+  const stopTiltAmbienceAudio = () => {
+    clearTiltAmbienceFade();
+    const audio = tiltAmbienceState.audio;
+    if (!audio) {
+      return;
+    }
+
+    try {
+      audio.pause();
+      audio.currentTime = 0;
+      audio.volume = 0;
+    } catch (error) {
+      // Ignore cleanup errors.
+    }
+
+    tiltAmbienceState.audio = null;
+  };
+
+  const ensureTiltAmbienceAudio = () => {
+    if (!hasWindow || isDisposed) {
+      return null;
+    }
+
+    if (tiltAmbienceState.audio) {
+      return tiltAmbienceState.audio;
+    }
+
+    const src = assetUrls.glassBloomLoop;
+    if (!src) {
+      return null;
+    }
+
+    const audio = new Audio(src);
+    audio.preload = "auto";
+    audio.loop = true;
+    audio.crossOrigin = "anonymous";
+    audio.volume = 0;
+    try {
+      audio.load();
+    } catch (error) {
+      // Best effort.
+    }
+
+    tiltAmbienceState.audio = audio;
+    return audio;
+  };
+
+  const rampTiltAmbienceVolume = (targetValue, durationMs, { pauseWhenSilent = false } = {}) => {
+    const audio = tiltAmbienceState.audio;
+    if (!audio) {
+      return;
+    }
+
+    clearTiltAmbienceFade();
+
+    const startVolume = Number.isFinite(audio.volume) ? audio.volume : 0;
+    const target = clamp(targetValue, 0, 1);
+    const duration = Math.max(0, Number(durationMs) || 0);
+
+    if (duration <= 0) {
+      try {
+        audio.volume = target;
+        if (pauseWhenSilent && target <= 0.0001) {
+          audio.pause();
+          audio.currentTime = 0;
+        }
+      } catch (error) {
+        // Ignore audio errors.
+      }
+      return;
+    }
+
+    const startedAt = now();
+    const tick = () => {
+      const elapsed = now() - startedAt;
+      const progress = clamp(elapsed / duration, 0, 1);
+      const nextVolume = startVolume + (target - startVolume) * progress;
+
+      try {
+        audio.volume = clamp(nextVolume, 0, 1);
+      } catch (error) {
+        tiltAmbienceState.fadeTimeoutId = null;
+        return;
+      }
+
+      if (progress >= 1) {
+        tiltAmbienceState.fadeTimeoutId = null;
+        if (pauseWhenSilent && target <= 0.0001) {
+          try {
+            audio.pause();
+            audio.currentTime = 0;
+          } catch (error) {
+            // Ignore cleanup errors.
+          }
+        }
+        return;
+      }
+
+      tiltAmbienceState.fadeTimeoutId = schedule(tick, 24);
+    };
+
+    tiltAmbienceState.fadeTimeoutId = schedule(tick, 24);
   };
 
   const decodeAllBuffers = async () => {
@@ -222,9 +351,7 @@ export const createInteractionSoundEngine = ({
       return false;
     }
 
-    const audio =
-      pool.find((entry) => entry.paused || entry.ended) ||
-      pool[0];
+    const audio = pool.find((entry) => entry.paused || entry.ended) || pool[0];
 
     try {
       audio.pause();
@@ -280,6 +407,71 @@ export const createInteractionSoundEngine = ({
     prewarm: prewarmAudioPools,
     arm,
     isArmed: () => isArmed,
+    tiltCardAmbienceEnter({
+      delayMs = 24,
+      fadeInMs = 240,
+      targetGain = 0.046,
+    } = {}) {
+      if (!AudioContextCtor || isDisposed) {
+        return false;
+      }
+
+      tiltAmbienceState.desiredOn = true;
+      tiltAmbienceState.leaveTimeoutId = cancelScheduled(tiltAmbienceState.leaveTimeoutId);
+      tiltAmbienceState.enterTimeoutId = cancelScheduled(tiltAmbienceState.enterTimeoutId);
+
+      tiltAmbienceState.enterTimeoutId = schedule(() => {
+        tiltAmbienceState.enterTimeoutId = null;
+        const audio = ensureTiltAmbienceAudio();
+        if (!audio) {
+          return;
+        }
+        try {
+          audio.volume = clamp(audio.volume || 0, 0, 1);
+          if (audio.paused) {
+            const playResult = audio.play();
+            if (playResult && typeof playResult.catch === "function") {
+              playResult.catch(() => {});
+            }
+          }
+        } catch (error) {
+          return;
+        }
+        rampTiltAmbienceVolume(clamp(targetGain, 0, 0.25), fadeInMs);
+      }, Math.max(0, Number(delayMs) || 0));
+
+      return true;
+    },
+    tiltCardAmbienceLeave({ holdMs = 140, fadeOutMs = 280 } = {}) {
+      tiltAmbienceState.desiredOn = false;
+      tiltAmbienceState.enterTimeoutId = cancelScheduled(tiltAmbienceState.enterTimeoutId);
+      tiltAmbienceState.leaveTimeoutId = cancelScheduled(tiltAmbienceState.leaveTimeoutId);
+
+      tiltAmbienceState.leaveTimeoutId = schedule(() => {
+        tiltAmbienceState.leaveTimeoutId = null;
+        if (tiltAmbienceState.desiredOn) {
+          return;
+        }
+
+        if (!tiltAmbienceState.audio) {
+          return;
+        }
+        rampTiltAmbienceVolume(0, fadeOutMs, { pauseWhenSilent: true });
+      }, Math.max(0, Number(holdMs) || 0));
+
+      return true;
+    },
+    tiltCardAmbienceStop({ fadeOutMs = 0 } = {}) {
+      tiltAmbienceState.desiredOn = false;
+      tiltAmbienceState.enterTimeoutId = cancelScheduled(tiltAmbienceState.enterTimeoutId);
+      tiltAmbienceState.leaveTimeoutId = cancelScheduled(tiltAmbienceState.leaveTimeoutId);
+
+      if (!tiltAmbienceState.audio) {
+        return false;
+      }
+      rampTiltAmbienceVolume(0, fadeOutMs, { pauseWhenSilent: true });
+      return true;
+    },
     play(eventName, options = {}) {
       const delayMs = Number.isFinite(options.delayMs) ? options.delayMs : 0;
       if (delayMs > 0 && hasWindow) {
@@ -294,6 +486,10 @@ export const createInteractionSoundEngine = ({
     dispose() {
       isDisposed = true;
       Array.from(timeouts).forEach(clearDelay);
+      tiltAmbienceState.enterTimeoutId = null;
+      tiltAmbienceState.leaveTimeoutId = null;
+      stopTiltAmbienceAudio();
+
       audioPools.forEach((pool) => {
         pool.forEach((audio) => {
           try {
@@ -304,9 +500,11 @@ export const createInteractionSoundEngine = ({
           }
         });
       });
+
       audioPools.clear();
       buffers.clear();
       lastPlayedAt.clear();
+
       if (audioContext && typeof audioContext.close === "function") {
         audioContext.close().catch(() => {});
       }

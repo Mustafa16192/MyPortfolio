@@ -237,13 +237,18 @@ body.is-project-focus .site__header > .d-flex {
 }
 
 .header_controls {
-    gap: 8px;
+    gap: 0;
     flex-shrink: 0;
     position: relative;
 }
 
-.header_controls .theme_toggler_btn {
+.header_controls .theme_toggler_btn:not(.sound_toggle_btn) {
     margin-right: 0;
+}
+
+.header_controls .sound_toggle_btn {
+    margin-left: 8px;
+    margin-right: 16px;
 }
 
 .sound_toggle_btn {
@@ -256,7 +261,6 @@ body.is-project-focus .site__header > .d-flex {
     min-width: 50px;
     min-height: 50px;
     padding: 0;
-    margin-right: 16px;
     border-radius: 12px;
     color: var(--text-color-2);
 }
@@ -454,7 +458,8 @@ body.is-project-focus .site__header > .d-flex {
 }
 
 @media (min-width: 992px) {
-    .sound_toggle_btn {
+    .header_controls .sound_toggle_btn {
+        margin-left: 8px;
         margin-right: 16px;
     }
 
