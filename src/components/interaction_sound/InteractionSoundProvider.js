@@ -498,7 +498,7 @@ export const InteractionSoundProvider = ({
       }
 
       pendingTiltHoverReplayRef.current = false;
-      engineRef.current?.tiltCardAmbienceStop?.({ fadeOutMs: 140 });
+      engineRef.current?.tiltCardAmbienceStop?.({ fadeOutMs: 1000 });
     };
 
     document.addEventListener("pointerdown", handleTiltCardPointerDown, true);
@@ -509,7 +509,7 @@ export const InteractionSoundProvider = ({
 
   useEffect(() => {
     pendingTiltHoverReplayRef.current = false;
-    engineRef.current?.tiltCardAmbienceStop?.({ fadeOutMs: 140 });
+    engineRef.current?.tiltCardAmbienceStop?.({ fadeOutMs: 1000 });
     lastHoveredClickableRef.current = null;
   }, [location.key, location.pathname]);
 
