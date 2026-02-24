@@ -316,10 +316,10 @@ export const createInteractionSoundEngine = ({
 
     isArmed = ctx.state === "running";
 
-    try {
-      await decodeAllBuffers();
-    } catch (error) {
-      // Fallback path still usable.
+    if (isArmed) {
+      decodeAllBuffers().catch(() => {
+        // Fallback path still usable.
+      });
     }
 
     return isArmed;

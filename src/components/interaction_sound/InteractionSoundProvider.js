@@ -230,8 +230,11 @@ export const InteractionSoundProvider = ({
     }
 
     const armed = await engineRef.current.arm();
-    setIsArmed(engineRef.current.isArmed ? engineRef.current.isArmed() : armed);
-    return armed;
+    const resolvedArmed = engineRef.current.isArmed
+      ? engineRef.current.isArmed()
+      : armed;
+    setIsArmed(resolvedArmed);
+    return resolvedArmed;
   }, []);
 
   const play = useCallback(
@@ -255,12 +258,7 @@ export const InteractionSoundProvider = ({
     }
 
     if (!isArmed) {
-      void armAudioFromUserGesture().then((armed) => {
-        if (armed && engineRef.current && isEnabled) {
-          engineRef.current.tiltCardAmbienceEnter?.();
-        }
-      });
-      return true;
+      void armAudioFromUserGesture();
     }
 
     return engineRef.current.tiltCardAmbienceEnter?.() ?? false;
@@ -350,7 +348,7 @@ export const InteractionSoundProvider = ({
       return undefined;
     }
 
-    if (!isEnabled || !isArmed || !isHoverEligible) {
+    if (!isEnabled || !isHoverEligible) {
       lastHoveredClickableRef.current = null;
       return undefined;
     }
@@ -404,12 +402,7 @@ export const InteractionSoundProvider = ({
 
       lastHoveredClickableRef.current = clickable;
       if (!isArmed) {
-        void armAudioFromUserGesture().then((armed) => {
-          if (armed) {
-            play("ui.hover.interactive");
-          }
-        });
-        return;
+        void armAudioFromUserGesture();
       }
       play("ui.hover.interactive");
     };
