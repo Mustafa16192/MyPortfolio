@@ -142,7 +142,7 @@ export const InteractionSoundProvider = ({
   const unmountTimerRef = useRef(null);
   const lastHoveredClickableRef = useRef(null);
   const [isEnabled, setIsEnabled] = useState(
-    () => safeReadStorage(SOUND_ENABLED_STORAGE_KEY) === "1"
+    () => safeReadStorage(SOUND_ENABLED_STORAGE_KEY) !== "0"
   );
   const [hasSeenPrompt, setHasSeenPrompt] = useState(
     () => safeReadStorage(SOUND_INTRO_SEEN_STORAGE_KEY) === "1"
@@ -250,12 +250,21 @@ export const InteractionSoundProvider = ({
   );
 
   const tiltCardHoverEnter = useCallback(() => {
-    if (!engineRef.current || !isEnabled || !isArmed || !isHoverEligible) {
+    if (!engineRef.current || !isEnabled || !isHoverEligible) {
       return false;
     }
 
+    if (!isArmed) {
+      void armAudioFromUserGesture().then((armed) => {
+        if (armed && engineRef.current && isEnabled) {
+          engineRef.current.tiltCardAmbienceEnter?.();
+        }
+      });
+      return true;
+    }
+
     return engineRef.current.tiltCardAmbienceEnter?.() ?? false;
-  }, [isArmed, isEnabled, isHoverEligible]);
+  }, [armAudioFromUserGesture, isArmed, isEnabled, isHoverEligible]);
 
   const tiltCardHoverLeave = useCallback(() => {
     if (!engineRef.current) {
@@ -394,6 +403,14 @@ export const InteractionSoundProvider = ({
       }
 
       lastHoveredClickableRef.current = clickable;
+      if (!isArmed) {
+        void armAudioFromUserGesture().then((armed) => {
+          if (armed) {
+            play("ui.hover.interactive");
+          }
+        });
+        return;
+      }
       play("ui.hover.interactive");
     };
 
@@ -406,7 +423,7 @@ export const InteractionSoundProvider = ({
       document.removeEventListener("pointerdown", resetLastHoveredClickable, true);
       window.removeEventListener("blur", resetLastHoveredClickable);
     };
-  }, [isArmed, isEnabled, isHoverEligible, play]);
+  }, [armAudioFromUserGesture, isArmed, isEnabled, isHoverEligible, play]);
 
   useEffect(() => {
     if (!isEnabled || !isArmed || !isHoverEligible) {
@@ -427,10 +444,15 @@ export const InteractionSoundProvider = ({
       capture: true,
       passive: true,
     });
+    window.addEventListener("pointermove", handleFirstGesture, {
+      capture: true,
+      passive: true,
+    });
     window.addEventListener("keydown", handleFirstGesture, true);
 
     return () => {
       window.removeEventListener("pointerdown", handleFirstGesture, true);
+      window.removeEventListener("pointermove", handleFirstGesture, true);
       window.removeEventListener("keydown", handleFirstGesture, true);
     };
   }, [armAudioFromUserGesture, isArmed]);
