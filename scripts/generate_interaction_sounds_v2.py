@@ -175,6 +175,43 @@ def make_air(seed, dur_ms=230, amp=0.55, direction=1):
     return samples
 
 
+def make_tilt_card_hover_ps(seed, dur_ms=185, amp=0.58):
+    rng = random.Random(seed)
+    base = 452.0 + rng.uniform(-10.0, 10.0)
+    ratios = [1.0, 1.498, 2.01]
+    phases = [rng.random() * 2.0 * math.pi for _ in ratios]
+    detunes = [1.0, 1.0 + rng.uniform(-0.004, 0.004), 1.0 + rng.uniform(-0.003, 0.003)]
+
+    def fn(t):
+        dur_s = dur_ms / 1000.0
+        swell = env_exp(t, 0.0055, 0.13)
+        bloom = smoothstep(min(1.0, t / 0.045))
+        micro_glide = 1.0 + 0.015 * math.exp(-t / 0.035)
+
+        tone = 0.0
+        for ratio, ph, detune in zip(ratios, phases, detunes):
+            tone += math.sin(2.0 * math.pi * base * ratio * detune * micro_glide * t + ph)
+        tone /= len(ratios)
+
+        # subtle second harmonic swell for "grandeur" without becoming a pad
+        grandeur = 0.24 * math.sin(2.0 * math.pi * (base * 0.75) * t + phases[0] * 0.5)
+        grandeur *= env_exp(t, 0.01, 0.16)
+
+        # airy shimmer that opens then decays
+        shimmer_env = env_exp(t, 0.0015, 0.07) * (0.55 + 0.45 * bloom)
+        shimmer = 0.0
+        shimmer += 0.6 * math.sin(phase_chirp_linear(min(t, dur_s), 2100.0, 1650.0, dur_s))
+        shimmer += 0.4 * math.sin(phase_chirp_linear(min(t, dur_s), 2850.0, 2250.0, dur_s))
+        shimmer += 0.28 * rng.uniform(-1.0, 1.0)
+
+        return amp * ((0.78 * tone * swell) + grandeur + (0.18 * shimmer * shimmer_env))
+
+    samples = render(dur_ms, fn)
+    samples = highpass(samples, 160.0)
+    samples = lowpass(samples, 7200.0)
+    return samples
+
+
 def mix(*tracks):
     n = max((len(t) for t in tracks), default=0)
     out = [0.0] * n
@@ -190,6 +227,10 @@ def main():
     assets = {
         "glass-hover-soft.wav": mix(
             make_glass_tick("hover", dur_ms=55, base_hz=1750.0, amp=0.55, tilt=-0.03)
+        ),
+        "tilt-card-hover-ps.wav": mix(
+            make_tilt_card_hover_ps("tilt-card-hover", dur_ms=190, amp=0.6),
+            make_air("tilt-card-hover-air", dur_ms=165, amp=0.12, direction=1),
         ),
         "glass-tap-soft.wav": mix(
             make_thuck("tap", dur_ms=95, amp=0.72),

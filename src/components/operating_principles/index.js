@@ -16,7 +16,7 @@ const PRINCIPLE_TAG_LABELS = {
 
 export const OperatingPrinciples = ({ items = [] }) => {
   const rootRef = useRef(null);
-  const { play: playInteractionSound, hoverBedEnter, hoverBedLeave } = useInteractionSound();
+  const { play: playInteractionSound } = useInteractionSound();
   const [activeId, setActiveId] = useState(null);
   const [hoveredId, setHoveredId] = useState(null);
 
@@ -98,7 +98,6 @@ export const OperatingPrinciples = ({ items = [] }) => {
         className="operating-principles__grid"
         onMouseLeave={() => {
           setHoveredId(null);
-          hoverBedLeave();
         }}
       >
         {items.map((item) => {
@@ -112,6 +111,7 @@ export const OperatingPrinciples = ({ items = [] }) => {
                 className={`operating-principles__card ${
                   isExpanded ? "is-expanded" : ""
                 }`.trim()}
+                data-sound-hover="tilt-card"
                 onClick={() => {
                   const willCollapse = activeId === item.id;
                   playInteractionSound(
@@ -121,8 +121,7 @@ export const OperatingPrinciples = ({ items = [] }) => {
                 }}
                 onMouseEnter={() => {
                   setHoveredId(item.id);
-                  playInteractionSound("ui.card.hover-enter");
-                  hoverBedEnter();
+                  playInteractionSound("ui.card.tilt-hover-enter");
                 }}
                 aria-expanded={isExpanded}
               >

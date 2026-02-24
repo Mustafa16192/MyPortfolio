@@ -454,6 +454,10 @@ body.is-project-focus .site__header > .d-flex {
 }
 
 @media (min-width: 992px) {
+    .sound_toggle_btn {
+        margin-right: 16px;
+    }
+
     .header_quick_links {
         display: flex;
         position: absolute;

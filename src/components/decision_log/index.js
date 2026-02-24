@@ -8,7 +8,7 @@ import "./style.css";
 
 export const DecisionLog = ({ items = [] }) => {
   const rootRef = useRef(null);
-  const { play: playInteractionSound, hoverBedEnter, hoverBedLeave } = useInteractionSound();
+  const { play: playInteractionSound } = useInteractionSound();
 
   const handleProjectLinkClick = useCallback(
     (event) => {
@@ -111,11 +111,10 @@ export const DecisionLog = ({ items = [] }) => {
           <article
             key={item.id}
             className="decision-log__card"
+            data-sound-hover="tilt-card"
             onMouseEnter={() => {
-              playInteractionSound("ui.card.hover-enter");
-              hoverBedEnter();
+              playInteractionSound("ui.card.tilt-hover-enter");
             }}
-            onMouseLeave={() => hoverBedLeave()}
           >
             <div className="decision-log__card-head">
               <h3>{item.title}</h3>
